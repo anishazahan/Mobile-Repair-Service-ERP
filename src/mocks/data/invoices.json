@@ -1,0 +1,153 @@
+[
+  {
+    "id": "INV-5001",
+    "orderId": "SO-1001",
+    "customerId": "CUST-1001",
+    "lineItems": [
+      { "description": "iPhone 13 OLED Screen (Part)", "quantity": 1, "unitPrice": 6500 },
+      { "description": "Labor — Screen Replacement", "quantity": 1, "unitPrice": 800 }
+    ],
+    "subtotal": 7300,
+    "tax": 0,
+    "discount": 0,
+    "total": 7300,
+    "amountPaid": 7300,
+    "status": "paid",
+    "issuedAt": "2026-09-07T12:10:00Z"
+  },
+  {
+    "id": "INV-5002",
+    "orderId": "SO-1002",
+    "customerId": "CUST-1002",
+    "lineItems": [
+      { "description": "Charging Port Flex (Part)", "quantity": 1, "unitPrice": 800 },
+      { "description": "Labor — Charging Port Replacement", "quantity": 1, "unitPrice": 400 }
+    ],
+    "subtotal": 1200,
+    "tax": 0,
+    "discount": 0,
+    "total": 1200,
+    "amountPaid": 1200,
+    "status": "paid",
+    "issuedAt": "2026-09-08T13:25:00Z"
+  },
+  {
+    "id": "INV-5003",
+    "orderId": "SO-1003",
+    "customerId": "CUST-1003",
+    "lineItems": [
+      { "description": "Redmi Note 12 Battery (Part)", "quantity": 1, "unitPrice": 1400 },
+      { "description": "Labor — Battery Replacement", "quantity": 1, "unitPrice": 300 }
+    ],
+    "subtotal": 1700,
+    "tax": 0,
+    "discount": 0,
+    "total": 1700,
+    "amountPaid": 0,
+    "status": "unpaid",
+    "issuedAt": "2026-09-11T15:05:00Z",
+    "dueAt": "2026-09-18T00:00:00Z"
+  },
+  {
+    "id": "INV-5004",
+    "orderId": "SO-1012",
+    "customerId": "CUST-1002",
+    "lineItems": [
+      { "description": "Galaxy S22 AMOLED Screen (Part)", "quantity": 1, "unitPrice": 7800 },
+      { "description": "Labor — Screen Replacement", "quantity": 1, "unitPrice": 700 }
+    ],
+    "subtotal": 8500,
+    "tax": 0,
+    "discount": 0,
+    "total": 8500,
+    "amountPaid": 8500,
+    "status": "paid",
+    "issuedAt": "2026-08-23T14:10:00Z"
+  },
+  {
+    "id": "INV-5005",
+    "orderId": "SO-1014",
+    "customerId": "CUST-1010",
+    "lineItems": [{ "description": "Labor — Software Cleanup & OS Update", "quantity": 1, "unitPrice": 500 }],
+    "subtotal": 500,
+    "tax": 0,
+    "discount": 0,
+    "total": 500,
+    "amountPaid": 500,
+    "status": "paid",
+    "issuedAt": "2026-08-28T16:05:00Z"
+  },
+  {
+    "id": "INV-5006",
+    "orderId": "SO-1015",
+    "customerId": "CUST-1005",
+    "lineItems": [
+      { "description": "Charging Port Flex (Part)", "quantity": 1, "unitPrice": 800 },
+      { "description": "Labor — Charging Port Replacement", "quantity": 1, "unitPrice": 350 }
+    ],
+    "subtotal": 1150,
+    "tax": 0,
+    "discount": 0,
+    "total": 1150,
+    "amountPaid": 1150,
+    "status": "paid",
+    "issuedAt": "2026-09-02T14:05:00Z"
+  },
+  {
+    "id": "INV-5007",
+    "orderId": "SO-1016",
+    "customerId": "CUST-1007",
+    "lineItems": [{ "description": "Labor — Software Recovery", "quantity": 1, "unitPrice": 600 }],
+    "subtotal": 600,
+    "tax": 0,
+    "discount": 0,
+    "total": 600,
+    "amountPaid": 600,
+    "status": "paid",
+    "issuedAt": "2026-09-04T13:05:00Z"
+  },
+  {
+    "id": "INV-5008",
+    "orderId": "SO-1017",
+    "customerId": "CUST-1004",
+    "lineItems": [{ "description": "Labor — Digitizer Reseat & Diagnostics", "quantity": 1, "unitPrice": 1600 }],
+    "subtotal": 1600,
+    "tax": 0,
+    "discount": 0,
+    "total": 1600,
+    "amountPaid": 800,
+    "status": "partially_paid",
+    "issuedAt": "2026-09-03T12:10:00Z",
+    "dueAt": "2026-09-10T00:00:00Z"
+  },
+  {
+    "id": "INV-5009",
+    "orderId": "SO-1018",
+    "customerId": "CUST-1006",
+    "lineItems": [
+      { "description": "Mic/Speaker Flex Module (Part)", "quantity": 1, "unitPrice": 600 },
+      { "description": "Labor — Microphone Repair", "quantity": 1, "unitPrice": 900 }
+    ],
+    "subtotal": 2400,
+    "tax": 0,
+    "discount": 1000,
+    "total": 1400,
+    "amountPaid": 0,
+    "status": "overdue",
+    "issuedAt": "2026-08-26T12:10:00Z",
+    "dueAt": "2026-09-02T00:00:00Z"
+  },
+  {
+    "id": "INV-5010",
+    "orderId": "SO-1019",
+    "customerId": "CUST-1011",
+    "lineItems": [{ "description": "Labor — SIM Tray Removal", "quantity": 1, "unitPrice": 300 }],
+    "subtotal": 300,
+    "tax": 0,
+    "discount": 0,
+    "total": 300,
+    "amountPaid": 300,
+    "status": "paid",
+    "issuedAt": "2026-09-12T09:40:00Z"
+  }
+]

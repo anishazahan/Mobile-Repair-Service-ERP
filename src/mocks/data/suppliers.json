@@ -1,0 +1,36 @@
+[
+  {
+    "id": "SUP-01",
+    "name": "Dhaka Mobile Parts Ltd.",
+    "contactPerson": "Mr. Habibur Rahman",
+    "phone": "+880 1911-100001",
+    "email": "sales@dhakamobileparts.com",
+    "address": "Gulistan Underground Market, Dhaka",
+    "status": "active"
+  },
+  {
+    "id": "SUP-02",
+    "name": "TechSource BD",
+    "contactPerson": "Ms. Nabila Haque",
+    "phone": "+880 1911-100002",
+    "email": "orders@techsourcebd.com",
+    "address": "Notun Bazar, Dhaka",
+    "status": "active"
+  },
+  {
+    "id": "SUP-03",
+    "name": "Global Gadget Supplies",
+    "contactPerson": "Mr. Emran Hossain",
+    "phone": "+880 1911-100003",
+    "email": "contact@globalgadgetbd.com",
+    "address": "Chattogram Port Road",
+    "status": "active"
+  },
+  {
+    "id": "SUP-04",
+    "name": "Motherboard World",
+    "contactPerson": "Mr. Sohel Rana",
+    "phone": "+880 1911-100004",
+    "status": "inactive"
+  }
+]

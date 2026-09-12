@@ -1,0 +1,59 @@
+[
+  {
+    "id": "USR-01",
+    "name": "Hashi Anisha",
+    "email": "admin@gadgetfix.shop",
+    "role": "admin",
+    "status": "active",
+    "lastLoginAt": "2026-09-12T08:00:00Z",
+    "createdAt": "2023-01-01T00:00:00Z"
+  },
+  {
+    "id": "USR-02",
+    "name": "Rezwan Kabir",
+    "email": "manager@gadgetfix.shop",
+    "role": "manager",
+    "status": "active",
+    "lastLoginAt": "2026-09-12T08:10:00Z",
+    "createdAt": "2023-02-15T00:00:00Z"
+  },
+  {
+    "id": "USR-03",
+    "name": "Sara Islam",
+    "email": "frontdesk@gadgetfix.shop",
+    "role": "front_desk",
+    "status": "active",
+    "lastLoginAt": "2026-09-12T08:05:00Z",
+    "createdAt": "2023-03-01T00:00:00Z"
+  },
+  {
+    "id": "USR-04",
+    "name": "Ahmed Karim",
+    "email": "ahmed.karim@gadgetfix.shop",
+    "role": "technician",
+    "linkedTechnicianId": "TECH-01",
+    "status": "active",
+    "lastLoginAt": "2026-09-12T08:15:00Z",
+    "createdAt": "2023-02-10T00:00:00Z"
+  },
+  {
+    "id": "USR-05",
+    "name": "Mizanur Rahman",
+    "email": "mizanur.rahman@gadgetfix.shop",
+    "role": "technician",
+    "linkedTechnicianId": "TECH-02",
+    "status": "active",
+    "lastLoginAt": "2026-09-11T18:30:00Z",
+    "createdAt": "2022-07-18T00:00:00Z"
+  },
+  {
+    "id": "USR-06",
+    "name": "Farzana Sultana",
+    "email": "farzana.sultana@gadgetfix.shop",
+    "role": "technician",
+    "linkedTechnicianId": "TECH-03",
+    "status": "active",
+    "lastLoginAt": "2026-09-12T09:00:00Z",
+    "createdAt": "2024-01-05T00:00:00Z"
+  }
+]

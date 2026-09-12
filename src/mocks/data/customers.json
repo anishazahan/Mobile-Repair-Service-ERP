@@ -1,0 +1,105 @@
+[
+  {
+    "id": "CUST-1001",
+    "name": "Aisha Rahman",
+    "phone": "+880 1711-223344",
+    "email": "aisha.rahman@example.com",
+    "address": "House 12, Road 5, Dhanmondi, Dhaka",
+    "type": "regular",
+    "status": "active",
+    "notes": "Prefers SMS updates over calls.",
+    "createdAt": "2025-11-02T09:12:00Z"
+  },
+  {
+    "id": "CUST-1002",
+    "name": "Tanvir Ahmed",
+    "phone": "+880 1822-556677",
+    "email": "tanvir.ahmed@example.com",
+    "address": "Flat 4B, Gulshan-2, Dhaka",
+    "type": "regular",
+    "status": "active",
+    "createdAt": "2025-12-14T11:40:00Z"
+  },
+  {
+    "id": "CUST-1003",
+    "name": "Nusrat Jahan",
+    "phone": "+880 1933-889900",
+    "email": "nusrat.jahan@example.com",
+    "type": "walk_in",
+    "status": "active",
+    "createdAt": "2026-01-05T14:20:00Z"
+  },
+  {
+    "id": "CUST-1004",
+    "name": "Rafiul Islam",
+    "phone": "+880 1644-112233",
+    "address": "Uttara Sector 7, Dhaka",
+    "type": "regular",
+    "status": "active",
+    "notes": "Owns a small business, brings multiple staff phones.",
+    "createdAt": "2026-01-20T08:05:00Z"
+  },
+  {
+    "id": "CUST-1005",
+    "name": "Farhana Akter",
+    "phone": "+880 1555-667788",
+    "email": "farhana.akter@example.com",
+    "type": "walk_in",
+    "status": "active",
+    "createdAt": "2026-02-11T16:45:00Z"
+  },
+  {
+    "id": "CUST-1006",
+    "name": "Shakib Hossain",
+    "phone": "+880 1766-998877",
+    "email": "shakib.hossain@example.com",
+    "address": "Bashundhara R/A, Dhaka",
+    "type": "regular",
+    "status": "active",
+    "createdAt": "2026-03-01T10:30:00Z"
+  },
+  {
+    "id": "CUST-1007",
+    "name": "Mahin Chowdhury",
+    "phone": "+880 1877-334455",
+    "type": "walk_in",
+    "status": "active",
+    "createdAt": "2026-03-18T13:10:00Z"
+  },
+  {
+    "id": "CUST-1008",
+    "name": "Ishrat Zaman",
+    "phone": "+880 1911-224466",
+    "email": "ishrat.zaman@example.com",
+    "type": "regular",
+    "status": "archived",
+    "notes": "Moved city, unlikely to return.",
+    "createdAt": "2025-09-10T09:00:00Z"
+  },
+  {
+    "id": "CUST-1009",
+    "name": "Kamrul Hasan",
+    "phone": "+880 1688-556699",
+    "type": "walk_in",
+    "status": "active",
+    "createdAt": "2026-04-02T12:15:00Z"
+  },
+  {
+    "id": "CUST-1010",
+    "name": "Sabrina Yasmin",
+    "phone": "+880 1533-778899",
+    "email": "sabrina.yasmin@example.com",
+    "address": "Mirpur DOHS, Dhaka",
+    "type": "regular",
+    "status": "active",
+    "createdAt": "2026-04-22T15:50:00Z"
+  },
+  {
+    "id": "CUST-1011",
+    "name": "Nayeem Chowdhury",
+    "phone": "+880 1799-112200",
+    "type": "walk_in",
+    "status": "active",
+    "createdAt": "2026-09-12T09:10:00Z"
+  }
+]

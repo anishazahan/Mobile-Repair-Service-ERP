@@ -1,0 +1,62 @@
+[
+  {
+    "id": "NOTIF-01",
+    "type": "low_stock",
+    "message": "iPhone 12 Battery is low on stock (1 remaining, reorder level 4).",
+    "relatedEntityId": "PART-005",
+    "relatedEntityType": "part",
+    "read": false,
+    "createdAt": "2026-09-12T07:00:00Z"
+  },
+  {
+    "id": "NOTIF-02",
+    "type": "low_stock",
+    "message": "iPad 9th Gen Digitizer is out of stock.",
+    "relatedEntityId": "PART-012",
+    "relatedEntityType": "part",
+    "read": false,
+    "createdAt": "2026-09-10T10:05:00Z"
+  },
+  {
+    "id": "NOTIF-03",
+    "type": "order_update",
+    "message": "SO-1011 has been sent for Quality Check.",
+    "relatedEntityId": "SO-1011",
+    "relatedEntityType": "order",
+    "read": false,
+    "createdAt": "2026-09-12T11:00:00Z"
+  },
+  {
+    "id": "NOTIF-04",
+    "type": "payment",
+    "message": "Invoice INV-5009 (SO-1018) is now overdue.",
+    "relatedEntityId": "INV-5009",
+    "relatedEntityType": "invoice",
+    "read": false,
+    "createdAt": "2026-09-03T00:00:00Z"
+  },
+  {
+    "id": "NOTIF-05",
+    "type": "new_booking",
+    "message": "New booking request submitted via website by Farhana Akter.",
+    "relatedEntityType": "customer",
+    "read": true,
+    "createdAt": "2026-09-11T19:20:00Z"
+  },
+  {
+    "id": "NOTIF-06",
+    "type": "order_update",
+    "message": "SO-1004 marked Urgent — customer needs device before travel.",
+    "relatedEntityId": "SO-1004",
+    "relatedEntityType": "order",
+    "read": true,
+    "createdAt": "2026-09-10T09:20:00Z"
+  },
+  {
+    "id": "NOTIF-07",
+    "type": "system",
+    "message": "Weekly backup of shop records completed successfully.",
+    "read": true,
+    "createdAt": "2026-09-08T02:00:00Z"
+  }
+]

@@ -1,0 +1,47 @@
+[
+  {
+    "id": "TECH-01",
+    "name": "Ahmed Karim",
+    "phone": "+880 1712-000001",
+    "email": "ahmed.karim@gadgetfix.shop",
+    "specialties": ["screen", "battery", "charging_port"],
+    "status": "active",
+    "joinedAt": "2023-02-10T00:00:00Z"
+  },
+  {
+    "id": "TECH-02",
+    "name": "Mizanur Rahman",
+    "phone": "+880 1712-000002",
+    "email": "mizanur.rahman@gadgetfix.shop",
+    "specialties": ["motherboard", "water_damage"],
+    "status": "active",
+    "joinedAt": "2022-07-18T00:00:00Z"
+  },
+  {
+    "id": "TECH-03",
+    "name": "Farzana Sultana",
+    "phone": "+880 1712-000003",
+    "email": "farzana.sultana@gadgetfix.shop",
+    "specialties": ["software", "camera"],
+    "status": "active",
+    "joinedAt": "2024-01-05T00:00:00Z"
+  },
+  {
+    "id": "TECH-04",
+    "name": "Jahangir Alam",
+    "phone": "+880 1712-000004",
+    "email": "jahangir.alam@gadgetfix.shop",
+    "specialties": ["screen", "general"],
+    "status": "on_leave",
+    "joinedAt": "2023-09-22T00:00:00Z"
+  },
+  {
+    "id": "TECH-05",
+    "name": "Rumana Akter",
+    "phone": "+880 1712-000005",
+    "email": "rumana.akter@gadgetfix.shop",
+    "specialties": ["battery", "charging_port", "general"],
+    "status": "active",
+    "joinedAt": "2024-06-14T00:00:00Z"
+  }
+]

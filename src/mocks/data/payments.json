@@ -1,0 +1,10 @@
+[
+  { "id": "PAY-9001", "invoiceId": "INV-5001", "amount": 7300, "method": "card", "recordedBy": "Sara Islam", "createdAt": "2026-09-07T16:35:00Z" },
+  { "id": "PAY-9002", "invoiceId": "INV-5002", "amount": 1200, "method": "cash", "recordedBy": "Sara Islam", "createdAt": "2026-09-08T13:20:00Z" },
+  { "id": "PAY-9003", "invoiceId": "INV-5004", "amount": 8500, "method": "mobile_wallet", "recordedBy": "Sara Islam", "createdAt": "2026-08-23T15:00:00Z" },
+  { "id": "PAY-9004", "invoiceId": "INV-5005", "amount": 500, "method": "cash", "recordedBy": "Sara Islam", "createdAt": "2026-08-28T16:00:00Z" },
+  { "id": "PAY-9005", "invoiceId": "INV-5006", "amount": 1150, "method": "cash", "recordedBy": "Sara Islam", "createdAt": "2026-09-02T14:00:00Z" },
+  { "id": "PAY-9006", "invoiceId": "INV-5007", "amount": 600, "method": "mobile_wallet", "recordedBy": "Sara Islam", "createdAt": "2026-09-04T13:00:00Z" },
+  { "id": "PAY-9007", "invoiceId": "INV-5008", "amount": 800, "method": "cash", "recordedBy": "Sara Islam", "createdAt": "2026-09-03T12:05:00Z" },
+  { "id": "PAY-9008", "invoiceId": "INV-5010", "amount": 300, "method": "cash", "recordedBy": "Sara Islam", "createdAt": "2026-09-12T10:00:00Z" }
+]

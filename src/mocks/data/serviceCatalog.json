@@ -1,0 +1,12 @@
+[
+  { "id": "SVC-01", "name": "Screen Replacement", "category": "Hardware Repair", "basePrice": 1500, "estDurationMinutes": 60, "status": "active", "description": "Full front glass/display assembly replacement for phones and tablets." },
+  { "id": "SVC-02", "name": "Battery Replacement", "category": "Hardware Repair", "basePrice": 1000, "estDurationMinutes": 45, "status": "active", "description": "Genuine/OEM-grade battery swap with health calibration." },
+  { "id": "SVC-03", "name": "Charging Port Repair", "category": "Hardware Repair", "basePrice": 700, "estDurationMinutes": 40, "status": "active", "description": "Charging port flex cleaning or replacement." },
+  { "id": "SVC-04", "name": "Water Damage Treatment", "category": "Hardware Repair", "basePrice": 1200, "estDurationMinutes": 120, "status": "active", "description": "Ultrasonic cleaning, corrosion removal, and board-level diagnostics." },
+  { "id": "SVC-05", "name": "Camera Module Replacement", "category": "Hardware Repair", "basePrice": 2000, "estDurationMinutes": 60, "status": "active", "description": "Front or rear camera module replacement." },
+  { "id": "SVC-06", "name": "Software Troubleshooting", "category": "Software", "basePrice": 500, "estDurationMinutes": 45, "status": "active", "description": "OS reinstall, boot loop fixes, performance optimization." },
+  { "id": "SVC-07", "name": "Data Recovery", "category": "Software", "basePrice": 2500, "estDurationMinutes": 180, "status": "active", "description": "Recovery of photos, contacts, and files from a non-booting device." },
+  { "id": "SVC-08", "name": "Speaker/Mic Repair", "category": "Hardware Repair", "basePrice": 600, "estDurationMinutes": 30, "status": "active", "description": "Loudspeaker, earpiece, or microphone module replacement." },
+  { "id": "SVC-09", "name": "Motherboard Repair", "category": "Advanced Repair", "basePrice": 3000, "estDurationMinutes": 240, "status": "active", "description": "Chip-level diagnostics and micro-soldering repair." },
+  { "id": "SVC-10", "name": "Free Diagnostic Check-up", "category": "Diagnostics", "basePrice": 0, "estDurationMinutes": 20, "status": "active", "description": "No-obligation inspection to identify the issue before any commitment." }
+]
