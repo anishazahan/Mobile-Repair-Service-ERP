@@ -11,6 +11,10 @@ const HomePage = lazy(() => import("@/pages/public/HomePage").then((m) => ({ def
 const LoginPage = lazy(() => import("@/pages/auth/LoginPage").then((m) => ({ default: m.LoginPage })));
 const DashboardPage = lazy(() => import("@/pages/erp/DashboardPage").then((m) => ({ default: m.DashboardPage })));
 const NotFoundPage = lazy(() => import("@/pages/NotFoundPage").then((m) => ({ default: m.NotFoundPage })));
+const OrdersListPage = lazy(() => import("@/pages/erp/orders/OrdersListPage").then((m) => ({ default: m.OrdersListPage })));
+const RepairBoardPage = lazy(() => import("@/pages/erp/orders/RepairBoardPage").then((m) => ({ default: m.RepairBoardPage })));
+const NewOrderPage = lazy(() => import("@/pages/erp/orders/NewOrderPage").then((m) => ({ default: m.NewOrderPage })));
+const OrderDetailPage = lazy(() => import("@/pages/erp/orders/OrderDetailPage").then((m) => ({ default: m.OrderDetailPage })));
 
 const IMG = {
   services: "https://images.unsplash.com/photo-1581092921461-eab62e97a780?q=85&w=1600&auto=format&fit=crop",
@@ -122,7 +126,10 @@ const router = createBrowserRouter([
         element: withSuspense(<ErpLayout />),
         children: [
           { index: true, element: withSuspense(<DashboardPage />) },
-          { path: "orders", element: <PlaceholderPage title="Service Orders" /> },
+          { path: "orders", element: withSuspense(<OrdersListPage />) },
+          { path: "orders/board", element: withSuspense(<RepairBoardPage />) },
+          { path: "orders/new", element: withSuspense(<NewOrderPage />) },
+          { path: "orders/:id", element: withSuspense(<OrderDetailPage />) },
           { path: "customers", element: <PlaceholderPage title="Customers" /> },
           { path: "devices", element: <PlaceholderPage title="Devices" /> },
           { path: "inventory/parts", element: <PlaceholderPage title="Spare Parts" /> },

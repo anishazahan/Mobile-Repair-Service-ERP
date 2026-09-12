@@ -10,7 +10,7 @@ import {
   Wallet,
   Wrench,
 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { PageHeader } from "@/components/layout/page-header";
 import { RevenueTrendChart } from "@/components/charts/revenue-trend-chart";
 import { StatusBreakdownList } from "@/components/charts/status-breakdown-list";
@@ -28,6 +28,7 @@ import { formatCurrency, formatRelativeTime } from "@/lib/utils";
 
 export function DashboardPage() {
   const user = useAuthStore((s) => s.user);
+  const navigate = useNavigate();
   const { data, isLoading, isError, refetch } = useDashboardData();
 
   return (
@@ -43,7 +44,7 @@ export function DashboardPage() {
               </Link>
             </Button>
             <Button size="sm" asChild>
-              <Link to="/app/orders">
+              <Link to="/app/orders/new">
                 <Plus /> New Service Order
               </Link>
             </Button>
@@ -135,7 +136,11 @@ export function DashboardPage() {
                       </thead>
                       <tbody>
                         {data.todaysQueue.map((row) => (
-                          <tr key={row.order.id} className="border-b border-border/60 last:border-0">
+                          <tr
+                            key={row.order.id}
+                            onClick={() => navigate(`/app/orders/${row.order.id}`)}
+                            className="cursor-pointer border-b border-border/60 last:border-0 hover:bg-accent/50"
+                          >
                             <td className="py-2.5 pr-2 font-medium text-foreground">
                               <div className="flex items-center gap-1.5">
                                 {row.order.id}
@@ -169,7 +174,7 @@ export function DashboardPage() {
                       <div className="min-w-0">
                         <p className="text-foreground">
                           {activity.label}{" "}
-                          <Link to="/app/orders" className="font-medium text-primary hover:underline">
+                          <Link to={`/app/orders/${activity.orderId}`} className="font-medium text-primary hover:underline">
                             {activity.orderId}
                           </Link>
                         </p>
