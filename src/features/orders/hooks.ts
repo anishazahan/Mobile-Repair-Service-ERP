@@ -109,7 +109,9 @@ export function useConfirmDelivery(id: string) {
 }
 
 export function useCloseOrder(id: string) {
-  return useOrderMutation(() => api.closeOrder(id), "Order closed.");
+  // Closing an order generates its invoice (see api.closeOrder) — keep the
+  // Billing module's cache in sync.
+  return useOrderMutation(() => api.closeOrder(id), "Order closed.", [["billing"]]);
 }
 
 export function useCancelOrder(id: string) {

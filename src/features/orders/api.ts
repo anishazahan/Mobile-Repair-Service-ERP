@@ -4,6 +4,8 @@ import { MockApiError, simulateRequest } from "@/mocks/server";
 import type {
   Customer,
   Device,
+  Invoice,
+  InvoiceLineItem,
   OrderPartLine,
   OrderTimelineEvent,
   ServiceOrder,
@@ -22,6 +24,7 @@ export interface OrderRow {
   customer?: Customer;
   device?: Device;
   technicianName?: string;
+  invoiceId?: string;
 }
 
 function currentActor() {
@@ -53,7 +56,8 @@ function enrich(order: ServiceOrder): OrderRow {
   const technician = order.assignedTechnicianId
     ? db.technicians.find((t) => t.id === order.assignedTechnicianId)
     : undefined;
-  return { order, customer, device, technicianName: technician?.name };
+  const invoice = db.invoices.find((inv) => inv.orderId === order.id);
+  return { order, customer, device, technicianName: technician?.name, invoiceId: invoice?.id };
 }
 
 export async function getOrders(filters?: OrderFilters): Promise<OrderRow[]> {
@@ -320,10 +324,55 @@ export async function confirmDelivery(id: string, input: DeliveryInput): Promise
   });
 }
 
+function buildInvoiceLineItems(order: ServiceOrder): InvoiceLineItem[] {
+  const items: InvoiceLineItem[] = order.partsUsed.map((line) => ({
+    description: `${line.partName} (Part)`,
+    quantity: line.quantity,
+    unitPrice: line.unitPrice,
+  }));
+  if (order.laborCost) {
+    items.push({ description: "Labor", quantity: 1, unitPrice: order.laborCost });
+  }
+  return items;
+}
+
 export async function closeOrder(id: string): Promise<void> {
   return simulateRequest(() => {
     const order = findOrder(id);
     order.status = "CLOSED";
+
+    // The close-order flow is payment-gated (see CloseOrderModal) — by the
+    // time an order reaches here it's already been paid in full, so this
+    // is also where the paid invoice for it actually gets created.
+    if (!db.invoices.some((inv) => inv.orderId === order.id)) {
+      const lineItems = buildInvoiceLineItems(order);
+      const subtotal = lineItems.reduce((sum, li) => sum + li.quantity * li.unitPrice, 0);
+      const total = order.finalCost ?? order.estimatedCost ?? subtotal;
+      const now = new Date().toISOString();
+      const invoice: Invoice = {
+        id: genId("INV"),
+        orderId: order.id,
+        customerId: order.customerId,
+        lineItems,
+        subtotal,
+        tax: 0,
+        discount: 0,
+        total,
+        amountPaid: total,
+        status: "paid",
+        issuedAt: now,
+      };
+      db.invoices.unshift(invoice);
+      db.payments.unshift({
+        id: genId("PAY"),
+        invoiceId: invoice.id,
+        amount: total,
+        method: "cash",
+        recordedBy: currentActor().name,
+        createdAt: now,
+      });
+    }
+
     pushTimeline(order, { type: "status_change", label: "Order Closed — Payment Settled" });
   });
 }

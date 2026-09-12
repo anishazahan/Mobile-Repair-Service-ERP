@@ -322,6 +322,15 @@ export function OrderDetailPage() {
                   <span>{formatDate(order.estimatedCompletionAt)}</span>
                 </div>
               )}
+              {data.invoiceId && (
+                <Link
+                  to={`/app/billing/${data.invoiceId}`}
+                  className="flex items-center justify-between border-t border-border pt-2 text-primary hover:underline"
+                >
+                  <span>View Invoice</span>
+                  <span>{data.invoiceId}</span>
+                </Link>
+              )}
             </CardContent>
           </Card>
 

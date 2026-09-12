@@ -65,7 +65,13 @@ export function DashboardPage() {
             <KpiCard label="Ready for Pickup" value={String(data.kpis.readyForPickup)} icon={PackageCheck} accent="success" />
             <KpiCard label="Revenue Today" value={formatCurrency(data.kpis.revenueToday)} icon={Wallet} accent="success" />
             <KpiCard label="Revenue This Month" value={formatCurrency(data.kpis.revenueThisMonth)} icon={TrendingUp} accent="primary" />
-            <KpiCard label="Pending Payments" value={formatCurrency(data.kpis.pendingPaymentsTotal)} icon={Banknote} accent="warning" />
+            <KpiCard
+              label="Pending Payments"
+              value={formatCurrency(data.kpis.pendingPaymentsTotal)}
+              icon={Banknote}
+              accent="warning"
+              to="/app/billing"
+            />
             <KpiCard label="Low Stock Alerts" value={String(data.kpis.lowStockCount)} icon={PackageX} accent="warning" />
             <KpiCard label="Overdue Jobs" value={String(data.kpis.overdueJobs)} icon={Clock} accent={data.kpis.overdueJobs > 0 ? "destructive" : "primary"} />
           </div>
