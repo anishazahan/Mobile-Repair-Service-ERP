@@ -55,7 +55,11 @@ export function PricingSection() {
                     <Check className="h-4 w-4 text-primary" /> Free re-diagnosis if unresolved
                   </li>
                 </ul>
-                <Button className="mt-6" variant={isPopular ? "default" : "outline"} asChild>
+                <Button
+                  className="mt-6 rounded-none text-[13px] font-semibold uppercase tracking-wider"
+                  variant={isPopular ? "default" : "outline"}
+                  asChild
+                >
                   <Link to="/book-a-service">Book This Service</Link>
                 </Button>
               </CardContent>

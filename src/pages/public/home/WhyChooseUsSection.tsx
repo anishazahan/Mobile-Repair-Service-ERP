@@ -1,34 +1,64 @@
-import { BadgeCheck, Clock, ShieldCheck, Sparkles, Tag, Users } from "lucide-react";
+import { Cog, ShieldCheck, Timer, Users } from "lucide-react";
 
 const REASONS = [
-  { icon: ShieldCheck, title: "90-Day Warranty", description: "Every repair is backed by a genuine warranty — parts and labor." },
-  { icon: BadgeCheck, title: "Genuine Parts Only", description: "We never use counterfeit components — sourced from vetted suppliers." },
-  { icon: Clock, title: "Fast Turnaround", description: "Most repairs are completed the same day, some in under an hour." },
-  { icon: Tag, title: "Transparent Pricing", description: "You approve the exact cost before any work begins — no hidden fees." },
-  { icon: Users, title: "Certified Technicians", description: "Our team is trained and specialized across every major brand." },
-  { icon: Sparkles, title: "Free Diagnostics", description: "No obligation, no cost to find out exactly what's wrong." },
+  { icon: Timer, title: "Quick Repair Service", description: "Most repairs are completed the same day, some in under an hour." },
+  { icon: ShieldCheck, title: "Two Years Warranty", description: "Every repair is backed by a genuine warranty on parts and labor." },
+  { icon: Users, title: "Expert Technicians", description: "Certified and specialized across every major device brand." },
+  { icon: Cog, title: "Quality Parts", description: "We never use counterfeit components — sourced from vetted suppliers." },
 ];
+
+const STATS = [
+  { value: "100%", label: "Satisfaction" },
+  { value: "12K+", label: "Devices Fixed" },
+  { value: "20+", label: "Certified Techs" },
+];
+
+const IMAGE =
+  "https://images.unsplash.com/photo-1581092921461-eab62e97a780?q=80&w=1000&auto=format&fit=crop";
 
 export function WhyChooseUsSection() {
   return (
-    <section className="container py-20">
-      <div className="mx-auto max-w-2xl text-center">
-        <span className="text-sm font-semibold uppercase tracking-wider text-primary">Why GadgetFIX</span>
-        <h2 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">Repairs you can actually trust</h2>
-      </div>
+    <section className="bg-primary text-primary-foreground">
+      <div className="grid lg:grid-cols-2">
+        <div className="hidden lg:block">
+          <img src={IMAGE} alt="Technician holding professional repair tools" className="h-full w-full object-cover" />
+        </div>
 
-      <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {REASONS.map((reason) => (
-          <div key={reason.title} className="flex gap-4 rounded-md border border-border p-5">
-            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
-              <reason.icon className="h-5 w-5" />
-            </div>
-            <div>
-              <h3 className="font-semibold text-foreground">{reason.title}</h3>
-              <p className="mt-1 text-sm text-muted-foreground">{reason.description}</p>
-            </div>
+        <div className="space-y-8 px-6 py-16 sm:px-10 lg:px-16">
+          <div className="space-y-4">
+            <span className="text-sm font-semibold uppercase tracking-wider text-primary-foreground/80">
+              Why Choose Us?
+            </span>
+            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">Quality Service And Competitive Rates</h2>
+            <p className="text-primary-foreground/85">
+              We treat every device like it's our own — honest diagnostics, fair pricing, and
+              work that holds up long after you walk out the door.
+            </p>
           </div>
-        ))}
+
+          <div className="grid gap-6 sm:grid-cols-2">
+            {REASONS.map((reason) => (
+              <div key={reason.title} className="flex gap-3">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/15">
+                  <reason.icon className="h-5 w-5" />
+                </div>
+                <div>
+                  <h3 className="font-semibold">{reason.title}</h3>
+                  <p className="mt-1 text-sm text-primary-foreground/80">{reason.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="flex flex-wrap gap-10 border-t border-white/20 pt-6">
+            {STATS.map((stat) => (
+              <div key={stat.label}>
+                <p className="text-2xl font-extrabold">{stat.value}</p>
+                <p className="text-xs uppercase tracking-wide text-primary-foreground/80">{stat.label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );

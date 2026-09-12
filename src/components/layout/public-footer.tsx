@@ -1,16 +1,38 @@
-import { Camera, Mail, MapPin, MessageCircle, Phone, Video, Wrench } from "lucide-react";
+import { Camera, Mail, MapPin, MessageCircle, Phone, Video } from "lucide-react";
 import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+
+const CONTACT_ITEMS = [
+  { icon: MapPin, label: "Head Office", value: "House 12, Road 5, Dhanmondi, Dhaka" },
+  { icon: Mail, label: "Email", value: "hello@gadgetfix.shop" },
+  { icon: Phone, label: "Phone", value: "+880 1700-000000" },
+];
 
 export function PublicFooter() {
   return (
-    <footer className="border-t border-border bg-slate-950 text-slate-300">
+    <footer className="bg-slate-950 text-slate-300">
+      <div className="border-b border-white/10">
+        <div className="container grid gap-6 py-8 sm:grid-cols-3">
+          {CONTACT_ITEMS.map((item) => (
+            <div key={item.label} className="flex items-center gap-3">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-primary/20 text-primary">
+                <item.icon className="h-5 w-5" />
+              </span>
+              <div>
+                <p className="text-sm font-semibold text-white">{item.label}</p>
+                <p className="text-sm text-slate-400">{item.value}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
       <div className="container grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4">
         <div className="space-y-4">
-          <Link to="/" className="flex items-center gap-2">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-              <Wrench className="h-5 w-5" />
-            </div>
-            <span className="text-lg font-bold text-white">GadgetFIX</span>
+          <Link to="/" className="text-xl font-extrabold tracking-tight">
+            <span className="text-white">Gadget</span>
+            <span className="text-primary">FIX</span>
           </Link>
           <p className="max-w-xs text-sm text-slate-400">
             Trusted mobile & tablet repair — genuine parts, certified technicians, and honest
@@ -30,7 +52,7 @@ export function PublicFooter() {
         </div>
 
         <div>
-          <h4 className="mb-4 text-sm font-semibold text-white">Company</h4>
+          <h4 className="mb-4 text-sm font-semibold uppercase tracking-wide text-white">Company</h4>
           <ul className="space-y-2.5 text-sm">
             <li><Link to="/about" className="hover:text-white">About Us</Link></li>
             <li><Link to="/team" className="hover:text-white">Our Team</Link></li>
@@ -40,7 +62,7 @@ export function PublicFooter() {
         </div>
 
         <div>
-          <h4 className="mb-4 text-sm font-semibold text-white">Services</h4>
+          <h4 className="mb-4 text-sm font-semibold uppercase tracking-wide text-white">Services</h4>
           <ul className="space-y-2.5 text-sm">
             <li><Link to="/services" className="hover:text-white">Screen Replacement</Link></li>
             <li><Link to="/services" className="hover:text-white">Battery Replacement</Link></li>
@@ -50,26 +72,29 @@ export function PublicFooter() {
         </div>
 
         <div>
-          <h4 className="mb-4 text-sm font-semibold text-white">Get in Touch</h4>
-          <ul className="space-y-3 text-sm">
-            <li className="flex items-start gap-2.5">
-              <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
-              House 12, Road 5, Dhanmondi, Dhaka
-            </li>
-            <li className="flex items-center gap-2.5">
-              <Phone className="h-4 w-4 shrink-0 text-primary" /> +880 1700-000000
-            </li>
-            <li className="flex items-center gap-2.5">
-              <Mail className="h-4 w-4 shrink-0 text-primary" /> hello@gadgetfix.shop
-            </li>
-          </ul>
+          <h4 className="mb-4 text-sm font-semibold uppercase tracking-wide text-white">Newsletter</h4>
+          <p className="mb-3 text-sm text-slate-400">Get repair tips and shop offers in your inbox.</p>
+          <form className="flex" onSubmit={(e) => e.preventDefault()}>
+            <Input
+              type="email"
+              placeholder="Email"
+              className="rounded-none border-white/20 bg-white/5 text-white placeholder:text-slate-500 focus-visible:ring-primary"
+            />
+            <Button type="submit" className="shrink-0 rounded-none px-4 text-[13px] font-semibold uppercase tracking-wider">
+              Subscribe
+            </Button>
+          </form>
         </div>
       </div>
 
       <div className="border-t border-white/10 py-6">
-        <div className="container flex flex-col items-center justify-between gap-2 text-xs text-slate-500 sm:flex-row">
+        <div className="container flex flex-col items-center justify-between gap-3 text-xs text-slate-500 sm:flex-row">
           <p>© {new Date().getFullYear()} GadgetFIX. All rights reserved.</p>
-          <p>Built as a frontend ERP prototype for a Developer Hiring Assessment.</p>
+          <div className="flex gap-5">
+            <a href="#" className="hover:text-white">Legal</a>
+            <a href="#" className="hover:text-white">GDPR</a>
+            <a href="#" className="hover:text-white">Terms of Service</a>
+          </div>
         </div>
       </div>
     </footer>

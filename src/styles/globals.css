@@ -88,6 +88,14 @@
     @apply border-border;
   }
 
+  /* Centralized type-scale bump: every Tailwind text-* utility is defined in
+     rem, so raising the root size here raises text-sm/base/lg/etc. together
+     everywhere in the app (public site + ERP) from one place — no per-class
+     overrides needed. 17px root ≈ text-sm rendering at ~15px. */
+  html {
+    font-size: 17px;
+  }
+
   body {
     @apply bg-background text-foreground antialiased;
     font-feature-settings: "cv11", "ss01";

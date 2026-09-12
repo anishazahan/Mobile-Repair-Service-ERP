@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 export function CtaSection() {
   return (
     <section className="container pb-20">
-      <div className="relative overflow-hidden rounded-md bg-primary px-8 py-14 text-center text-primary-foreground sm:px-16">
+      <div className="relative overflow-hidden bg-primary px-8 py-14 text-center text-primary-foreground sm:px-16">
         <div
           className="absolute inset-0 opacity-20"
           style={{ backgroundImage: "radial-gradient(circle at 30% 20%, white, transparent 45%)" }}
@@ -17,12 +17,17 @@ export function CtaSection() {
             know the cost before we touch your device.
           </p>
           <div className="flex flex-wrap justify-center gap-3 pt-2">
-            <Button size="lg" variant="secondary" asChild>
+            <Button size="lg" variant="secondary" className="rounded-none text-[13px] font-semibold uppercase tracking-wider" asChild>
               <Link to="/book-a-service">
                 Book a Service <ArrowRight className="h-4 w-4" />
               </Link>
             </Button>
-            <Button size="lg" variant="outline" className="border-white/30 bg-transparent text-white hover:bg-white/10 hover:text-white" asChild>
+            <Button
+              size="lg"
+              variant="outline"
+              className="rounded-none border-white/30 bg-transparent text-[13px] font-semibold uppercase tracking-wider text-white hover:bg-white/10 hover:text-white"
+              asChild
+            >
               <Link to="/contact">Contact Us</Link>
             </Button>
           </div>
