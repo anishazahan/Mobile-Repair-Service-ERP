@@ -6,23 +6,29 @@ interface RevealProps {
   className?: string;
   /** Stagger delay in ms — pass index * 80 for grid/list items. */
   delay?: number;
-  /** Direction the content animates in from. */
-  direction?: "up" | "left" | "right" | "none";
+  /** Direction/style the content animates in with. */
+  direction?: "up" | "down" | "left" | "right" | "zoom" | "none";
+  /** Animation duration in ms. Defaults to a premium, slightly slow 900ms. */
+  duration?: number;
 }
 
-const DIRECTION_OFFSET: Record<NonNullable<RevealProps["direction"]>, string> = {
-  up: "translate-y-6",
-  left: "-translate-x-6",
-  right: "translate-x-6",
+const DIRECTION_START: Record<NonNullable<RevealProps["direction"]>, string> = {
+  up: "translate-y-10",
+  down: "-translate-y-10",
+  left: "-translate-x-12",
+  right: "translate-x-12",
+  zoom: "scale-90",
   none: "",
 };
 
 /**
- * Scroll-triggered fade/slide-in wrapper used across every public-site
- * section. Animates once when the element first enters the viewport, and
- * is a no-op (content just renders, no motion) for prefers-reduced-motion.
+ * Scroll-triggered entrance animation used across every public-site section.
+ * Animates once when the element first enters the viewport using a premium
+ * "ease-out-expo" curve (fast start, long soft settle) rather than a linear
+ * fade — combines opacity with a directional translate or scale. No-ops for
+ * prefers-reduced-motion.
  */
-export function Reveal({ children, className, delay = 0, direction = "up" }: RevealProps) {
+export function Reveal({ children, className, delay = 0, direction = "up", duration = 900 }: RevealProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
 
@@ -40,7 +46,7 @@ export function Reveal({ children, className, delay = 0, direction = "up" }: Rev
           observer.disconnect();
         }
       },
-      { threshold: 0.15, rootMargin: "0px 0px -40px 0px" },
+      { threshold: 0.15, rootMargin: "0px 0px -60px 0px" },
     );
     observer.observe(el);
     return () => observer.disconnect();
@@ -50,11 +56,16 @@ export function Reveal({ children, className, delay = 0, direction = "up" }: Rev
     <div
       ref={ref}
       className={cn(
-        "transition-all duration-700 ease-out motion-reduce:transition-none motion-reduce:transform-none",
-        visible ? "opacity-100 translate-x-0 translate-y-0" : cn("opacity-0", DIRECTION_OFFSET[direction]),
+        "transition-all motion-reduce:transition-none motion-reduce:transform-none motion-reduce:opacity-100",
+        visible ? "opacity-100 translate-x-0 translate-y-0 scale-100" : cn("opacity-0", DIRECTION_START[direction]),
         className,
       )}
-      style={{ transitionDelay: visible ? `${delay}ms` : "0ms" }}
+      style={{
+        transitionDuration: `${duration}ms`,
+        transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
+        transitionDelay: visible ? `${delay}ms` : "0ms",
+        willChange: "opacity, transform",
+      }}
     >
       {children}
     </div>
