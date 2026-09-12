@@ -1,4 +1,4 @@
-import { Facebook, Instagram, Mail, MapPin, Phone, Wrench, Youtube } from "lucide-react";
+import { Camera, Mail, MapPin, MessageCircle, Phone, Video, Wrench } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export function PublicFooter() {
@@ -17,7 +17,7 @@ export function PublicFooter() {
             turnaround times, every time.
           </p>
           <div className="flex gap-3">
-            {[Facebook, Instagram, Youtube].map((Icon, i) => (
+            {[MessageCircle, Camera, Video].map((Icon, i) => (
               <a
                 key={i}
                 href="#"

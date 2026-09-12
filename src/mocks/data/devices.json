@@ -9,7 +9,7 @@
   { "id": "DEV-2008", "customerId": "CUST-1007", "brand": "Oppo", "model": "Reno 8", "type": "phone", "imei": "358240051111170", "color": "Shimmer Gold", "createdAt": "2026-03-18T13:12:00Z" },
   { "id": "DEV-2009", "customerId": "CUST-1009", "brand": "Realme", "model": "11 Pro", "type": "phone", "imei": "358240051111180", "color": "Sunrise Beige", "createdAt": "2026-04-02T12:18:00Z" },
   { "id": "DEV-2010", "customerId": "CUST-1010", "brand": "Apple", "model": "iPad 9th Gen", "type": "tablet", "imei": "358240051111190", "color": "Silver", "createdAt": "2026-04-22T15:52:00Z" },
-  { "id": "DEV-2011", "customerId": "CUST-1001", "brand": "Apple", "model": "Apple Watch Series 8", "type": "smartwatch", "imei": "358240051111200", "color": "Midnight", "createdAt": "2026-05-03T09:00:00Z" },
+  { "id": "DEV-2011", "customerId": "CUST-1001", "brand": "Apple", "model": "Watch Series 8", "type": "smartwatch", "imei": "358240051111200", "color": "Midnight", "createdAt": "2026-05-03T09:00:00Z" },
   { "id": "DEV-2012", "customerId": "CUST-1006", "brand": "Samsung", "model": "Galaxy Tab S8", "type": "tablet", "imei": "358240051111210", "color": "Graphite", "createdAt": "2026-05-15T10:00:00Z" },
   { "id": "DEV-2013", "customerId": "CUST-1011", "brand": "Samsung", "model": "Galaxy M14", "type": "phone", "imei": "358240051111220", "color": "Ice Blue", "createdAt": "2026-09-12T09:10:00Z" }
 ]
