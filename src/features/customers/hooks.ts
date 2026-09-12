@@ -1,6 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { createDevice, type CreateDeviceInput } from "@/features/devices/api";
 import * as api from "./api";
 import type { CustomerFilters } from "./api";
 
@@ -13,6 +12,16 @@ export function useCustomerRows(filters?: CustomerFilters) {
 
 export function useCustomer(id: string) {
   return useQuery({ queryKey: customerKey(id), queryFn: () => api.getCustomer(id), enabled: Boolean(id) });
+}
+
+/**
+ * Flat, unfiltered customer list for pickers elsewhere in the app (the
+ * Service Order wizard's customer step, the Devices module's owner select).
+ * Kept separate from `useCustomerRows` because those consumers just need
+ * `{ id, name }`-shaped options, not the enriched list-page stats.
+ */
+export function useCustomerOptions() {
+  return useQuery({ queryKey: [...CUSTOMERS_KEY, "options"], queryFn: api.getCustomers });
 }
 
 function invalidateCustomers(queryClient: ReturnType<typeof useQueryClient>) {
@@ -53,17 +62,5 @@ export function useSetCustomerStatus(id: string) {
       toast.success(customer.status === "archived" ? "Customer archived." : "Customer reactivated.");
     },
     onError: (err) => toast.error(err instanceof Error ? err.message : "Could not update the customer."),
-  });
-}
-
-export function useAddCustomerDevice(customerId: string) {
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: (input: Omit<CreateDeviceInput, "customerId">) => createDevice({ customerId, ...input }),
-    onSuccess: () => {
-      invalidateCustomers(queryClient);
-      toast.success("Device added.");
-    },
-    onError: (err) => toast.error(err instanceof Error ? err.message : "Could not add the device."),
   });
 }

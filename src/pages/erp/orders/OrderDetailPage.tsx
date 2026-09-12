@@ -241,7 +241,7 @@ export function OrderDetailPage() {
             </CardHeader>
             <CardContent className="pt-0">
               {customer ? (
-                <Link to="/app/customers" className="flex items-center gap-3 hover:opacity-80">
+                <Link to={`/app/customers/${customer.id}`} className="flex items-center gap-3 hover:opacity-80">
                   <span className="flex h-9 w-9 items-center justify-center rounded-full bg-muted text-muted-foreground">
                     <UserIcon className="h-4 w-4" />
                   </span>
@@ -262,7 +262,7 @@ export function OrderDetailPage() {
             </CardHeader>
             <CardContent className="pt-0">
               {device ? (
-                <div className="flex items-center gap-3">
+                <Link to={`/app/devices/${device.id}`} className="flex items-center gap-3 hover:opacity-80">
                   <span className="flex h-9 w-9 items-center justify-center rounded-full bg-muted text-muted-foreground">
                     <Smartphone className="h-4 w-4" />
                   </span>
@@ -272,7 +272,7 @@ export function OrderDetailPage() {
                     </span>
                     <span className="block text-xs text-muted-foreground">IMEI {device.imei}</span>
                   </span>
-                </div>
+                </Link>
               ) : (
                 <p className="text-sm text-muted-foreground">Unknown device</p>
               )}

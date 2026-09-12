@@ -145,9 +145,31 @@ export function OrdersListPage() {
                       <PriorityBadge priority={row.order.priority} />
                     </div>
                   </td>
-                  <td className="px-4 py-3 text-muted-foreground">{row.customer?.name ?? "—"}</td>
                   <td className="px-4 py-3 text-muted-foreground">
-                    {row.device ? `${row.device.brand} ${row.device.model}` : "—"}
+                    {row.customer ? (
+                      <Link
+                        to={`/app/customers/${row.customer.id}`}
+                        onClick={(e) => e.stopPropagation()}
+                        className="hover:text-primary"
+                      >
+                        {row.customer.name}
+                      </Link>
+                    ) : (
+                      "—"
+                    )}
+                  </td>
+                  <td className="px-4 py-3 text-muted-foreground">
+                    {row.device ? (
+                      <Link
+                        to={`/app/devices/${row.device.id}`}
+                        onClick={(e) => e.stopPropagation()}
+                        className="hover:text-primary"
+                      >
+                        {row.device.brand} {row.device.model}
+                      </Link>
+                    ) : (
+                      "—"
+                    )}
                   </td>
                   <td className="px-4 py-3 text-muted-foreground">{row.technicianName ?? "Unassigned"}</td>
                   <td className="px-4 py-3">

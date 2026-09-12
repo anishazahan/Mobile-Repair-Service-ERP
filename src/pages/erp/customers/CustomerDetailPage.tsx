@@ -18,8 +18,8 @@ import { EmptyState } from "@/components/feedback/empty-state";
 import { ErrorState } from "@/components/feedback/error-state";
 import { OrderStatusBadge, PriorityBadge } from "@/components/feedback/status-badge";
 import { CustomerFormDialog } from "@/features/customers/components/customer-form-dialog";
-import { DeviceFormDialog } from "@/features/customers/components/device-form-dialog";
 import { useCustomer, useSetCustomerStatus } from "@/features/customers/hooks";
+import { DeviceFormDialog } from "@/features/devices/components/device-form-dialog";
 import { formatCurrency, formatDate } from "@/lib/utils";
 
 export function CustomerDetailPage() {
@@ -107,7 +107,11 @@ export function CustomerDetailPage() {
               ) : (
                 <div className="grid gap-3 sm:grid-cols-2">
                   {devices.map((device) => (
-                    <div key={device.id} className="flex items-center gap-3 rounded-md border border-border p-3">
+                    <Link
+                      key={device.id}
+                      to={`/app/devices/${device.id}`}
+                      className="flex items-center gap-3 rounded-md border border-border p-3 transition-colors hover:border-primary/40 hover:bg-accent/50"
+                    >
                       <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-muted text-muted-foreground">
                         <Smartphone className="h-4 w-4" />
                       </span>
@@ -120,7 +124,7 @@ export function CustomerDetailPage() {
                           {device.color ? ` · ${device.color}` : ""}
                         </span>
                       </span>
-                    </div>
+                    </Link>
                   ))}
                 </div>
               )}
@@ -170,7 +174,13 @@ export function CustomerDetailPage() {
                             </Link>
                           </td>
                           <td className="px-4 py-3 text-muted-foreground">
-                            {device ? `${device.brand} ${device.model}` : "—"}
+                            {device ? (
+                              <Link to={`/app/devices/${device.id}`} className="hover:text-primary">
+                                {device.brand} {device.model}
+                              </Link>
+                            ) : (
+                              "—"
+                            )}
                           </td>
                           <td className="px-4 py-3">
                             <OrderStatusBadge status={order.status} />

@@ -9,13 +9,3 @@ export const customerFormSchema = z.object({
   notes: z.string().optional(),
 });
 export type CustomerFormValues = z.infer<typeof customerFormSchema>;
-
-export const deviceFormSchema = z.object({
-  brand: z.string().min(1, "Brand is required"),
-  model: z.string().min(1, "Model is required"),
-  type: z.enum(["phone", "tablet", "smartwatch", "laptop"]),
-  imei: z.string().min(4, "IMEI / serial number is required"),
-  color: z.string().optional(),
-  conditionNotes: z.string().optional(),
-});
-export type DeviceFormValues = z.infer<typeof deviceFormSchema>;
