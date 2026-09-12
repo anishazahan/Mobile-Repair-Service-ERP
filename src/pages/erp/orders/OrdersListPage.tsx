@@ -171,7 +171,19 @@ export function OrdersListPage() {
                       "—"
                     )}
                   </td>
-                  <td className="px-4 py-3 text-muted-foreground">{row.technicianName ?? "Unassigned"}</td>
+                  <td className="px-4 py-3 text-muted-foreground">
+                    {row.order.assignedTechnicianId ? (
+                      <Link
+                        to={`/app/technicians/${row.order.assignedTechnicianId}`}
+                        onClick={(e) => e.stopPropagation()}
+                        className="hover:text-primary"
+                      >
+                        {row.technicianName ?? "Unassigned"}
+                      </Link>
+                    ) : (
+                      "Unassigned"
+                    )}
+                  </td>
                   <td className="px-4 py-3">
                     <OrderStatusBadge status={row.order.status} />
                   </td>

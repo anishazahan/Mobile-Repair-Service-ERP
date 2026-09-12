@@ -25,6 +25,10 @@ function useOrderMutation<TInput>(
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ORDERS_KEY });
       queryClient.invalidateQueries({ queryKey: ["dashboard"] });
+      // Nearly every status transition can move the assigned technician's
+      // job between "active" and "completed" — keep their workload/revenue
+      // figures accurate everywhere they're shown (Technicians, Reports).
+      queryClient.invalidateQueries({ queryKey: ["technicians"] });
       extraKeys?.forEach((key) => queryClient.invalidateQueries({ queryKey: key as unknown[] }));
       toast.success(successMessage);
     },

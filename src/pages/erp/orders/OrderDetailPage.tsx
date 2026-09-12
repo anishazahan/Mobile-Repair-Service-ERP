@@ -22,7 +22,7 @@ import { OrderTimeline } from "@/features/orders/components/order-timeline";
 import { PartsUsedDrawer } from "@/features/orders/components/parts-used-drawer";
 import { StatusTransitionMenu } from "@/features/orders/components/status-transition-menu";
 import { useAddProgressNote, useOrder } from "@/features/orders/hooks";
-import { cn, formatCurrency, formatDate, formatDateTime, humanizeStatus } from "@/lib/utils";
+import { formatCurrency, formatDate, formatDateTime, humanizeStatus } from "@/lib/utils";
 import type { ServiceOrder } from "@/types";
 
 const EMPTY_ORDER: ServiceOrder = {
@@ -289,9 +289,16 @@ export function OrderDetailPage() {
               )}
             </CardHeader>
             <CardContent className="pt-0">
-              <p className={cn("text-sm", technicianName ? "font-medium text-foreground" : "text-muted-foreground")}>
-                {technicianName ?? "Unassigned"}
-              </p>
+              {technicianName && order.assignedTechnicianId ? (
+                <Link
+                  to={`/app/technicians/${order.assignedTechnicianId}`}
+                  className="text-sm font-medium text-foreground hover:text-primary"
+                >
+                  {technicianName}
+                </Link>
+              ) : (
+                <p className="text-sm text-muted-foreground">Unassigned</p>
+              )}
             </CardContent>
           </Card>
 

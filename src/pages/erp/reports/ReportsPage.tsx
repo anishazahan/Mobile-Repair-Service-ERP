@@ -121,7 +121,12 @@ export function ReportsPage() {
                       <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-muted text-xs font-medium text-muted-foreground">
                         {i + 1}
                       </span>
-                      <span className="truncate text-sm font-medium text-foreground">{row.technicianName}</span>
+                      <Link
+                        to={`/app/technicians/${row.technicianId}`}
+                        className="truncate text-sm font-medium text-foreground hover:text-primary"
+                      >
+                        {row.technicianName}
+                      </Link>
                     </div>
                     <div className="shrink-0 text-right">
                       <p className="text-sm font-medium text-foreground">{formatCurrency(row.revenueGenerated)}</p>

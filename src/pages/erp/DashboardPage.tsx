@@ -160,7 +160,19 @@ export function DashboardPage() {
                             </td>
                             <td className="py-2.5 pr-2 text-muted-foreground">{row.customerName}</td>
                             <td className="py-2.5 pr-2 text-muted-foreground">{row.deviceLabel}</td>
-                            <td className="py-2.5 pr-2 text-muted-foreground">{row.technicianName ?? "Unassigned"}</td>
+                            <td className="py-2.5 pr-2 text-muted-foreground">
+                              {row.order.assignedTechnicianId ? (
+                                <Link
+                                  to={`/app/technicians/${row.order.assignedTechnicianId}`}
+                                  onClick={(e) => e.stopPropagation()}
+                                  className="hover:text-primary"
+                                >
+                                  {row.technicianName ?? "Unassigned"}
+                                </Link>
+                              ) : (
+                                "Unassigned"
+                              )}
+                            </td>
                             <td className="py-2.5">
                               <OrderStatusBadge status={row.order.status} />
                             </td>
