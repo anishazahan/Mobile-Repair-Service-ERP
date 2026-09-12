@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 export function CtaSection() {
   return (
     <section className="container pb-20">
-      <div className="relative overflow-hidden rounded-2xl bg-primary px-8 py-14 text-center text-primary-foreground sm:px-16">
+      <div className="relative overflow-hidden rounded-md bg-primary px-8 py-14 text-center text-primary-foreground sm:px-16">
         <div
           className="absolute inset-0 opacity-20"
           style={{ backgroundImage: "radial-gradient(circle at 30% 20%, white, transparent 45%)" }}

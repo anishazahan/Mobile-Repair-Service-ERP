@@ -19,7 +19,7 @@ export function TeamPreviewSection() {
 
       <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {activeTechs.map((tech) => (
-          <div key={tech.id} className="rounded-xl border border-border p-6 text-center">
+          <div key={tech.id} className="rounded-md border border-border p-6 text-center">
             <Avatar className="mx-auto h-16 w-16">
               <AvatarFallback className="text-lg">{initials(tech.name)}</AvatarFallback>
             </Avatar>

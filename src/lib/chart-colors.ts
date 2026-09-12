@@ -4,8 +4,8 @@
 // hue assignment or CVD pairlist validation is required for a single hue.
 
 export const CHART_COLORS = {
-  seriesBlue: "#2a78d6",
-  seriesBlueSoft: "#9ec5f4",
+  seriesBlue: "#3D6D95",
+  seriesBlueSoft: "#a9c5d8",
   gridline: "#e1e0d9",
   axis: "#c3c2b7",
   mutedInk: "#898781",
