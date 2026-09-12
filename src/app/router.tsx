@@ -15,6 +15,8 @@ const OrdersListPage = lazy(() => import("@/pages/erp/orders/OrdersListPage").th
 const RepairBoardPage = lazy(() => import("@/pages/erp/orders/RepairBoardPage").then((m) => ({ default: m.RepairBoardPage })));
 const NewOrderPage = lazy(() => import("@/pages/erp/orders/NewOrderPage").then((m) => ({ default: m.NewOrderPage })));
 const OrderDetailPage = lazy(() => import("@/pages/erp/orders/OrderDetailPage").then((m) => ({ default: m.OrderDetailPage })));
+const CustomersListPage = lazy(() => import("@/pages/erp/customers/CustomersListPage").then((m) => ({ default: m.CustomersListPage })));
+const CustomerDetailPage = lazy(() => import("@/pages/erp/customers/CustomerDetailPage").then((m) => ({ default: m.CustomerDetailPage })));
 
 const IMG = {
   services: "https://images.unsplash.com/photo-1581092921461-eab62e97a780?q=85&w=1600&auto=format&fit=crop",
@@ -130,7 +132,8 @@ const router = createBrowserRouter([
           { path: "orders/board", element: withSuspense(<RepairBoardPage />) },
           { path: "orders/new", element: withSuspense(<NewOrderPage />) },
           { path: "orders/:id", element: withSuspense(<OrderDetailPage />) },
-          { path: "customers", element: <PlaceholderPage title="Customers" /> },
+          { path: "customers", element: withSuspense(<CustomersListPage />) },
+          { path: "customers/:id", element: withSuspense(<CustomerDetailPage />) },
           { path: "devices", element: <PlaceholderPage title="Devices" /> },
           { path: "inventory/parts", element: <PlaceholderPage title="Spare Parts" /> },
           { path: "inventory/suppliers", element: <PlaceholderPage title="Suppliers" /> },

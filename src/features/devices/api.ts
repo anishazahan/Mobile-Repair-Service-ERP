@@ -14,6 +14,8 @@ export interface CreateDeviceInput {
   model: string;
   imei: string;
   color?: string;
+  type?: Device["type"];
+  conditionNotes?: string;
 }
 
 export async function createDevice(input: CreateDeviceInput): Promise<Device> {
@@ -23,9 +25,10 @@ export async function createDevice(input: CreateDeviceInput): Promise<Device> {
       customerId: input.customerId,
       brand: input.brand,
       model: input.model,
-      type: "phone",
+      type: input.type ?? "phone",
       imei: input.imei,
       color: input.color || undefined,
+      conditionNotes: input.conditionNotes || undefined,
       createdAt: new Date().toISOString(),
     };
     db.devices.unshift(device);
