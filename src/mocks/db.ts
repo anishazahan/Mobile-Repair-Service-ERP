@@ -11,6 +11,7 @@ import partsData from "./data/parts.json";
 import paymentsData from "./data/payments.json";
 import serviceCatalogData from "./data/serviceCatalog.json";
 import serviceOrdersData from "./data/serviceOrders.json";
+import shopSettingsData from "./data/shopSettings.json";
 import staffData from "./data/staff.json";
 import suppliersData from "./data/suppliers.json";
 import techniciansData from "./data/technicians.json";
@@ -23,6 +24,7 @@ import type {
   Payment,
   ServiceCatalogItem,
   ServiceOrder,
+  ShopSettings,
   SparePart,
   StaffUser,
   Supplier,
@@ -44,6 +46,7 @@ export const db = {
   staff: staffData as unknown as StaffUser[],
   notifications: notificationsData as unknown as AppNotification[],
   serviceCatalog: serviceCatalogData as unknown as ServiceCatalogItem[],
+  shopSettings: shopSettingsData as unknown as ShopSettings,
 };
 
 // Frozen "current time" for the mock dataset. The seed data is authored as

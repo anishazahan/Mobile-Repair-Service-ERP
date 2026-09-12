@@ -104,7 +104,7 @@ export function Topbar({ onMenuClick }: { onMenuClick: () => void }) {
           <DropdownMenuContent align="end" className="w-56">
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={() => navigate("/app/settings?tab=profile")}>
               <UserIcon /> Profile
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => navigate("/app/settings")}>

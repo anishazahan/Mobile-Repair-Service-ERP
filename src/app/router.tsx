@@ -1,7 +1,6 @@
 import { lazy, Suspense, type ReactNode } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ProtectedRoute } from "@/features/auth/ProtectedRoute";
-import { PlaceholderPage } from "@/components/feedback/placeholder-page";
 import { ComingSoonPage } from "@/pages/public/ComingSoonPage";
 import { Loader2 } from "lucide-react";
 
@@ -30,6 +29,7 @@ const TechniciansListPage = lazy(() => import("@/pages/erp/technicians/Technicia
 const TechnicianDetailPage = lazy(() => import("@/pages/erp/technicians/TechnicianDetailPage").then((m) => ({ default: m.TechnicianDetailPage })));
 const StaffListPage = lazy(() => import("@/pages/erp/staff/StaffListPage").then((m) => ({ default: m.StaffListPage })));
 const StaffDetailPage = lazy(() => import("@/pages/erp/staff/StaffDetailPage").then((m) => ({ default: m.StaffDetailPage })));
+const SettingsPage = lazy(() => import("@/pages/erp/settings/SettingsPage").then((m) => ({ default: m.SettingsPage })));
 
 const IMG = {
   services: "https://images.unsplash.com/photo-1581092921461-eab62e97a780?q=85&w=1600&auto=format&fit=crop",
@@ -160,7 +160,7 @@ const router = createBrowserRouter([
           { path: "technicians/:id", element: withSuspense(<TechnicianDetailPage />) },
           { path: "staff", element: withSuspense(<StaffListPage />) },
           { path: "staff/:id", element: withSuspense(<StaffDetailPage />) },
-          { path: "settings", element: <PlaceholderPage title="Settings" /> },
+          { path: "settings", element: withSuspense(<SettingsPage />) },
         ],
       },
     ],

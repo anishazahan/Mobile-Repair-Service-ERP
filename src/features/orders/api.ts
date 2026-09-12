@@ -347,7 +347,12 @@ export async function closeOrder(id: string): Promise<void> {
     if (!db.invoices.some((inv) => inv.orderId === order.id)) {
       const lineItems = buildInvoiceLineItems(order);
       const subtotal = lineItems.reduce((sum, li) => sum + li.quantity * li.unitPrice, 0);
-      const total = order.finalCost ?? order.estimatedCost ?? subtotal;
+      const preTaxAmount = order.finalCost ?? order.estimatedCost ?? subtotal;
+      // Shop-wide tax rate, managed in Settings — applied here so a rate
+      // change takes effect on the next order closed, without touching
+      // invoices already issued.
+      const tax = Math.round(preTaxAmount * (db.shopSettings.taxRatePercent / 100));
+      const total = preTaxAmount + tax;
       const now = new Date().toISOString();
       const invoice: Invoice = {
         id: genId("INV"),
@@ -355,7 +360,7 @@ export async function closeOrder(id: string): Promise<void> {
         customerId: order.customerId,
         lineItems,
         subtotal,
-        tax: 0,
+        tax,
         discount: 0,
         total,
         amountPaid: total,

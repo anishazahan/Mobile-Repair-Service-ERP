@@ -206,6 +206,14 @@ export interface ServiceCatalogItem {
   description?: string;
 }
 
+export interface ShopSettings {
+  shopName: string;
+  phone: string;
+  email: string;
+  address: string;
+  taxRatePercent: number;
+}
+
 export type NotificationType =
   | "low_stock"
   | "order_update"
