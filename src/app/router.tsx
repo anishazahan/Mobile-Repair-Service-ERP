@@ -19,6 +19,10 @@ const CustomersListPage = lazy(() => import("@/pages/erp/customers/CustomersList
 const CustomerDetailPage = lazy(() => import("@/pages/erp/customers/CustomerDetailPage").then((m) => ({ default: m.CustomerDetailPage })));
 const DevicesListPage = lazy(() => import("@/pages/erp/devices/DevicesListPage").then((m) => ({ default: m.DevicesListPage })));
 const DeviceDetailPage = lazy(() => import("@/pages/erp/devices/DeviceDetailPage").then((m) => ({ default: m.DeviceDetailPage })));
+const PartsListPage = lazy(() => import("@/pages/erp/parts/PartsListPage").then((m) => ({ default: m.PartsListPage })));
+const PartDetailPage = lazy(() => import("@/pages/erp/parts/PartDetailPage").then((m) => ({ default: m.PartDetailPage })));
+const SuppliersListPage = lazy(() => import("@/pages/erp/suppliers/SuppliersListPage").then((m) => ({ default: m.SuppliersListPage })));
+const SupplierDetailPage = lazy(() => import("@/pages/erp/suppliers/SupplierDetailPage").then((m) => ({ default: m.SupplierDetailPage })));
 
 const IMG = {
   services: "https://images.unsplash.com/photo-1581092921461-eab62e97a780?q=85&w=1600&auto=format&fit=crop",
@@ -138,8 +142,10 @@ const router = createBrowserRouter([
           { path: "customers/:id", element: withSuspense(<CustomerDetailPage />) },
           { path: "devices", element: withSuspense(<DevicesListPage />) },
           { path: "devices/:id", element: withSuspense(<DeviceDetailPage />) },
-          { path: "inventory/parts", element: <PlaceholderPage title="Spare Parts" /> },
-          { path: "inventory/suppliers", element: <PlaceholderPage title="Suppliers" /> },
+          { path: "inventory/parts", element: withSuspense(<PartsListPage />) },
+          { path: "inventory/parts/:id", element: withSuspense(<PartDetailPage />) },
+          { path: "inventory/suppliers", element: withSuspense(<SuppliersListPage />) },
+          { path: "inventory/suppliers/:id", element: withSuspense(<SupplierDetailPage />) },
           { path: "billing", element: <PlaceholderPage title="Billing" /> },
           { path: "reports", element: <PlaceholderPage title="Reports" /> },
           { path: "technicians", element: <PlaceholderPage title="Technicians" /> },

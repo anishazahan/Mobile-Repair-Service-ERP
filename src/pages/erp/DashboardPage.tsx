@@ -91,20 +91,25 @@ export function DashboardPage() {
                 ) : (
                   <ul className="space-y-3">
                     {data.lowStockParts.map((part) => (
-                      <li key={part.id} className="flex items-center justify-between gap-2">
-                        <div className="min-w-0">
-                          <p className="truncate text-sm font-medium text-foreground">{part.name}</p>
-                          <p className="text-xs text-muted-foreground">SKU {part.sku}</p>
-                        </div>
-                        <span
-                          className={`shrink-0 rounded-full px-2 py-0.5 text-xs font-medium ${
-                            part.quantityInStock === 0
-                              ? "bg-destructive/10 text-destructive"
-                              : "bg-warning/10 text-warning"
-                          }`}
+                      <li key={part.id}>
+                        <Link
+                          to={`/app/inventory/parts/${part.id}`}
+                          className="flex items-center justify-between gap-2 rounded-md -mx-1.5 px-1.5 py-1 transition-colors hover:bg-accent/50"
                         >
-                          {part.quantityInStock === 0 ? "Out of stock" : `${part.quantityInStock} left`}
-                        </span>
+                          <div className="min-w-0">
+                            <p className="truncate text-sm font-medium text-foreground">{part.name}</p>
+                            <p className="text-xs text-muted-foreground">SKU {part.sku}</p>
+                          </div>
+                          <span
+                            className={`shrink-0 rounded-full px-2 py-0.5 text-xs font-medium ${
+                              part.quantityInStock === 0
+                                ? "bg-destructive/10 text-destructive"
+                                : "bg-warning/10 text-warning"
+                            }`}
+                          >
+                            {part.quantityInStock === 0 ? "Out of stock" : `${part.quantityInStock} left`}
+                          </span>
+                        </Link>
                       </li>
                     ))}
                   </ul>

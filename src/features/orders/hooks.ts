@@ -17,6 +17,7 @@ export function useOrder(id: string) {
 function useOrderMutation<TInput>(
   mutationFn: (input: TInput) => Promise<unknown>,
   successMessage: string,
+  extraKeys?: readonly (readonly unknown[])[],
 ) {
   const queryClient = useQueryClient();
   return useMutation({
@@ -24,6 +25,7 @@ function useOrderMutation<TInput>(
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ORDERS_KEY });
       queryClient.invalidateQueries({ queryKey: ["dashboard"] });
+      extraKeys?.forEach((key) => queryClient.invalidateQueries({ queryKey: key as unknown[] }));
       toast.success(successMessage);
     },
     onError: (err) => toast.error(err instanceof Error ? err.message : "Something went wrong."),
@@ -75,7 +77,12 @@ export function useAddProgressNote(id: string) {
 }
 
 export function useAddPartsUsed(id: string) {
-  return useOrderMutation((input: api.AddPartsInput) => api.addPartsUsed(id, input), "Parts added to order.");
+  // Using parts on an order decrements shared stock — invalidate the Spare
+  // Parts module's cache too, so its list/detail stay accurate without a
+  // manual refresh (see also src/features/parts/hooks.ts).
+  return useOrderMutation((input: api.AddPartsInput) => api.addPartsUsed(id, input), "Parts added to order.", [
+    ["parts"],
+  ]);
 }
 
 export function usePauseForParts(id: string) {
