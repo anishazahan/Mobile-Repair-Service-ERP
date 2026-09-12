@@ -96,6 +96,17 @@
     font-size: 17px;
   }
 
+  /* The scroll-reveal animations translate elements off-screen before they
+     animate in (e.g. translate-x-12 on a full-width right-hand column).
+     That transient offset can register as horizontal scrollable overflow in
+     some browsers even though nothing is meant to be visible past the
+     viewport edge — clip it at the root so it can never surface a
+     horizontal scrollbar, without affecting vertical scrolling. */
+  html,
+  body {
+    overflow-x: hidden;
+  }
+
   body {
     @apply bg-background text-foreground antialiased;
     font-feature-settings: "cv11", "ss01";

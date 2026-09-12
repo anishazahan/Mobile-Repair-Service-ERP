@@ -14,7 +14,7 @@ const STATS = [
 export function HeroSection() {
   return (
     <section className="bg-background">
-      <div className="grid lg:h-[420px] lg:grid-cols-2">
+      <div className="grid lg:grid-cols-2">
         <div className="flex items-center bg-background px-6 py-14 sm:px-10 lg:px-16 lg:py-0">
           <Reveal direction="left" className="max-w-lg space-y-6">
             <h1 className="text-4xl font-extrabold leading-[1.12] tracking-tight text-foreground sm:text-[3.25rem]">
@@ -38,7 +38,12 @@ export function HeroSection() {
           </Reveal>
         </div>
 
-        <Reveal direction="zoom" delay={150} duration={1100} className="relative min-h-[260px] overflow-hidden lg:h-full">
+        <Reveal
+          direction="zoom"
+          delay={150}
+          duration={1100}
+          className="relative min-h-[340px] overflow-hidden sm:min-h-[420px] lg:h-[620px]"
+        >
           <img
             src={HERO_IMAGE}
             alt="Technician repairing a smartphone with precision tools"

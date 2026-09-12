@@ -34,7 +34,7 @@ export function TestimonialsSection() {
 
         <div className="mt-12 grid gap-6 lg:grid-cols-3">
           {TESTIMONIALS.map((t, i) => (
-            <Reveal key={t.name} delay={i * 100}>
+            <Reveal key={t.name} direction="zoom" delay={i * 100}>
               <Card className="h-full transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
                 <CardContent className="p-6">
                   <div className="flex gap-0.5 text-warning">

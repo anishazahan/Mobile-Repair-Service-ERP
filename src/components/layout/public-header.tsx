@@ -1,8 +1,10 @@
-import { Clock, Menu, Search } from "lucide-react";
+import { Clock, Mail, Menu, Search } from "lucide-react";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { FacebookIcon, LinkedInIcon } from "@/components/icons/social-icons";
+import { SOCIAL_LINKS } from "@/lib/social-links";
 import { cn } from "@/lib/utils";
 
 const NAV_LINKS = [
@@ -14,8 +16,6 @@ const NAV_LINKS = [
   { label: "Contact", to: "/contact" },
 ];
 
-const SOCIAL_LINKS = ["Facebook", "Instagram", "Twitter"];
-
 function TopUtilityBar() {
   return (
     <div className="hidden bg-primary text-primary-foreground sm:block">
@@ -23,12 +23,28 @@ function TopUtilityBar() {
         <span className="flex items-center gap-1.5 font-medium">
           <Clock className="h-3.5 w-3.5" /> We're Open: Mon – Sat 8:00 – 18:00
         </span>
-        <div className="flex items-center gap-5 font-medium uppercase tracking-wide">
-          {SOCIAL_LINKS.map((label) => (
-            <a key={label} href="#" className="opacity-90 transition-opacity hover:opacity-100">
-              {label}
-            </a>
-          ))}
+        <div className="flex items-center gap-4">
+          <a
+            href={SOCIAL_LINKS.facebook}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Facebook"
+            className="opacity-90 transition-opacity hover:opacity-100"
+          >
+            <FacebookIcon className="h-3.5 w-3.5" />
+          </a>
+          <a
+            href={SOCIAL_LINKS.linkedin}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="LinkedIn"
+            className="opacity-90 transition-opacity hover:opacity-100"
+          >
+            <LinkedInIcon className="h-3.5 w-3.5" />
+          </a>
+          <a href={`mailto:${SOCIAL_LINKS.email}`} aria-label="Email" className="opacity-90 transition-opacity hover:opacity-100">
+            <Mail className="h-3.5 w-3.5" />
+          </a>
         </div>
       </div>
     </div>

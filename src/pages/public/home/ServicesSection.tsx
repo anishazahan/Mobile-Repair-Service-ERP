@@ -45,7 +45,7 @@ export function ServicesSection() {
         {featured.map((service, i) => {
           const Icon = SERVICE_ICONS[service.id] ?? Smartphone;
           return (
-            <Reveal key={service.id} delay={i * 70}>
+            <Reveal key={service.id} direction="zoom" delay={i * 70}>
               <Card className="group h-full transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
                 <CardContent className="p-6">
                   <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">

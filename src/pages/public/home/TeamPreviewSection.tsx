@@ -5,14 +5,15 @@ import { db } from "@/mocks/db";
 import { humanizeStatus } from "@/lib/utils";
 
 // All-male technician photography for a consistent look across the two
-// featured spots in this composition (back/top and front/bottom).
+// featured spots in this composition (back/top and front/bottom). Features
+// Ahmed Karim and Mizanur Rahman specifically so the photo matches the name.
 const TECH_PHOTOS: Record<string, string> = {
   "TECH-01": "https://images.unsplash.com/photo-1560249956-b3731ecf3153?q=85&w=1200&auto=format&fit=crop",
-  "TECH-03": "https://images.unsplash.com/photo-1699389795119-297f8af9111f?q=85&w=1200&auto=format&fit=crop",
+  "TECH-02": "https://images.unsplash.com/photo-1699389795119-297f8af9111f?q=85&w=1200&auto=format&fit=crop",
 };
 
 export function TeamPreviewSection() {
-  const featured = db.technicians.filter((t) => ["TECH-01", "TECH-03"].includes(t.id));
+  const featured = db.technicians.filter((t) => ["TECH-01", "TECH-02"].includes(t.id));
 
   return (
     <section className="container py-20">
@@ -39,7 +40,7 @@ export function TeamPreviewSection() {
               nothing renders above it. */}
           <figure className="group absolute bottom-0 right-0 z-10 h-[68%] w-[68%] overflow-hidden border-4 border-primary shadow-xl">
             <img
-              src={TECH_PHOTOS["TECH-03"]}
+              src={TECH_PHOTOS["TECH-02"]}
               alt={featured[1]?.name}
               className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
             />

@@ -1,4 +1,5 @@
 import { Cog, ShieldCheck, Timer, Users } from "lucide-react";
+import { CountUp } from "@/components/motion/count-up";
 import { Reveal } from "@/components/motion/reveal";
 
 const REASONS = [
@@ -9,9 +10,9 @@ const REASONS = [
 ];
 
 const STATS = [
-  { value: "100%", label: "Satisfaction" },
-  { value: "12K+", label: "Devices Fixed" },
-  { value: "20+", label: "Certified Techs" },
+  { value: 100, suffix: "%", label: "Satisfaction" },
+  { value: 12, suffix: "K+", label: "Devices Fixed" },
+  { value: 20, suffix: "+", label: "Certified Techs" },
 ];
 
 const IMAGE =
@@ -21,7 +22,7 @@ export function WhyChooseUsSection() {
   return (
     <section className="bg-primary text-primary-foreground">
       <div className="grid lg:grid-cols-2">
-        <Reveal direction="left" className="hidden lg:block">
+        <Reveal direction="zoom" duration={1100} className="hidden overflow-hidden lg:block">
           <img src={IMAGE} alt="Technician holding professional repair tools" className="h-full w-full object-cover" />
         </Reveal>
 
@@ -54,7 +55,9 @@ export function WhyChooseUsSection() {
           <Reveal direction="right" delay={480} className="flex flex-wrap gap-10 border-t border-white/20 pt-6">
             {STATS.map((stat) => (
               <div key={stat.label}>
-                <p className="text-2xl font-extrabold">{stat.value}</p>
+                <p className="text-2xl font-extrabold">
+                  <CountUp value={stat.value} suffix={stat.suffix} />
+                </p>
                 <p className="text-xs uppercase tracking-wide text-primary-foreground/80">{stat.label}</p>
               </div>
             ))}

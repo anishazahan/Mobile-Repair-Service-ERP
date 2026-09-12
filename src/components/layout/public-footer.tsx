@@ -1,7 +1,9 @@
-import { Camera, Mail, MapPin, MessageCircle, Phone, Video } from "lucide-react";
+import { Mail, MapPin, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { FacebookIcon, LinkedInIcon } from "@/components/icons/social-icons";
+import { SOCIAL_LINKS } from "@/lib/social-links";
 
 const CONTACT_ITEMS = [
   { icon: MapPin, label: "Head Office", value: "House 12, Road 5, Dhanmondi, Dhaka" },
@@ -39,15 +41,31 @@ export function PublicFooter() {
             turnaround times, every time.
           </p>
           <div className="flex gap-3">
-            {[MessageCircle, Camera, Video].map((Icon, i) => (
-              <a
-                key={i}
-                href="#"
-                className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-primary"
-              >
-                <Icon className="h-4 w-4" />
-              </a>
-            ))}
+            <a
+              href={SOCIAL_LINKS.facebook}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Facebook"
+              className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-primary"
+            >
+              <FacebookIcon className="h-4 w-4" />
+            </a>
+            <a
+              href={SOCIAL_LINKS.linkedin}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="LinkedIn"
+              className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-primary"
+            >
+              <LinkedInIcon className="h-4 w-4" />
+            </a>
+            <a
+              href={`mailto:${SOCIAL_LINKS.email}`}
+              aria-label="Email"
+              className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-primary"
+            >
+              <Mail className="h-4 w-4" />
+            </a>
           </div>
         </div>
 
