@@ -1,4 +1,4 @@
-import { db, genId } from "@/mocks/db";
+import { db, genId, saveShopSettings } from "@/mocks/db";
 import { MockApiError, simulateRequest } from "@/mocks/server";
 import type { ServiceCatalogItem, ShopSettings, StaffUser } from "@/types";
 
@@ -8,7 +8,7 @@ export async function getShopSettings(): Promise<ShopSettings> {
 
 export async function updateShopSettings(input: ShopSettings): Promise<ShopSettings> {
   return simulateRequest(() => {
-    db.shopSettings = { ...input };
+    saveShopSettings({ ...input });
     return db.shopSettings;
   });
 }

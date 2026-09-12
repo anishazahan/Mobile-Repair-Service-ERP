@@ -3,20 +3,29 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FacebookIcon, LinkedInIcon } from "@/components/icons/social-icons";
+import { Logo } from "@/components/layout/logo";
+import { useShopSettings } from "@/features/settings/hooks";
 import { SOCIAL_LINKS } from "@/lib/social-links";
 
-const CONTACT_ITEMS = [
-  { icon: MapPin, label: "Head Office", value: "House 12, Road 5, Dhanmondi, Dhaka" },
-  { icon: Mail, label: "Email", value: "hello@gadgetfix.shop" },
-  { icon: Phone, label: "Phone", value: "+880 1700-000000" },
-];
+// Fallback shown for a brief instant while the shop profile loads (or if it
+// ever fails to load) — kept in sync with the seed values in
+// mocks/data/shopSettings.json, which is what Settings > Shop Profile edits.
+const FALLBACK = { address: "House 12, Road 5, Dhanmondi, Dhaka", email: "hello@gadgetfix.shop", phone: "+880 1700-000000" };
 
 export function PublicFooter() {
+  const { data: shop } = useShopSettings();
+
+  const contactItems = [
+    { icon: MapPin, label: "Head Office", value: shop?.address ?? FALLBACK.address },
+    { icon: Mail, label: "Email", value: shop?.email ?? FALLBACK.email },
+    { icon: Phone, label: "Phone", value: shop?.phone ?? FALLBACK.phone },
+  ];
+
   return (
     <footer className="bg-slate-950 text-slate-300">
       <div className="border-b border-white/10">
         <div className="container grid gap-6 py-8 sm:grid-cols-3">
-          {CONTACT_ITEMS.map((item) => (
+          {contactItems.map((item) => (
             <div key={item.label} className="flex items-center gap-3">
               <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-primary/20 text-primary">
                 <item.icon className="h-5 w-5" />
@@ -32,9 +41,8 @@ export function PublicFooter() {
 
       <div className="container grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4">
         <div className="space-y-4">
-          <Link to="/" className="text-xl font-extrabold tracking-tight">
-            <span className="text-white">Gadget</span>
-            <span className="text-primary">FIX</span>
+          <Link to="/">
+            <Logo theme="light" />
           </Link>
           <p className="max-w-xs text-sm text-slate-400">
             Trusted mobile & tablet repair — genuine parts, certified technicians, and honest

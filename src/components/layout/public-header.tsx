@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { FacebookIcon, LinkedInIcon } from "@/components/icons/social-icons";
+import { Logo } from "@/components/layout/logo";
 import { SOCIAL_LINKS } from "@/lib/social-links";
 import { cn } from "@/lib/utils";
 
@@ -58,9 +59,8 @@ export function PublicHeader() {
     <header className="sticky top-0 z-40 bg-background shadow-sm">
       <TopUtilityBar />
       <div className="container flex h-[72px] items-center justify-between">
-        <NavLink to="/" className="flex items-center gap-2 text-xl font-extrabold tracking-tight">
-          <span className="text-foreground">Gadget</span>
-          <span className="text-primary">FIX</span>
+        <NavLink to="/">
+          <Logo />
         </NavLink>
 
         <nav className="hidden items-center gap-7 lg:flex">
@@ -104,9 +104,8 @@ export function PublicHeader() {
           </SheetTrigger>
           <SheetContent side="right" className="w-72">
             <SheetHeader>
-              <SheetTitle>
-                <span className="text-foreground">Gadget</span>
-                <span className="text-primary">FIX</span>
+              <SheetTitle asChild>
+                <Logo />
               </SheetTitle>
             </SheetHeader>
             <nav className="flex flex-col gap-1 p-4">

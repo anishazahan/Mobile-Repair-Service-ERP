@@ -2,6 +2,9 @@ import { PhoneCall, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/motion/reveal";
+import { useShopSettings } from "@/features/settings/hooks";
+
+const FALLBACK_PHONE = "+880 1700-000000";
 
 interface ComingSoonPageProps {
   eyebrow: string;
@@ -18,6 +21,10 @@ interface ComingSoonPageProps {
  * PlaceholderPage, which is intentionally minimal for internal modules.
  */
 export function ComingSoonPage({ eyebrow, title, description, image, imageAlt }: ComingSoonPageProps) {
+  const { data: shop } = useShopSettings();
+  const phone = shop?.phone ?? FALLBACK_PHONE;
+  const telHref = `tel:${phone.replace(/[^\d+]/g, "")}`;
+
   return (
     <section className="container py-20 sm:py-28">
       <Reveal className="mx-auto max-w-2xl text-center">
@@ -31,7 +38,7 @@ export function ComingSoonPage({ eyebrow, title, description, image, imageAlt }:
             <Link to="/">Back to Home</Link>
           </Button>
           <Button variant="outline" className="rounded-none px-7 text-[13px] font-semibold uppercase tracking-wider" asChild>
-            <a href="tel:+8801700000000">
+            <a href={telHref}>
               <PhoneCall className="h-4 w-4" /> Call Us Now
             </a>
           </Button>

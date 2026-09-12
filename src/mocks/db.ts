@@ -31,6 +31,24 @@ import type {
   Technician,
 } from "@/types";
 
+// Everything below is deliberately in-memory only and resets on reload —
+// fine for transactional demo records (orders, customers, ...). Shop
+// settings are the one exception: the public site (footer, "Call Us" links)
+// reads them too, and a user editing Settings expects that to actually
+// stick across a reload rather than snap back to the seed data.
+const SHOP_SETTINGS_STORAGE_KEY = "gadgetfix-shop-settings";
+
+function loadShopSettings(): ShopSettings {
+  try {
+    const saved = localStorage.getItem(SHOP_SETTINGS_STORAGE_KEY);
+    if (saved) return JSON.parse(saved) as ShopSettings;
+  } catch {
+    // Corrupted value or storage unavailable (private browsing, etc.) — fall
+    // back to the seed data below.
+  }
+  return shopSettingsData as unknown as ShopSettings;
+}
+
 // Cast through unknown: the JSON fixtures are hand-authored to match these
 // shapes, but TS can't verify string-literal unions (status, category, etc.)
 // against plain JSON. This is the one sanctioned `as` boundary in the app.
@@ -46,8 +64,19 @@ export const db = {
   staff: staffData as unknown as StaffUser[],
   notifications: notificationsData as unknown as AppNotification[],
   serviceCatalog: serviceCatalogData as unknown as ServiceCatalogItem[],
-  shopSettings: shopSettingsData as unknown as ShopSettings,
+  shopSettings: loadShopSettings(),
 };
+
+/** Updates the shop profile and persists it so it survives a reload. */
+export function saveShopSettings(settings: ShopSettings): void {
+  db.shopSettings = settings;
+  try {
+    localStorage.setItem(SHOP_SETTINGS_STORAGE_KEY, JSON.stringify(settings));
+  } catch {
+    // Best-effort persistence only — a save that can't reach localStorage
+    // still applies for the rest of this session.
+  }
+}
 
 // Frozen "current time" for the mock dataset. The seed data is authored as
 // if today is Sep 12, 2026 — every "today"/"this month" calculation in the
