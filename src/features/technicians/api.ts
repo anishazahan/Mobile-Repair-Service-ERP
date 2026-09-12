@@ -1,9 +1,15 @@
 import { db, genId } from "@/mocks/db";
 import { MockApiError, simulateRequest } from "@/mocks/server";
-import type { ServiceOrder, Technician, TechnicianSpecialty } from "@/types";
+import type { ServiceOrder, StaffUser, Technician, TechnicianSpecialty } from "@/types";
 
 const TERMINAL_STATUSES = ["CLOSED", "CANCELLED"];
 const COMPLETED_STATUSES = ["DELIVERED", "CLOSED"];
+
+// Flat, unfiltered list for pickers elsewhere — the Staff & Users form's
+// "link to a technician profile" select.
+export async function getTechnicians(): Promise<Technician[]> {
+  return simulateRequest(() => [...db.technicians].sort((a, b) => a.name.localeCompare(b.name)));
+}
 
 export interface TechnicianFilters {
   search?: string;
@@ -67,6 +73,7 @@ export interface TechnicianDetail {
   activeJobs: number;
   completedJobs: number;
   revenueGenerated: number;
+  linkedStaffUser?: StaffUser;
 }
 
 export async function getTechnician(id: string): Promise<TechnicianDetail> {
@@ -84,7 +91,8 @@ export async function getTechnician(id: string): Promise<TechnicianDetail> {
           deviceLabel: device ? `${device.brand} ${device.model}` : undefined,
         };
       });
-    return { technician, orders, ...technicianStats(id) };
+    const linkedStaffUser = db.staff.find((u) => u.linkedTechnicianId === id);
+    return { technician, orders, ...technicianStats(id), linkedStaffUser };
   });
 }
 

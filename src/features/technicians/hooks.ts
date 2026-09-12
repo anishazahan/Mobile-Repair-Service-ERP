@@ -14,6 +14,11 @@ export function useTechnician(id: string) {
   return useQuery({ queryKey: technicianKey(id), queryFn: () => api.getTechnician(id), enabled: Boolean(id) });
 }
 
+/** Flat options list for pickers — the Staff & Users form's technician-link select. */
+export function useTechnicianOptions() {
+  return useQuery({ queryKey: [...TECHNICIANS_KEY, "options"], queryFn: api.getTechnicians });
+}
+
 function invalidateTechnicians(queryClient: ReturnType<typeof useQueryClient>) {
   queryClient.invalidateQueries({ queryKey: TECHNICIANS_KEY });
   // Dashboard workload chart and Reports' technician performance both read

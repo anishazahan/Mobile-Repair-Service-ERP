@@ -1,6 +1,6 @@
 import { Badge, type BadgeProps } from "@/components/ui/badge";
 import { humanizeStatus } from "@/lib/utils";
-import type { InvoiceStatus, ServiceOrderStatus, Technician } from "@/types";
+import type { InvoiceStatus, Role, ServiceOrderStatus, StaffUser, Technician } from "@/types";
 
 type BadgeVariant = NonNullable<BadgeProps["variant"]>;
 
@@ -8,6 +8,19 @@ const TECHNICIAN_STATUS_VARIANTS: Record<Technician["status"], BadgeVariant> = {
   active: "success",
   on_leave: "warning",
   inactive: "secondary",
+};
+
+const STAFF_STATUS_VARIANTS: Record<StaffUser["status"], BadgeVariant> = {
+  active: "success",
+  inactive: "secondary",
+  suspended: "destructive",
+};
+
+const ROLE_VARIANTS: Record<Role, BadgeVariant> = {
+  admin: "default",
+  manager: "default",
+  front_desk: "secondary",
+  technician: "secondary",
 };
 
 const ORDER_STATUS_VARIANTS: Record<ServiceOrderStatus, BadgeVariant> = {
@@ -44,6 +57,14 @@ export function InvoiceStatusBadge({ status }: { status: InvoiceStatus }) {
 
 export function TechnicianStatusBadge({ status }: { status: Technician["status"] }) {
   return <Badge variant={TECHNICIAN_STATUS_VARIANTS[status]}>{humanizeStatus(status)}</Badge>;
+}
+
+export function StaffStatusBadge({ status }: { status: StaffUser["status"] }) {
+  return <Badge variant={STAFF_STATUS_VARIANTS[status]}>{humanizeStatus(status)}</Badge>;
+}
+
+export function RoleBadge({ role }: { role: Role }) {
+  return <Badge variant={ROLE_VARIANTS[role]}>{humanizeStatus(role)}</Badge>;
 }
 
 export function PriorityBadge({ priority }: { priority: "normal" | "urgent" }) {

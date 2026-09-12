@@ -1,4 +1,4 @@
-import { ChevronRight, Mail, Pencil, Phone, Wrench } from "lucide-react";
+import { ChevronRight, Mail, Pencil, Phone, UserCog, Wrench } from "lucide-react";
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -45,7 +45,7 @@ export function TechnicianDetailPage() {
     return <ErrorState onRetry={() => refetch()} description="We couldn't load this technician." />;
   }
 
-  const { technician, orders, activeJobs, completedJobs, revenueGenerated } = data;
+  const { technician, orders, activeJobs, completedJobs, revenueGenerated, linkedStaffUser } = data;
 
   return (
     <div className="space-y-6">
@@ -181,6 +181,25 @@ export function TechnicianDetailPage() {
               </div>
             </CardContent>
           </Card>
+
+          {linkedStaffUser && (
+            <Card>
+              <CardHeader>
+                <CardTitle>System Account</CardTitle>
+              </CardHeader>
+              <CardContent className="pt-0">
+                <Link to={`/app/staff/${linkedStaffUser.id}`} className="flex items-center gap-3 hover:opacity-80">
+                  <span className="flex h-9 w-9 items-center justify-center rounded-full bg-muted text-muted-foreground">
+                    <UserCog className="h-4 w-4" />
+                  </span>
+                  <span>
+                    <span className="block text-sm font-medium text-foreground">{linkedStaffUser.name}</span>
+                    <span className="block text-xs text-muted-foreground">{linkedStaffUser.email}</span>
+                  </span>
+                </Link>
+              </CardContent>
+            </Card>
+          )}
 
           <Card>
             <CardHeader>

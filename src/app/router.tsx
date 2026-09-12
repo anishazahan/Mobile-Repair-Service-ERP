@@ -28,6 +28,8 @@ const InvoiceDetailPage = lazy(() => import("@/pages/erp/billing/InvoiceDetailPa
 const ReportsPage = lazy(() => import("@/pages/erp/reports/ReportsPage").then((m) => ({ default: m.ReportsPage })));
 const TechniciansListPage = lazy(() => import("@/pages/erp/technicians/TechniciansListPage").then((m) => ({ default: m.TechniciansListPage })));
 const TechnicianDetailPage = lazy(() => import("@/pages/erp/technicians/TechnicianDetailPage").then((m) => ({ default: m.TechnicianDetailPage })));
+const StaffListPage = lazy(() => import("@/pages/erp/staff/StaffListPage").then((m) => ({ default: m.StaffListPage })));
+const StaffDetailPage = lazy(() => import("@/pages/erp/staff/StaffDetailPage").then((m) => ({ default: m.StaffDetailPage })));
 
 const IMG = {
   services: "https://images.unsplash.com/photo-1581092921461-eab62e97a780?q=85&w=1600&auto=format&fit=crop",
@@ -156,7 +158,8 @@ const router = createBrowserRouter([
           { path: "reports", element: withSuspense(<ReportsPage />) },
           { path: "technicians", element: withSuspense(<TechniciansListPage />) },
           { path: "technicians/:id", element: withSuspense(<TechnicianDetailPage />) },
-          { path: "staff", element: <PlaceholderPage title="Staff & Users" /> },
+          { path: "staff", element: withSuspense(<StaffListPage />) },
+          { path: "staff/:id", element: withSuspense(<StaffDetailPage />) },
           { path: "settings", element: <PlaceholderPage title="Settings" /> },
         ],
       },
