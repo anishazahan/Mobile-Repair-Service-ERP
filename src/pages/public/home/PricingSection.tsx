@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { Reveal } from "@/components/motion/reveal";
 import { db } from "@/mocks/db";
 import { cn } from "@/lib/utils";
 
@@ -16,22 +17,25 @@ export function PricingSection() {
 
   return (
     <section className="container py-20">
-      <div className="mx-auto max-w-2xl text-center">
+      <Reveal className="mx-auto max-w-2xl text-center">
         <span className="text-sm font-semibold uppercase tracking-wider text-primary">Pricing</span>
         <h2 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">Simple, honest pricing</h2>
         <p className="mt-3 text-muted-foreground">
           Starting prices for our most requested repairs — your technician confirms the exact
           cost after a free diagnosis, before any work begins.
         </p>
-      </div>
+      </Reveal>
 
       <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        {packages.map((pkg) => {
+        {packages.map((pkg, i) => {
           const isPopular = pkg.id === POPULAR_ID;
           return (
+            <Reveal key={pkg.id} delay={i * 90} className="h-full">
             <Card
-              key={pkg.id}
-              className={cn("relative flex flex-col", isPopular && "border-primary shadow-md ring-1 ring-primary")}
+              className={cn(
+                "relative flex h-full flex-col transition-all duration-300 hover:-translate-y-1 hover:shadow-lg",
+                isPopular && "border-primary shadow-md ring-1 ring-primary",
+              )}
             >
               {isPopular && (
                 <Badge className="absolute -top-3 left-1/2 -translate-x-1/2" variant="default">
@@ -64,6 +68,7 @@ export function PricingSection() {
                 </Button>
               </CardContent>
             </Card>
+            </Reveal>
           );
         })}
       </div>

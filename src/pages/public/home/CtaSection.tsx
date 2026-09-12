@@ -1,11 +1,12 @@
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { Reveal } from "@/components/motion/reveal";
 
 export function CtaSection() {
   return (
     <section className="container pb-20">
-      <div className="relative overflow-hidden bg-primary px-8 py-14 text-center text-primary-foreground sm:px-16">
+      <Reveal className="relative overflow-hidden bg-primary px-8 py-14 text-center text-primary-foreground sm:px-16">
         <div
           className="absolute inset-0 opacity-20"
           style={{ backgroundImage: "radial-gradient(circle at 30% 20%, white, transparent 45%)" }}
@@ -32,7 +33,7 @@ export function CtaSection() {
             </Button>
           </div>
         </div>
-      </div>
+      </Reveal>
     </section>
   );
 }

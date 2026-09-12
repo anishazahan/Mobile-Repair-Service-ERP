@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { Reveal } from "@/components/motion/reveal";
 
 const HERO_IMAGE =
-  "https://images.unsplash.com/photo-1550041473-d296a3a8a18a?q=80&w=1400&auto=format&fit=crop";
+  "https://images.unsplash.com/photo-1550041473-d296a3a8a18a?q=85&w=2200&auto=format&fit=crop";
 
 const STATS = [
   { value: "15+", label: "Years Experience" },
@@ -14,7 +15,7 @@ export function HeroSection() {
     <section className="bg-background">
       <div className="grid lg:grid-cols-2">
         <div className="flex items-center bg-background px-6 py-16 sm:px-10 lg:px-16 lg:py-0">
-          <div className="max-w-lg space-y-6">
+          <Reveal direction="left" className="max-w-lg space-y-6">
             <h1 className="text-4xl font-extrabold leading-[1.12] tracking-tight text-foreground sm:text-[3.25rem]">
               Have Broken <span className="text-primary">Gadget?</span> We Can Fix Anything
             </h1>
@@ -26,10 +27,10 @@ export function HeroSection() {
             <Button size="lg" className="rounded-none px-8 text-[13px] font-semibold uppercase tracking-wider" asChild>
               <Link to="/book-a-service">Book a Service</Link>
             </Button>
-          </div>
+          </Reveal>
         </div>
 
-        <div className="relative min-h-[340px] lg:min-h-[560px]">
+        <Reveal direction="right" delay={150} className="relative min-h-[340px] lg:min-h-[560px]">
           <img
             src={HERO_IMAGE}
             alt="Technician repairing a smartphone with precision tools"
@@ -43,7 +44,7 @@ export function HeroSection() {
               </div>
             ))}
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

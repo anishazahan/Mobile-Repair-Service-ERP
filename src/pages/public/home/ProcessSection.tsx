@@ -1,30 +1,21 @@
-import { ClipboardCheck, PackageCheck, Search, ThumbsUp, Wrench } from "lucide-react";
+import { Mail, PackageCheck, Truck } from "lucide-react";
+import { Reveal } from "@/components/motion/reveal";
 
 const STEPS = [
   {
-    icon: ClipboardCheck,
-    title: "Drop Off or Book Online",
-    description: "Bring your device in or reserve a slot online — we log the intake in minutes.",
-  },
-  {
-    icon: Search,
-    title: "Free Diagnosis",
-    description: "A certified technician inspects the device and identifies the exact issue.",
-  },
-  {
-    icon: ThumbsUp,
-    title: "Transparent Approval",
-    description: "We share the exact cost upfront — nothing starts until you approve it.",
-  },
-  {
-    icon: Wrench,
-    title: "Expert Repair",
-    description: "Genuine parts, careful workmanship, and a quality check before it leaves the bench.",
-  },
-  {
     icon: PackageCheck,
-    title: "Ready for Pickup",
-    description: "We notify you the moment it's ready — most repairs are done the same day.",
+    title: "Walk In — Drop Off & Collect",
+    description: "Bring your device to the shop, get a free on-the-spot diagnosis, and collect it once it's ready.",
+  },
+  {
+    icon: Mail,
+    title: "Mail In — Send Your Gadget",
+    description: "Ship it to us with a prepaid label — we diagnose, repair, and post it straight back to you.",
+  },
+  {
+    icon: Truck,
+    title: "Pickup — We Come Collect It",
+    description: "Book a courier pickup from your home or office and we'll return it once the repair is complete.",
   },
 ];
 
@@ -32,27 +23,29 @@ export function ProcessSection() {
   return (
     <section className="bg-muted/40 py-20">
       <div className="container">
-        <div className="mx-auto max-w-2xl text-center">
-          <span className="text-sm font-semibold uppercase tracking-wider text-primary">How It Works</span>
-          <h2 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
-            From drop-off to pickup, fully tracked
+        <Reveal className="mx-auto max-w-2xl text-center">
+          <span className="text-sm font-semibold uppercase tracking-wider text-primary">Our Process</span>
+          <h2 className="mt-2 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+            No Matter Where You Bought It, We Can Fix It
           </h2>
-          <p className="mt-3 text-muted-foreground">
-            Every repair moves through the same transparent process — no surprises, no guesswork.
-          </p>
-        </div>
+        </Reveal>
 
-        <div className="relative mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-5">
-          <div className="absolute left-0 right-0 top-6 hidden h-px bg-border lg:block" aria-hidden="true" />
+        <div className="mt-14 grid gap-10 sm:grid-cols-3">
           {STEPS.map((step, i) => (
-            <div key={step.title} className="relative flex flex-col items-center text-center">
-              <div className="relative z-10 flex h-12 w-12 items-center justify-center rounded-full border-2 border-primary bg-background text-primary">
-                <step.icon className="h-5 w-5" />
+            <Reveal key={step.title} delay={i * 120} className="flex flex-col items-center text-center">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary text-primary-foreground transition-transform duration-300 hover:scale-105">
+                <step.icon className="h-6 w-6" />
               </div>
-              <span className="mt-3 text-xs font-semibold text-primary">STEP {i + 1}</span>
-              <h3 className="mt-1 font-semibold text-foreground">{step.title}</h3>
-              <p className="mt-1.5 text-sm text-muted-foreground">{step.description}</p>
-            </div>
+              <h3 className="mt-5 font-semibold text-foreground">{step.title}</h3>
+              <p className="mt-2 text-sm text-muted-foreground">{step.description}</p>
+              <div className="mt-6 flex w-full items-center gap-3">
+                <span className="h-px flex-1 bg-border" />
+                <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-border bg-background text-xs font-semibold text-foreground">
+                  {i + 1}
+                </span>
+                <span className="h-px flex-1 bg-border" />
+              </div>
+            </Reveal>
           ))}
         </div>
       </div>

@@ -1,4 +1,5 @@
 import { Cog, ShieldCheck, Timer, Users } from "lucide-react";
+import { Reveal } from "@/components/motion/reveal";
 
 const REASONS = [
   { icon: Timer, title: "Quick Repair Service", description: "Most repairs are completed the same day, some in under an hour." },
@@ -14,18 +15,18 @@ const STATS = [
 ];
 
 const IMAGE =
-  "https://images.unsplash.com/photo-1581092921461-eab62e97a780?q=80&w=1000&auto=format&fit=crop";
+  "https://images.unsplash.com/photo-1581092921461-eab62e97a780?q=85&w=1600&auto=format&fit=crop";
 
 export function WhyChooseUsSection() {
   return (
     <section className="bg-primary text-primary-foreground">
       <div className="grid lg:grid-cols-2">
-        <div className="hidden lg:block">
+        <Reveal direction="left" className="hidden lg:block">
           <img src={IMAGE} alt="Technician holding professional repair tools" className="h-full w-full object-cover" />
-        </div>
+        </Reveal>
 
         <div className="space-y-8 px-6 py-16 sm:px-10 lg:px-16">
-          <div className="space-y-4">
+          <Reveal direction="right" className="space-y-4">
             <span className="text-sm font-semibold uppercase tracking-wider text-primary-foreground/80">
               Why Choose Us?
             </span>
@@ -34,30 +35,30 @@ export function WhyChooseUsSection() {
               We treat every device like it's our own — honest diagnostics, fair pricing, and
               work that holds up long after you walk out the door.
             </p>
-          </div>
+          </Reveal>
 
           <div className="grid gap-6 sm:grid-cols-2">
-            {REASONS.map((reason) => (
-              <div key={reason.title} className="flex gap-3">
-                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/15">
+            {REASONS.map((reason, i) => (
+              <Reveal key={reason.title} direction="right" delay={120 + i * 90} className="flex gap-3">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/15 transition-transform duration-300 hover:scale-105">
                   <reason.icon className="h-5 w-5" />
                 </div>
                 <div>
                   <h3 className="font-semibold">{reason.title}</h3>
                   <p className="mt-1 text-sm text-primary-foreground/80">{reason.description}</p>
                 </div>
-              </div>
+              </Reveal>
             ))}
           </div>
 
-          <div className="flex flex-wrap gap-10 border-t border-white/20 pt-6">
+          <Reveal direction="right" delay={480} className="flex flex-wrap gap-10 border-t border-white/20 pt-6">
             {STATS.map((stat) => (
               <div key={stat.label}>
                 <p className="text-2xl font-extrabold">{stat.value}</p>
                 <p className="text-xs uppercase tracking-wide text-primary-foreground/80">{stat.label}</p>
               </div>
             ))}
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>

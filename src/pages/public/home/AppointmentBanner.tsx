@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Reveal } from "@/components/motion/reveal";
 
 const appointmentSchema = z.object({
   name: z.string().min(2, "Enter your name"),
@@ -30,7 +31,7 @@ export function AppointmentBanner() {
 
   return (
     <section className="bg-primary text-primary-foreground">
-      <div className="container grid items-center gap-8 py-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)]">
+      <Reveal className="container grid items-center gap-8 py-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)]">
         <div className="flex items-start gap-4">
           <CalendarClock className="mt-1 h-9 w-9 shrink-0" />
           <div>
@@ -81,7 +82,7 @@ export function AppointmentBanner() {
             Book Now
           </Button>
         </form>
-      </div>
+      </Reveal>
     </section>
   );
 }
