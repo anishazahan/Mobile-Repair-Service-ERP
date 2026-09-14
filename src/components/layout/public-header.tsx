@@ -1,10 +1,11 @@
-import { Clock, Mail, Menu, Search } from "lucide-react";
+import { Clock, Mail, Menu } from "lucide-react";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { FacebookIcon, LinkedInIcon } from "@/components/icons/social-icons";
 import { Logo } from "@/components/layout/logo";
+import { PublicSearch } from "@/components/layout/public-search";
 import { SOCIAL_LINKS } from "@/lib/social-links";
 import { cn } from "@/lib/utils";
 
@@ -82,9 +83,7 @@ export function PublicHeader() {
         </nav>
 
         <div className="hidden items-center gap-4 lg:flex">
-          <button aria-label="Search" className="text-foreground/70 transition-colors hover:text-primary">
-            <Search className="h-[18px] w-[18px]" />
-          </button>
+          <PublicSearch />
           <NavLink
             to="/login"
             className="text-[13px] font-semibold uppercase tracking-wider text-foreground/70 hover:text-primary"

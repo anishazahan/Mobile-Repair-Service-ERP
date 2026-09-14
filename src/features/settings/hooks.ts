@@ -20,10 +20,11 @@ export function useUpdateShopSettings() {
   });
 }
 
-export function useServiceCatalogRows(filters?: ServiceCatalogFilters) {
+export function useServiceCatalogRows(filters?: ServiceCatalogFilters, options?: { enabled?: boolean }) {
   return useQuery({
     queryKey: ["settings", "catalog", filters],
     queryFn: () => api.getServiceCatalogRows(filters),
+    enabled: options?.enabled ?? true,
   });
 }
 
