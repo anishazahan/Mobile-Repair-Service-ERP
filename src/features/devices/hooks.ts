@@ -6,8 +6,12 @@ import type { DeviceFilters } from "./api";
 const DEVICES_KEY = ["devices"] as const;
 const deviceKey = (id: string) => ["devices", "detail", id] as const;
 
-export function useDeviceRows(filters?: DeviceFilters) {
-  return useQuery({ queryKey: [...DEVICES_KEY, "rows", filters], queryFn: () => api.getDeviceRows(filters) });
+export function useDeviceRows(filters?: DeviceFilters, options?: { enabled?: boolean }) {
+  return useQuery({
+    queryKey: [...DEVICES_KEY, "rows", filters],
+    queryFn: () => api.getDeviceRows(filters),
+    enabled: options?.enabled ?? true,
+  });
 }
 
 export function useDevice(id: string) {

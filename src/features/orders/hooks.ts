@@ -6,8 +6,12 @@ import type { OrderFilters } from "./api";
 const ORDERS_KEY = ["orders"] as const;
 const orderKey = (id: string) => ["orders", id] as const;
 
-export function useOrders(filters?: OrderFilters) {
-  return useQuery({ queryKey: [...ORDERS_KEY, filters], queryFn: () => api.getOrders(filters) });
+export function useOrders(filters?: OrderFilters, options?: { enabled?: boolean }) {
+  return useQuery({
+    queryKey: [...ORDERS_KEY, filters],
+    queryFn: () => api.getOrders(filters),
+    enabled: options?.enabled ?? true,
+  });
 }
 
 export function useOrder(id: string) {

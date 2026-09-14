@@ -1,4 +1,4 @@
-import { Bell, LogOut, Menu, Search, Settings as SettingsIcon, User as UserIcon } from "lucide-react";
+import { Bell, LogOut, Menu, Settings as SettingsIcon, User as UserIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -10,7 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
+import { GlobalSearch } from "@/components/layout/global-search";
 import { useAuthStore } from "@/features/auth/store";
 import { useMarkAllNotificationsRead, useNotifications } from "@/features/notifications/hooks";
 import { cn, formatRelativeTime, humanizeStatus } from "@/lib/utils";
@@ -43,10 +43,7 @@ export function Topbar({ onMenuClick }: { onMenuClick: () => void }) {
         <Menu className="h-5 w-5" />
       </Button>
 
-      <div className="relative hidden max-w-sm flex-1 sm:block">
-        <Search className="pointer-events-none absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-        <Input placeholder="Search orders, customers, devices…" className="pl-8" />
-      </div>
+      <GlobalSearch />
       <div className="flex-1 sm:hidden" />
 
       <div className="ml-auto flex items-center gap-1.5">

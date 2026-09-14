@@ -6,8 +6,12 @@ import type { CustomerFilters } from "./api";
 const CUSTOMERS_KEY = ["customers"] as const;
 const customerKey = (id: string) => ["customers", "detail", id] as const;
 
-export function useCustomerRows(filters?: CustomerFilters) {
-  return useQuery({ queryKey: [...CUSTOMERS_KEY, "rows", filters], queryFn: () => api.getCustomerRows(filters) });
+export function useCustomerRows(filters?: CustomerFilters, options?: { enabled?: boolean }) {
+  return useQuery({
+    queryKey: [...CUSTOMERS_KEY, "rows", filters],
+    queryFn: () => api.getCustomerRows(filters),
+    enabled: options?.enabled ?? true,
+  });
 }
 
 export function useCustomer(id: string) {
