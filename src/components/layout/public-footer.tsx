@@ -1,22 +1,27 @@
-import { Mail, MapPin, Phone } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { FacebookIcon, LinkedInIcon } from "@/components/icons/social-icons";
 import { Logo } from "@/components/layout/logo";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { useShopSettings } from "@/features/settings/hooks";
 import { SOCIAL_LINKS } from "@/lib/social-links";
+import { Mail, MapPin, Phone } from "lucide-react";
+import { Link } from "react-router-dom";
 
-// Fallback shown for a brief instant while the shop profile loads (or if it
-// ever fails to load) — kept in sync with the seed values in
-// mocks/data/shopSettings.json, which is what Settings > Shop Profile edits.
-const FALLBACK = { address: "House 12, Road 5, Dhanmondi, Dhaka", email: "hello@gadgetfix.shop", phone: "+880 1700-000000" };
+const FALLBACK = {
+  address: "House 12, Road 5, Dhanmondi, Dhaka",
+  email: "anishazahan13@gmail.com",
+  phone: "+880 1700-000000",
+};
 
 export function PublicFooter() {
   const { data: shop } = useShopSettings();
 
   const contactItems = [
-    { icon: MapPin, label: "Head Office", value: shop?.address ?? FALLBACK.address },
+    {
+      icon: MapPin,
+      label: "Head Office",
+      value: shop?.address ?? FALLBACK.address,
+    },
     { icon: Mail, label: "Email", value: shop?.email ?? FALLBACK.email },
     { icon: Phone, label: "Phone", value: shop?.phone ?? FALLBACK.phone },
   ];
@@ -42,11 +47,11 @@ export function PublicFooter() {
       <div className="container grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4">
         <div className="space-y-4">
           <Link to="/">
-            <Logo theme="light" />
+            <Logo theme="light" icon />
           </Link>
           <p className="max-w-xs text-sm text-slate-400">
-            Trusted mobile & tablet repair — genuine parts, certified technicians, and honest
-            turnaround times, every time.
+            Trusted mobile & tablet repair genuine parts, certified technicians,
+            and honest turnaround times, every time.
           </p>
           <div className="flex gap-3">
             <a
@@ -78,35 +83,78 @@ export function PublicFooter() {
         </div>
 
         <div>
-          <h4 className="mb-4 text-sm font-semibold uppercase tracking-wide text-white">Company</h4>
+          <h4 className="mb-4 text-sm font-semibold uppercase tracking-wide text-white">
+            Company
+          </h4>
           <ul className="space-y-2.5 text-sm">
-            <li><Link to="/about" className="hover:text-white">About Us</Link></li>
-            <li><Link to="/team" className="hover:text-white">Our Team</Link></li>
-            <li><Link to="/pricing" className="hover:text-white">Pricing</Link></li>
-            <li><Link to="/contact" className="hover:text-white">Contact</Link></li>
+            <li>
+              <Link to="/about" className="hover:text-white">
+                About Us
+              </Link>
+            </li>
+            <li>
+              <Link to="/team" className="hover:text-white">
+                Our Team
+              </Link>
+            </li>
+            <li>
+              <Link to="/pricing" className="hover:text-white">
+                Pricing
+              </Link>
+            </li>
+            <li>
+              <Link to="/contact" className="hover:text-white">
+                Contact
+              </Link>
+            </li>
           </ul>
         </div>
 
         <div>
-          <h4 className="mb-4 text-sm font-semibold uppercase tracking-wide text-white">Services</h4>
+          <h4 className="mb-4 text-sm font-semibold uppercase tracking-wide text-white">
+            Services
+          </h4>
           <ul className="space-y-2.5 text-sm">
-            <li><Link to="/services" className="hover:text-white">Screen Replacement</Link></li>
-            <li><Link to="/services" className="hover:text-white">Battery Replacement</Link></li>
-            <li><Link to="/services" className="hover:text-white">Water Damage Repair</Link></li>
-            <li><Link to="/services" className="hover:text-white">Software Troubleshooting</Link></li>
+            <li>
+              <Link to="/services" className="hover:text-white">
+                Screen Replacement
+              </Link>
+            </li>
+            <li>
+              <Link to="/services" className="hover:text-white">
+                Battery Replacement
+              </Link>
+            </li>
+            <li>
+              <Link to="/services" className="hover:text-white">
+                Water Damage Repair
+              </Link>
+            </li>
+            <li>
+              <Link to="/services" className="hover:text-white">
+                Software Troubleshooting
+              </Link>
+            </li>
           </ul>
         </div>
 
         <div>
-          <h4 className="mb-4 text-sm font-semibold uppercase tracking-wide text-white">Newsletter</h4>
-          <p className="mb-3 text-sm text-slate-400">Get repair tips and shop offers in your inbox.</p>
+          <h4 className="mb-4 text-sm font-semibold uppercase tracking-wide text-white">
+            Newsletter
+          </h4>
+          <p className="mb-3 text-sm text-slate-400">
+            Get repair tips and shop offers in your inbox.
+          </p>
           <form className="flex" onSubmit={(e) => e.preventDefault()}>
             <Input
               type="email"
               placeholder="Email"
               className="rounded-none border-white/20 bg-white/5 text-white placeholder:text-slate-500 focus-visible:ring-primary"
             />
-            <Button type="submit" className="shrink-0 rounded-none px-4 text-[13px] font-semibold uppercase tracking-wider">
+            <Button
+              type="submit"
+              className="shrink-0 rounded-none px-4 text-[13px] font-semibold uppercase tracking-wider"
+            >
               Subscribe
             </Button>
           </form>
@@ -114,12 +162,21 @@ export function PublicFooter() {
       </div>
 
       <div className="border-t border-white/10 py-6">
-        <div className="container flex flex-col items-center justify-between gap-3 text-xs text-slate-500 sm:flex-row">
-          <p>© {new Date().getFullYear()} GadgetFIX. All rights reserved.</p>
+        <div className="container flex flex-col items-center justify-between gap-3 text-sm text-slate-500 sm:flex-row">
+          <p>
+            © {new Date().getFullYear()} GadgetFIX. All rights reserved By{" "}
+            <span className="font-bold text-primary">Anisha Zahan</span>
+          </p>
           <div className="flex gap-5">
-            <a href="#" className="hover:text-white">Legal</a>
-            <a href="#" className="hover:text-white">GDPR</a>
-            <a href="#" className="hover:text-white">Terms of Service</a>
+            <a href="#" className="hover:text-white">
+              Legal
+            </a>
+            <a href="#" className="hover:text-white">
+              GDPR
+            </a>
+            <a href="#" className="hover:text-white">
+              Terms of Service
+            </a>
           </div>
         </div>
       </div>

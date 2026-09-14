@@ -1,3 +1,20 @@
+import { KpiCard } from "@/components/charts/kpi-card";
+import { RevenueTrendChart } from "@/components/charts/revenue-trend-chart";
+import { StatusBreakdownList } from "@/components/charts/status-breakdown-list";
+import { TechnicianWorkloadChart } from "@/components/charts/technician-workload-chart";
+import { EmptyState } from "@/components/feedback/empty-state";
+import { ErrorState } from "@/components/feedback/error-state";
+import {
+  OrderStatusBadge,
+  PriorityBadge,
+} from "@/components/feedback/status-badge";
+import { PageHeader } from "@/components/layout/page-header";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useAuthStore } from "@/features/auth/store";
+import { useDashboardData } from "@/features/dashboard/hooks";
+import { formatCurrency, formatRelativeTime } from "@/lib/utils";
 import {
   Banknote,
   Clock,
@@ -11,20 +28,6 @@ import {
   Wrench,
 } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
-import { PageHeader } from "@/components/layout/page-header";
-import { RevenueTrendChart } from "@/components/charts/revenue-trend-chart";
-import { StatusBreakdownList } from "@/components/charts/status-breakdown-list";
-import { TechnicianWorkloadChart } from "@/components/charts/technician-workload-chart";
-import { KpiCard } from "@/components/charts/kpi-card";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
-import { EmptyState } from "@/components/feedback/empty-state";
-import { ErrorState } from "@/components/feedback/error-state";
-import { OrderStatusBadge, PriorityBadge } from "@/components/feedback/status-badge";
-import { useAuthStore } from "@/features/auth/store";
-import { useDashboardData } from "@/features/dashboard/hooks";
-import { formatCurrency, formatRelativeTime } from "@/lib/utils";
 
 export function DashboardPage() {
   const user = useAuthStore((s) => s.user);
@@ -35,7 +38,7 @@ export function DashboardPage() {
     <div className="space-y-6">
       <PageHeader
         title="Dashboard"
-        description={`Welcome back, ${user?.name.split(" ")[0] ?? "there"} — here's what's happening at the shop today.`}
+        description={`Welcome back, ${user?.name.split(" ")[0] ?? "there"},here's what's happening at the shop today.`}
         actions={
           <>
             <Button variant="outline" size="sm" asChild>
@@ -52,7 +55,12 @@ export function DashboardPage() {
         }
       />
 
-      {isError && <ErrorState onRetry={() => refetch()} description="We couldn't load the dashboard. Please try again." />}
+      {isError && (
+        <ErrorState
+          onRetry={() => refetch()}
+          description="We couldn't load the dashboard. Please try again."
+        />
+      )}
 
       {isLoading && <DashboardSkeleton />}
 
@@ -60,11 +68,36 @@ export function DashboardPage() {
         <>
           {/* KPI grid */}
           <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-            <KpiCard label="Jobs Received Today" value={String(data.kpis.jobsToday)} icon={Inbox} accent="primary" />
-            <KpiCard label="In Progress" value={String(data.kpis.inProgress)} icon={Wrench} accent="primary" />
-            <KpiCard label="Ready for Pickup" value={String(data.kpis.readyForPickup)} icon={PackageCheck} accent="success" />
-            <KpiCard label="Revenue Today" value={formatCurrency(data.kpis.revenueToday)} icon={Wallet} accent="success" />
-            <KpiCard label="Revenue This Month" value={formatCurrency(data.kpis.revenueThisMonth)} icon={TrendingUp} accent="primary" />
+            <KpiCard
+              label="Jobs Received Today"
+              value={String(data.kpis.jobsToday)}
+              icon={Inbox}
+              accent="primary"
+            />
+            <KpiCard
+              label="In Progress"
+              value={String(data.kpis.inProgress)}
+              icon={Wrench}
+              accent="primary"
+            />
+            <KpiCard
+              label="Ready for Pickup"
+              value={String(data.kpis.readyForPickup)}
+              icon={PackageCheck}
+              accent="success"
+            />
+            <KpiCard
+              label="Revenue Today"
+              value={formatCurrency(data.kpis.revenueToday)}
+              icon={Wallet}
+              accent="success"
+            />
+            <KpiCard
+              label="Revenue This Month"
+              value={formatCurrency(data.kpis.revenueThisMonth)}
+              icon={TrendingUp}
+              accent="primary"
+            />
             <KpiCard
               label="Pending Payments"
               value={formatCurrency(data.kpis.pendingPaymentsTotal)}
@@ -72,8 +105,18 @@ export function DashboardPage() {
               accent="warning"
               to="/app/billing"
             />
-            <KpiCard label="Low Stock Alerts" value={String(data.kpis.lowStockCount)} icon={PackageX} accent="warning" />
-            <KpiCard label="Overdue Jobs" value={String(data.kpis.overdueJobs)} icon={Clock} accent={data.kpis.overdueJobs > 0 ? "destructive" : "primary"} />
+            <KpiCard
+              label="Low Stock Alerts"
+              value={String(data.kpis.lowStockCount)}
+              icon={PackageX}
+              accent="warning"
+            />
+            <KpiCard
+              label="Overdue Jobs"
+              value={String(data.kpis.overdueJobs)}
+              icon={Clock}
+              accent={data.kpis.overdueJobs > 0 ? "destructive" : "primary"}
+            />
           </div>
 
           {/* Revenue trend + Low stock */}
@@ -93,7 +136,11 @@ export function DashboardPage() {
               </CardHeader>
               <CardContent>
                 {data.lowStockParts.length === 0 ? (
-                  <EmptyState icon={PackageCheck} title="Stock levels look healthy" className="py-8" />
+                  <EmptyState
+                    icon={PackageCheck}
+                    title="Stock levels look healthy"
+                    className="py-8"
+                  />
                 ) : (
                   <ul className="space-y-3">
                     {data.lowStockParts.map((part) => (
@@ -103,8 +150,12 @@ export function DashboardPage() {
                           className="flex items-center justify-between gap-2 rounded-md -mx-1.5 px-1.5 py-1 transition-colors hover:bg-accent/50"
                         >
                           <div className="min-w-0">
-                            <p className="truncate text-sm font-medium text-foreground">{part.name}</p>
-                            <p className="text-xs text-muted-foreground">SKU {part.sku}</p>
+                            <p className="truncate text-sm font-medium text-foreground">
+                              {part.name}
+                            </p>
+                            <p className="text-xs text-muted-foreground">
+                              SKU {part.sku}
+                            </p>
                           </div>
                           <span
                             className={`shrink-0 rounded-full px-2 py-0.5 text-xs font-medium ${
@@ -113,7 +164,9 @@ export function DashboardPage() {
                                 : "bg-warning/10 text-warning"
                             }`}
                           >
-                            {part.quantityInStock === 0 ? "Out of stock" : `${part.quantityInStock} left`}
+                            {part.quantityInStock === 0
+                              ? "Out of stock"
+                              : `${part.quantityInStock} left`}
                           </span>
                         </Link>
                       </li>
@@ -132,7 +185,11 @@ export function DashboardPage() {
               </CardHeader>
               <CardContent>
                 {data.todaysQueue.length === 0 ? (
-                  <EmptyState icon={Inbox} title="No jobs received today yet" description="New service orders will show up here as they're created." />
+                  <EmptyState
+                    icon={Inbox}
+                    title="No jobs received today yet"
+                    description="New service orders will show up here as they're created."
+                  />
                 ) : (
                   <div className="overflow-x-auto">
                     <table className="w-full text-sm">
@@ -149,7 +206,9 @@ export function DashboardPage() {
                         {data.todaysQueue.map((row) => (
                           <tr
                             key={row.order.id}
-                            onClick={() => navigate(`/app/orders/${row.order.id}`)}
+                            onClick={() =>
+                              navigate(`/app/orders/${row.order.id}`)
+                            }
                             className="cursor-pointer border-b border-border/60 last:border-0 hover:bg-accent/50"
                           >
                             <td className="py-2.5 pr-2 font-medium text-foreground">
@@ -158,8 +217,12 @@ export function DashboardPage() {
                                 <PriorityBadge priority={row.order.priority} />
                               </div>
                             </td>
-                            <td className="py-2.5 pr-2 text-muted-foreground">{row.customerName}</td>
-                            <td className="py-2.5 pr-2 text-muted-foreground">{row.deviceLabel}</td>
+                            <td className="py-2.5 pr-2 text-muted-foreground">
+                              {row.customerName}
+                            </td>
+                            <td className="py-2.5 pr-2 text-muted-foreground">
+                              {row.deviceLabel}
+                            </td>
                             <td className="py-2.5 pr-2 text-muted-foreground">
                               {row.order.assignedTechnicianId ? (
                                 <Link
@@ -197,12 +260,16 @@ export function DashboardPage() {
                       <div className="min-w-0">
                         <p className="text-foreground">
                           {activity.label}{" "}
-                          <Link to={`/app/orders/${activity.orderId}`} className="font-medium text-primary hover:underline">
+                          <Link
+                            to={`/app/orders/${activity.orderId}`}
+                            className="font-medium text-primary hover:underline"
+                          >
                             {activity.orderId}
                           </Link>
                         </p>
                         <p className="text-xs text-muted-foreground">
-                          {activity.actorName} · {formatRelativeTime(activity.createdAt)}
+                          {activity.actorName} ·{" "}
+                          {formatRelativeTime(activity.createdAt)}
                         </p>
                       </div>
                     </li>

@@ -60,7 +60,7 @@ export function PublicHeader() {
       <TopUtilityBar />
       <div className="container flex h-[72px] items-center justify-between">
         <NavLink to="/">
-          <Logo />
+          <Logo icon />
         </NavLink>
 
         <nav className="hidden items-center gap-7 lg:flex">
@@ -105,7 +105,7 @@ export function PublicHeader() {
           <SheetContent side="right" className="w-72">
             <SheetHeader>
               <SheetTitle asChild>
-                <Logo />
+                <Logo icon />
               </SheetTitle>
             </SheetHeader>
             <nav className="flex flex-col gap-1 p-4">

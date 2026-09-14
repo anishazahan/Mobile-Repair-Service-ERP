@@ -1,7 +1,7 @@
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
 import { CountUp } from "@/components/motion/count-up";
 import { Reveal } from "@/components/motion/reveal";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const HERO_IMAGE =
   "https://images.unsplash.com/photo-1550041473-d296a3a8a18a?q=85&w=2200&auto=format&fit=crop";
@@ -18,16 +18,17 @@ export function HeroSection() {
         <div className="flex items-center bg-background px-6 py-14 sm:px-10 lg:px-16 lg:py-0">
           <Reveal direction="left" className="max-w-lg space-y-6">
             <h1 className="text-4xl font-extrabold leading-[1.12] tracking-tight text-foreground sm:text-[3.25rem]">
-              Have Broken <span className="text-primary">Gadget?</span> We Can Fix Anything
+              Have Broken <span className="text-primary">Gadget?</span> We Can
+              Fix Anything
             </h1>
             <p className="text-muted-foreground">
-              From cracked screens to water damage, our certified technicians diagnose the issue
-              for free and get you back up and running — usually the same day, with genuine parts
-              and a real warranty.
+              From cracked screens to water damage, our certified technicians
+              diagnose the issue for free and get you back up and running
+              usually the same day, with genuine parts and a real warranty.
             </p>
             <Button
               size="lg"
-              className="group relative overflow-hidden rounded-none px-8 text-[13px] font-semibold uppercase tracking-wider"
+              className="group relative overflow-hidden rounded-none h-12 lg:h-14 px-8 text-[13px] font-semibold uppercase tracking-wider"
               asChild
             >
               <Link to="/book-a-service">
@@ -51,11 +52,16 @@ export function HeroSection() {
           />
           <div className="absolute inset-x-0 bottom-0 grid grid-cols-2 bg-primary text-primary-foreground sm:inset-x-8 sm:bottom-8 sm:w-fit sm:min-w-[320px]">
             {STATS.map((stat) => (
-              <div key={stat.label} className="px-8 py-6 text-center first:border-r first:border-white/20">
+              <div
+                key={stat.label}
+                className="px-8 py-6 text-center first:border-r first:border-white/20"
+              >
                 <p className="text-3xl font-extrabold">
                   <CountUp value={stat.value} suffix={stat.suffix} />
                 </p>
-                <p className="mt-1 text-xs uppercase tracking-wide text-primary-foreground/85">{stat.label}</p>
+                <p className="mt-1 text-xs uppercase tracking-wide text-primary-foreground/85">
+                  {stat.label}
+                </p>
               </div>
             ))}
           </div>

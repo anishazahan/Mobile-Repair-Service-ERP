@@ -1,7 +1,7 @@
-import { NavLink } from "react-router-dom";
-import { useAuthStore } from "@/features/auth/store";
 import { Logo } from "@/components/layout/logo";
+import { useAuthStore } from "@/features/auth/store";
 import { cn } from "@/lib/utils";
+import { NavLink } from "react-router-dom";
 import { isNavItemVisible, NAV_GROUPS } from "./nav-config";
 
 /** Persistent ERP navigation — filtered per the signed-in user's role. */
@@ -11,12 +11,14 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
   return (
     <div className="flex h-full w-64 flex-col bg-sidebar text-sidebar-foreground">
       <div className="flex h-14 items-center border-b border-sidebar-border px-5">
-        <Logo theme="light" size="sm" icon suffix="ERP" />
+        <Logo theme="light" size="sm" icon />
       </div>
 
       <nav className="flex-1 space-y-5 overflow-y-auto px-3 py-4 no-scrollbar">
         {NAV_GROUPS.map((group, i) => {
-          const items = role ? group.items.filter((item) => isNavItemVisible(item, role)) : group.items;
+          const items = role
+            ? group.items.filter((item) => isNavItemVisible(item, role))
+            : group.items;
           if (items.length === 0) return null;
           return (
             <div key={group.label ?? i}>
