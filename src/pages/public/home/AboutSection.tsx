@@ -3,27 +3,24 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
 const IMAGE_BACK =
-  "https://images.unsplash.com/photo-1743836798811-6208a08233c9?q=85&w=1400&auto=format&fit=crop";
+  "https://images.unsplash.com/photo-1611396000732-f8c9a933424f?q=85&w=1200&auto=format&fit=crop";
 const IMAGE_FRONT =
-  "https://images.unsplash.com/photo-1635501108232-29707bfb7c75?q=85&w=1400&auto=format&fit=crop";
+  "https://images.unsplash.com/photo-1539331586018-346b53b2aaa4?q=85&w=1000&auto=format&fit=crop";
 
 export function AboutSection() {
   return (
     <section className="container py-20">
       <div className="grid items-center gap-16 lg:grid-cols-2">
-        <Reveal
-          direction="left"
-          className="relative mx-auto w-full max-w-md pb-10 pr-10 sm:pb-14 sm:pr-14"
-        >
+        <Reveal direction="left" className="relative w-full pb-12 pr-12 sm:pb-16 sm:pr-16">
           <img
             src={IMAGE_BACK}
-            alt="Technician working on an opened phone at the repair bench"
-            className="h-56 w-full max-w-[280px] object-cover shadow-md transition-transform duration-500 hover:scale-[1.03] sm:h-64"
+            alt="Disassembled phone parts laid out on the repair bench"
+            className="aspect-[4/3] w-[82%] object-cover shadow-md transition-transform duration-500 hover:scale-[1.03]"
           />
           <img
             src={IMAGE_FRONT}
-            alt="Technician diagnosing a device in the workshop"
-            className="absolute bottom-0 right-0 h-56 w-52 border-4 border-background object-cover shadow-lg transition-transform duration-500 hover:scale-[1.03] sm:h-64 sm:w-64"
+            alt="Technician's gloved hands repairing a phone screen"
+            className="absolute bottom-0 right-0 aspect-[4/5] w-[62%] border-4 border-background object-cover shadow-lg transition-transform duration-500 hover:scale-[1.03]"
           />
         </Reveal>
 

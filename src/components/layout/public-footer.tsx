@@ -4,17 +4,29 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useShopSettings } from "@/features/settings/hooks";
 import { SOCIAL_LINKS } from "@/lib/social-links";
-import { Mail, MapPin, Phone } from "lucide-react";
+import {
+  CheckCircle2,
+  Loader2,
+  Mail,
+  MapPin,
+  Phone,
+  SendHorizontal,
+} from "lucide-react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "sonner";
 
 const FALLBACK = {
   address: "House 12, Road 5, Dhanmondi, Dhaka",
-  email: "anishazahan13@gmail.com",
+  email: "hello@gadgetfix.shop",
   phone: "+880 1700-000000",
 };
 
 export function PublicFooter() {
   const { data: shop } = useShopSettings();
+  const [email, setEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubscribed, setIsSubscribed] = useState(false);
 
   const contactItems = [
     {
@@ -25,6 +37,40 @@ export function PublicFooter() {
     { icon: Mail, label: "Email", value: shop?.email ?? FALLBACK.email },
     { icon: Phone, label: "Phone", value: shop?.phone ?? FALLBACK.phone },
   ];
+
+  const handleSubscribe = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const trimmedEmail = email.trim();
+    if (!trimmedEmail) {
+      toast.error("Please provide your email address.");
+      return;
+    }
+
+    // Basic email validation check
+    const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail);
+    if (!isValidEmail) {
+      toast.error("Please enter a valid email address.");
+      return;
+    }
+
+    try {
+      setIsSubmitting(true);
+      // Simulate API call
+      await new Promise((resolve) => setTimeout(resolve, 800));
+
+      toast.success("Successfully subscribed!", {
+        description: "Thank you for joining our newsletter.",
+      });
+
+      setEmail("");
+      setIsSubscribed(true);
+    } catch {
+      toast.error("Failed to subscribe. Please try again later.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <footer className="bg-slate-950 text-slate-300">
@@ -138,26 +184,54 @@ export function PublicFooter() {
           </ul>
         </div>
 
-        <div>
-          <h4 className="mb-4 text-sm font-semibold uppercase tracking-wide text-white">
+        {/* Improved Subscription Section */}
+        <div className="space-y-3.5">
+          <h4 className="text-sm font-semibold uppercase tracking-wide text-white">
             Newsletter
           </h4>
-          <p className="mb-3 text-sm text-slate-400">
-            Get repair tips and shop offers in your inbox.
+          <p className="text-sm leading-relaxed text-slate-400">
+            Get gadget maintenance tips, repair discounts, and service updates
+            straight to your inbox.
           </p>
-          <form className="flex" onSubmit={(e) => e.preventDefault()}>
-            <Input
-              type="email"
-              placeholder="Email"
-              className="rounded-none border-white/20 bg-white/5 text-white placeholder:text-slate-500 focus-visible:ring-primary"
-            />
-            <Button
-              type="submit"
-              className="shrink-0 rounded-none px-4 text-[13px] font-semibold uppercase tracking-wider"
-            >
-              Subscribe
-            </Button>
-          </form>
+
+          {isSubscribed ? (
+            <div className="flex items-center gap-2 rounded-lg border border-emerald-500/20 bg-emerald-500/10 p-3 text-sm text-emerald-400">
+              <CheckCircle2 className="h-4 w-4 shrink-0" />
+              <span>You are subscribed to our updates!</span>
+            </div>
+          ) : (
+            <form onSubmit={handleSubscribe} className="space-y-2">
+              <div className="relative flex items-center">
+                <Mail className="pointer-events-none absolute left-3.5 h-4 w-4 text-slate-400" />
+                <Input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="name@example.com"
+                  disabled={isSubmitting}
+                  className="h-11 rounded-lg border-white/10 bg-white/[0.06] pl-10 pr-28 text-sm text-white placeholder:text-slate-500 focus-visible:border-primary focus-visible:ring-1 focus-visible:ring-primary focus-visible:ring-offset-0 disabled:opacity-50"
+                />
+                <Button
+                  type="submit"
+                  size="sm"
+                  disabled={isSubmitting}
+                  className="absolute right-1.5 h-8 gap-1.5 rounded-md px-3 text-xs font-semibold uppercase tracking-wider"
+                >
+                  {isSubmitting ? (
+                    <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                  ) : (
+                    <>
+                      Join
+                      <SendHorizontal className="h-3 w-3" />
+                    </>
+                  )}
+                </Button>
+              </div>
+              <p className="text-[11px] text-slate-500">
+                No spam. Unsubscribe at any time.
+              </p>
+            </form>
+          )}
         </div>
       </div>
 
