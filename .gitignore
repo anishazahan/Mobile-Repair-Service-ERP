@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# Internal-only documentation (not published to the public repo)
+BANGLA_EXPLANATION.md
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
