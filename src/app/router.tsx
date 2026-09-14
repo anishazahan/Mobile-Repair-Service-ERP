@@ -1,43 +1,141 @@
-import { lazy, Suspense, type ReactNode } from "react";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ProtectedRoute } from "@/features/auth/ProtectedRoute";
 import { ComingSoonPage } from "@/pages/public/ComingSoonPage";
 import { Loader2 } from "lucide-react";
+import { lazy, Suspense, type ReactNode } from "react";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-const PublicLayout = lazy(() => import("@/layouts/PublicLayout").then((m) => ({ default: m.PublicLayout })));
-const ErpLayout = lazy(() => import("@/layouts/ErpLayout").then((m) => ({ default: m.ErpLayout })));
-const HomePage = lazy(() => import("@/pages/public/HomePage").then((m) => ({ default: m.HomePage })));
-const LoginPage = lazy(() => import("@/pages/auth/LoginPage").then((m) => ({ default: m.LoginPage })));
-const DashboardPage = lazy(() => import("@/pages/erp/DashboardPage").then((m) => ({ default: m.DashboardPage })));
-const NotFoundPage = lazy(() => import("@/pages/NotFoundPage").then((m) => ({ default: m.NotFoundPage })));
-const OrdersListPage = lazy(() => import("@/pages/erp/orders/OrdersListPage").then((m) => ({ default: m.OrdersListPage })));
-const RepairBoardPage = lazy(() => import("@/pages/erp/orders/RepairBoardPage").then((m) => ({ default: m.RepairBoardPage })));
-const NewOrderPage = lazy(() => import("@/pages/erp/orders/NewOrderPage").then((m) => ({ default: m.NewOrderPage })));
-const OrderDetailPage = lazy(() => import("@/pages/erp/orders/OrderDetailPage").then((m) => ({ default: m.OrderDetailPage })));
-const CustomersListPage = lazy(() => import("@/pages/erp/customers/CustomersListPage").then((m) => ({ default: m.CustomersListPage })));
-const CustomerDetailPage = lazy(() => import("@/pages/erp/customers/CustomerDetailPage").then((m) => ({ default: m.CustomerDetailPage })));
-const DevicesListPage = lazy(() => import("@/pages/erp/devices/DevicesListPage").then((m) => ({ default: m.DevicesListPage })));
-const DeviceDetailPage = lazy(() => import("@/pages/erp/devices/DeviceDetailPage").then((m) => ({ default: m.DeviceDetailPage })));
-const PartsListPage = lazy(() => import("@/pages/erp/parts/PartsListPage").then((m) => ({ default: m.PartsListPage })));
-const PartDetailPage = lazy(() => import("@/pages/erp/parts/PartDetailPage").then((m) => ({ default: m.PartDetailPage })));
-const SuppliersListPage = lazy(() => import("@/pages/erp/suppliers/SuppliersListPage").then((m) => ({ default: m.SuppliersListPage })));
-const SupplierDetailPage = lazy(() => import("@/pages/erp/suppliers/SupplierDetailPage").then((m) => ({ default: m.SupplierDetailPage })));
-const InvoicesListPage = lazy(() => import("@/pages/erp/billing/InvoicesListPage").then((m) => ({ default: m.InvoicesListPage })));
-const InvoiceDetailPage = lazy(() => import("@/pages/erp/billing/InvoiceDetailPage").then((m) => ({ default: m.InvoiceDetailPage })));
-const ReportsPage = lazy(() => import("@/pages/erp/reports/ReportsPage").then((m) => ({ default: m.ReportsPage })));
-const TechniciansListPage = lazy(() => import("@/pages/erp/technicians/TechniciansListPage").then((m) => ({ default: m.TechniciansListPage })));
-const TechnicianDetailPage = lazy(() => import("@/pages/erp/technicians/TechnicianDetailPage").then((m) => ({ default: m.TechnicianDetailPage })));
-const StaffListPage = lazy(() => import("@/pages/erp/staff/StaffListPage").then((m) => ({ default: m.StaffListPage })));
-const StaffDetailPage = lazy(() => import("@/pages/erp/staff/StaffDetailPage").then((m) => ({ default: m.StaffDetailPage })));
-const SettingsPage = lazy(() => import("@/pages/erp/settings/SettingsPage").then((m) => ({ default: m.SettingsPage })));
+const PublicLayout = lazy(() =>
+  import("@/layouts/PublicLayout").then((m) => ({ default: m.PublicLayout })),
+);
+const ErpLayout = lazy(() =>
+  import("@/layouts/ErpLayout").then((m) => ({ default: m.ErpLayout })),
+);
+const HomePage = lazy(() =>
+  import("@/pages/public/HomePage").then((m) => ({ default: m.HomePage })),
+);
+const LoginPage = lazy(() =>
+  import("@/pages/auth/LoginPage").then((m) => ({ default: m.LoginPage })),
+);
+const DashboardPage = lazy(() =>
+  import("@/pages/erp/DashboardPage").then((m) => ({
+    default: m.DashboardPage,
+  })),
+);
+const NotFoundPage = lazy(() =>
+  import("@/pages/NotFoundPage").then((m) => ({ default: m.NotFoundPage })),
+);
+const OrdersListPage = lazy(() =>
+  import("@/pages/erp/orders/OrdersListPage").then((m) => ({
+    default: m.OrdersListPage,
+  })),
+);
+const RepairBoardPage = lazy(() =>
+  import("@/pages/erp/orders/RepairBoardPage").then((m) => ({
+    default: m.RepairBoardPage,
+  })),
+);
+const NewOrderPage = lazy(() =>
+  import("@/pages/erp/orders/NewOrderPage").then((m) => ({
+    default: m.NewOrderPage,
+  })),
+);
+const OrderDetailPage = lazy(() =>
+  import("@/pages/erp/orders/OrderDetailPage").then((m) => ({
+    default: m.OrderDetailPage,
+  })),
+);
+const CustomersListPage = lazy(() =>
+  import("@/pages/erp/customers/CustomersListPage").then((m) => ({
+    default: m.CustomersListPage,
+  })),
+);
+const CustomerDetailPage = lazy(() =>
+  import("@/pages/erp/customers/CustomerDetailPage").then((m) => ({
+    default: m.CustomerDetailPage,
+  })),
+);
+const DevicesListPage = lazy(() =>
+  import("@/pages/erp/devices/DevicesListPage").then((m) => ({
+    default: m.DevicesListPage,
+  })),
+);
+const DeviceDetailPage = lazy(() =>
+  import("@/pages/erp/devices/DeviceDetailPage").then((m) => ({
+    default: m.DeviceDetailPage,
+  })),
+);
+const PartsListPage = lazy(() =>
+  import("@/pages/erp/parts/PartsListPage").then((m) => ({
+    default: m.PartsListPage,
+  })),
+);
+const PartDetailPage = lazy(() =>
+  import("@/pages/erp/parts/PartDetailPage").then((m) => ({
+    default: m.PartDetailPage,
+  })),
+);
+const SuppliersListPage = lazy(() =>
+  import("@/pages/erp/suppliers/SuppliersListPage").then((m) => ({
+    default: m.SuppliersListPage,
+  })),
+);
+const SupplierDetailPage = lazy(() =>
+  import("@/pages/erp/suppliers/SupplierDetailPage").then((m) => ({
+    default: m.SupplierDetailPage,
+  })),
+);
+const InvoicesListPage = lazy(() =>
+  import("@/pages/erp/billing/InvoicesListPage").then((m) => ({
+    default: m.InvoicesListPage,
+  })),
+);
+const InvoiceDetailPage = lazy(() =>
+  import("@/pages/erp/billing/InvoiceDetailPage").then((m) => ({
+    default: m.InvoiceDetailPage,
+  })),
+);
+const ReportsPage = lazy(() =>
+  import("@/pages/erp/reports/ReportsPage").then((m) => ({
+    default: m.ReportsPage,
+  })),
+);
+const TechniciansListPage = lazy(() =>
+  import("@/pages/erp/technicians/TechniciansListPage").then((m) => ({
+    default: m.TechniciansListPage,
+  })),
+);
+const TechnicianDetailPage = lazy(() =>
+  import("@/pages/erp/technicians/TechnicianDetailPage").then((m) => ({
+    default: m.TechnicianDetailPage,
+  })),
+);
+const StaffListPage = lazy(() =>
+  import("@/pages/erp/staff/StaffListPage").then((m) => ({
+    default: m.StaffListPage,
+  })),
+);
+const StaffDetailPage = lazy(() =>
+  import("@/pages/erp/staff/StaffDetailPage").then((m) => ({
+    default: m.StaffDetailPage,
+  })),
+);
+const SettingsPage = lazy(() =>
+  import("@/pages/erp/settings/SettingsPage").then((m) => ({
+    default: m.SettingsPage,
+  })),
+);
 
 const IMG = {
-  services: "https://images.unsplash.com/photo-1581092921461-eab62e97a780?q=85&w=1600&auto=format&fit=crop",
-  pricing: "https://images.unsplash.com/photo-1743836798811-6208a08233c9?q=85&w=1600&auto=format&fit=crop",
+  services:
+    "https://images.unsplash.com/photo-1581092921461-eab62e97a780?q=85&w=1600&auto=format&fit=crop",
+  pricing:
+    "https://images.unsplash.com/photo-1743836798811-6208a08233c9?q=85&w=1600&auto=format&fit=crop",
   book: "https://images.unsplash.com/photo-1649433391719-2e784576d044?q=85&w=1600&auto=format&fit=crop",
-  about: "https://images.unsplash.com/photo-1635501108232-29707bfb7c75?q=85&w=1600&auto=format&fit=crop",
+  about:
+    "https://images.unsplash.com/photo-1635501108232-29707bfb7c75?q=85&w=1600&auto=format&fit=crop",
   team: "https://images.unsplash.com/photo-1699389795119-297f8af9111f?q=85&w=1600&auto=format&fit=crop",
-  contact: "https://images.unsplash.com/photo-1626863905121-3b0c0ed7b94c?q=85&w=1600&auto=format&fit=crop",
+  contact:
+    "https://images.unsplash.com/photo-1626863905121-3b0c0ed7b94c?q=85&w=1600&auto=format&fit=crop",
 };
 
 function RouteFallback() {
@@ -64,7 +162,7 @@ const router = createBrowserRouter([
           <ComingSoonPage
             eyebrow="What We Fix"
             title="The Full Services Directory"
-            description="A detailed, filterable directory of every repair we offer — by device type, issue, and price — is on its way."
+            description="A detailed, filterable directory of every repair we offer by device type, issue, and price is on its way."
             image={IMG.services}
             imageAlt="Technician holding professional repair tools"
           />
@@ -112,7 +210,7 @@ const router = createBrowserRouter([
           <ComingSoonPage
             eyebrow="Our Team"
             title="Meet Every Technician"
-            description="Full profiles for every certified technician on the floor — specialties, experience, and more — are on the way."
+            description="Full profiles for every certified technician on the floor specialties, experience, and more  are on the way."
             image={IMG.team}
             imageAlt="Technician diagnosing a device in the workshop"
           />
@@ -146,18 +244,36 @@ const router = createBrowserRouter([
           { path: "orders/new", element: withSuspense(<NewOrderPage />) },
           { path: "orders/:id", element: withSuspense(<OrderDetailPage />) },
           { path: "customers", element: withSuspense(<CustomersListPage />) },
-          { path: "customers/:id", element: withSuspense(<CustomerDetailPage />) },
+          {
+            path: "customers/:id",
+            element: withSuspense(<CustomerDetailPage />),
+          },
           { path: "devices", element: withSuspense(<DevicesListPage />) },
           { path: "devices/:id", element: withSuspense(<DeviceDetailPage />) },
           { path: "inventory/parts", element: withSuspense(<PartsListPage />) },
-          { path: "inventory/parts/:id", element: withSuspense(<PartDetailPage />) },
-          { path: "inventory/suppliers", element: withSuspense(<SuppliersListPage />) },
-          { path: "inventory/suppliers/:id", element: withSuspense(<SupplierDetailPage />) },
+          {
+            path: "inventory/parts/:id",
+            element: withSuspense(<PartDetailPage />),
+          },
+          {
+            path: "inventory/suppliers",
+            element: withSuspense(<SuppliersListPage />),
+          },
+          {
+            path: "inventory/suppliers/:id",
+            element: withSuspense(<SupplierDetailPage />),
+          },
           { path: "billing", element: withSuspense(<InvoicesListPage />) },
           { path: "billing/:id", element: withSuspense(<InvoiceDetailPage />) },
           { path: "reports", element: withSuspense(<ReportsPage />) },
-          { path: "technicians", element: withSuspense(<TechniciansListPage />) },
-          { path: "technicians/:id", element: withSuspense(<TechnicianDetailPage />) },
+          {
+            path: "technicians",
+            element: withSuspense(<TechniciansListPage />),
+          },
+          {
+            path: "technicians/:id",
+            element: withSuspense(<TechnicianDetailPage />),
+          },
           { path: "staff", element: withSuspense(<StaffListPage />) },
           { path: "staff/:id", element: withSuspense(<StaffDetailPage />) },
           { path: "settings", element: withSuspense(<SettingsPage />) },
