@@ -1,6 +1,3 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useState } from "react";
-import { Controller, useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -12,12 +9,24 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useCustomerOptions } from "@/features/customers/hooks";
 import { useCreateDevice, useUpdateDevice } from "@/features/devices/hooks";
-import { deviceFormSchema, type DeviceFormValues } from "@/features/devices/schema";
+import {
+  deviceFormSchema,
+  type DeviceFormValues,
+} from "@/features/devices/schema";
 import type { Device } from "@/types";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
 
 const DEVICE_TYPES: { value: DeviceFormValues["type"]; label: string }[] = [
   { value: "phone", label: "Phone" },
@@ -26,15 +35,16 @@ const DEVICE_TYPES: { value: DeviceFormValues["type"]; label: string }[] = [
   { value: "laptop", label: "Laptop" },
 ];
 
-const BLANK: DeviceFormValues = { brand: "", model: "", type: "phone", imei: "", color: "", purchaseDate: "", conditionNotes: "" };
+const BLANK: DeviceFormValues = {
+  brand: "",
+  model: "",
+  type: "phone",
+  imei: "",
+  color: "",
+  purchaseDate: "",
+  conditionNotes: "",
+};
 
-/**
- * Canonical device add/edit dialog — used two ways:
- *  - from the Customer detail page, with `customerId` fixed (owner locked)
- *  - from the standalone Devices module, with no `customerId`, so the
- *    dialog itself asks which customer owns the device.
- * Editing (`device` passed) always keeps the original owner.
- */
 export function DeviceFormDialog({
   open,
   onOpenChange,
@@ -63,7 +73,10 @@ export function DeviceFormDialog({
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<DeviceFormValues>({ resolver: zodResolver(deviceFormSchema), defaultValues: BLANK });
+  } = useForm<DeviceFormValues>({
+    resolver: zodResolver(deviceFormSchema),
+    defaultValues: BLANK,
+  });
 
   useEffect(() => {
     if (open) {
@@ -98,7 +111,10 @@ export function DeviceFormDialog({
       setCustomerError(true);
       return;
     }
-    const saved = await createMutation.mutateAsync({ customerId: ownerId, ...values });
+    const saved = await createMutation.mutateAsync({
+      customerId: ownerId,
+      ...values,
+    });
     onOpenChange(false);
     onSaved?.(saved);
   }
@@ -109,10 +125,16 @@ export function DeviceFormDialog({
         <DialogHeader>
           <DialogTitle>{device ? "Edit Device" : "Add Device"}</DialogTitle>
           <DialogDescription>
-            {device ? "Update this device's details." : "Register a device and link it to its owner."}
+            {device
+              ? "Update this device's details."
+              : "Register a device and link it to its owner."}
           </DialogDescription>
         </DialogHeader>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="space-y-4"
+          noValidate
+        >
           {needsCustomerPicker && (
             <div className="space-y-1.5">
               <Label>Owner</Label>
@@ -134,20 +156,40 @@ export function DeviceFormDialog({
                   ))}
                 </SelectContent>
               </Select>
-              {customerError && <p className="text-xs text-destructive">Select the device's owner</p>}
+              {customerError && (
+                <p className="text-xs text-destructive">
+                  Select the device's owner
+                </p>
+              )}
             </div>
           )}
 
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="space-y-1.5">
               <Label htmlFor="brand">Brand</Label>
-              <Input id="brand" placeholder="Apple, Samsung..." {...register("brand")} />
-              {errors.brand && <p className="text-xs text-destructive">{errors.brand.message}</p>}
+              <Input
+                id="brand"
+                placeholder="Apple, Samsung..."
+                {...register("brand")}
+              />
+              {errors.brand && (
+                <p className="text-xs text-destructive">
+                  {errors.brand.message}
+                </p>
+              )}
             </div>
             <div className="space-y-1.5">
               <Label htmlFor="model">Model</Label>
-              <Input id="model" placeholder="iPhone 13, Galaxy S22..." {...register("model")} />
-              {errors.model && <p className="text-xs text-destructive">{errors.model.message}</p>}
+              <Input
+                id="model"
+                placeholder="iPhone 13, Galaxy S22..."
+                {...register("model")}
+              />
+              {errors.model && (
+                <p className="text-xs text-destructive">
+                  {errors.model.message}
+                </p>
+              )}
             </div>
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
@@ -181,19 +223,35 @@ export function DeviceFormDialog({
             <div className="space-y-1.5">
               <Label htmlFor="imei">IMEI / Serial Number</Label>
               <Input id="imei" {...register("imei")} />
-              {errors.imei && <p className="text-xs text-destructive">{errors.imei.message}</p>}
+              {errors.imei && (
+                <p className="text-xs text-destructive">
+                  {errors.imei.message}
+                </p>
+              )}
             </div>
             <div className="space-y-1.5">
               <Label htmlFor="purchaseDate">Purchase Date (optional)</Label>
-              <Input id="purchaseDate" type="date" {...register("purchaseDate")} />
+              <Input
+                id="purchaseDate"
+                type="date"
+                {...register("purchaseDate")}
+              />
             </div>
           </div>
           <div className="space-y-1.5">
             <Label htmlFor="conditionNotes">Condition Notes (optional)</Label>
-            <Textarea id="conditionNotes" rows={2} {...register("conditionNotes")} />
+            <Textarea
+              id="conditionNotes"
+              rows={2}
+              {...register("conditionNotes")}
+            />
           </div>
           <DialogFooter>
-            <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => onOpenChange(false)}
+            >
               Cancel
             </Button>
             <Button type="submit" disabled={mutation.isPending}>

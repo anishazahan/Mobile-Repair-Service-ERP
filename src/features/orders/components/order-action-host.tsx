@@ -1,5 +1,3 @@
-import { useState } from "react";
-import { toast } from "sonner";
 import type { TransitionOption } from "@/features/orders/constants";
 import {
   useResumeRepair,
@@ -9,6 +7,8 @@ import {
   useStartRepair,
 } from "@/features/orders/hooks";
 import type { ServiceOrder } from "@/types";
+import { useState } from "react";
+import { toast } from "sonner";
 import { ApprovalModal } from "./modals/approval-modal";
 import { AwaitingPartsModal } from "./modals/awaiting-parts-modal";
 import { CancelOrderModal } from "./modals/cancel-modal";
@@ -27,12 +27,6 @@ type ModalState =
   | { kind: "cancel" }
   | { kind: "close" };
 
-/**
- * Central place that turns a TransitionOption from the status menu / Kanban
- * drag-drop into either an immediate mutation (no extra data needed) or the
- * right confirmation modal. Keeping this in one hook means the order detail
- * page and the Repair Board share identical transition behavior.
- */
 export function useOrderActions(order: ServiceOrder) {
   const [modal, setModal] = useState<ModalState>({ kind: "none" });
 
@@ -66,7 +60,10 @@ export function useOrderActions(order: ServiceOrder) {
 
     switch (option.modal) {
       case "diagnosis":
-        return setModal({ kind: "diagnosis", isAdditionalIssue: option.action === "send_for_approval_again" });
+        return setModal({
+          kind: "diagnosis",
+          isAdditionalIssue: option.action === "send_for_approval_again",
+        });
       case "approval":
         return setModal({ kind: "approval" });
       case "awaiting_parts":
@@ -90,14 +87,40 @@ export function useOrderActions(order: ServiceOrder) {
         orderId={order.id}
         open={modal.kind === "diagnosis"}
         onOpenChange={(open) => !open && close()}
-        isAdditionalIssue={modal.kind === "diagnosis" ? modal.isAdditionalIssue : undefined}
+        isAdditionalIssue={
+          modal.kind === "diagnosis" ? modal.isAdditionalIssue : undefined
+        }
       />
-      <ApprovalModal order={order} open={modal.kind === "approval"} onOpenChange={(open) => !open && close()} />
-      <AwaitingPartsModal orderId={order.id} open={modal.kind === "awaiting_parts"} onOpenChange={(open) => !open && close()} />
-      <QualityCheckModal orderId={order.id} open={modal.kind === "quality_check"} onOpenChange={(open) => !open && close()} />
-      <DeliveryModal order={order} open={modal.kind === "delivery"} onOpenChange={(open) => !open && close()} />
-      <CancelOrderModal orderId={order.id} open={modal.kind === "cancel"} onOpenChange={(open) => !open && close()} />
-      <CloseOrderModal order={order} open={modal.kind === "close"} onOpenChange={(open) => !open && close()} />
+      <ApprovalModal
+        order={order}
+        open={modal.kind === "approval"}
+        onOpenChange={(open) => !open && close()}
+      />
+      <AwaitingPartsModal
+        orderId={order.id}
+        open={modal.kind === "awaiting_parts"}
+        onOpenChange={(open) => !open && close()}
+      />
+      <QualityCheckModal
+        orderId={order.id}
+        open={modal.kind === "quality_check"}
+        onOpenChange={(open) => !open && close()}
+      />
+      <DeliveryModal
+        order={order}
+        open={modal.kind === "delivery"}
+        onOpenChange={(open) => !open && close()}
+      />
+      <CancelOrderModal
+        orderId={order.id}
+        open={modal.kind === "cancel"}
+        onOpenChange={(open) => !open && close()}
+      />
+      <CloseOrderModal
+        order={order}
+        open={modal.kind === "close"}
+        onOpenChange={(open) => !open && close()}
+      />
     </>
   );
 

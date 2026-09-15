@@ -1,8 +1,8 @@
+import { Reveal } from "@/components/motion/reveal";
+import { Button } from "@/components/ui/button";
+import { useShopSettings } from "@/features/settings/hooks";
 import { PhoneCall, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Reveal } from "@/components/motion/reveal";
-import { useShopSettings } from "@/features/settings/hooks";
 
 const FALLBACK_PHONE = "+880 1700-000000";
 
@@ -14,13 +14,13 @@ interface ComingSoonPageProps {
   imageAlt: string;
 }
 
-/**
- * Elevated placeholder for public marketing pages not yet built out — centered,
- * on-brand, with a real photo and working navigation, so it reads as "this
- * page is next" rather than a bare dev stub. Distinct from the ERP's
- * PlaceholderPage, which is intentionally minimal for internal modules.
- */
-export function ComingSoonPage({ eyebrow, title, description, image, imageAlt }: ComingSoonPageProps) {
+export function ComingSoonPage({
+  eyebrow,
+  title,
+  description,
+  image,
+  imageAlt,
+}: ComingSoonPageProps) {
   const { data: shop } = useShopSettings();
   const phone = shop?.phone ?? FALLBACK_PHONE;
   const telHref = `tel:${phone.replace(/[^\d+]/g, "")}`;
@@ -31,13 +31,22 @@ export function ComingSoonPage({ eyebrow, title, description, image, imageAlt }:
         <span className="inline-flex items-center gap-1.5 text-sm font-semibold uppercase tracking-wider text-primary">
           <Sparkles className="h-4 w-4" /> {eyebrow}
         </span>
-        <h1 className="mt-3 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">{title}</h1>
+        <h1 className="mt-3 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+          {title}
+        </h1>
         <p className="mt-4 text-muted-foreground">{description}</p>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
-          <Button className="rounded-none px-7 text-[13px] font-semibold uppercase tracking-wider" asChild>
+          <Button
+            className="rounded-none px-7 text-[13px] font-semibold uppercase tracking-wider"
+            asChild
+          >
             <Link to="/">Back to Home</Link>
           </Button>
-          <Button variant="outline" className="rounded-none px-7 text-[13px] font-semibold uppercase tracking-wider" asChild>
+          <Button
+            variant="outline"
+            className="rounded-none px-7 text-[13px] font-semibold uppercase tracking-wider"
+            asChild
+          >
             <a href={telHref}>
               <PhoneCall className="h-4 w-4" /> Call Us Now
             </a>
@@ -45,8 +54,16 @@ export function ComingSoonPage({ eyebrow, title, description, image, imageAlt }:
         </div>
       </Reveal>
 
-      <Reveal direction="zoom" delay={150} className="relative mx-auto mt-14 max-w-4xl">
-        <img src={image} alt={imageAlt} className="aspect-video w-full border-4 border-primary object-cover shadow-lg" />
+      <Reveal
+        direction="zoom"
+        delay={150}
+        className="relative mx-auto mt-14 max-w-4xl"
+      >
+        <img
+          src={image}
+          alt={imageAlt}
+          className="aspect-video w-full border-4 border-primary object-cover shadow-lg"
+        />
         <span className="absolute -bottom-4 left-8 bg-primary px-4 py-2 text-xs font-bold uppercase tracking-wider text-primary-foreground shadow-md">
           This Page Is Coming Soon
         </span>

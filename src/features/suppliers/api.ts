@@ -2,10 +2,10 @@ import { db, genId } from "@/mocks/db";
 import { MockApiError, simulateRequest } from "@/mocks/server";
 import type { SparePart, Supplier } from "@/types";
 
-// Flat, unfiltered list for pickers elsewhere (the Spare Parts form's
-// supplier select) — mirrors the getCustomers()/getCustomerOptions() pattern.
 export async function getSuppliers(): Promise<Supplier[]> {
-  return simulateRequest(() => [...db.suppliers].sort((a, b) => a.name.localeCompare(b.name)));
+  return simulateRequest(() =>
+    [...db.suppliers].sort((a, b) => a.name.localeCompare(b.name)),
+  );
 }
 
 export interface SupplierFilters {
@@ -25,10 +25,15 @@ function findSupplier(id: string): Supplier {
 }
 
 function enrichSupplier(supplier: Supplier): SupplierRow {
-  return { supplier, partCount: db.parts.filter((p) => p.supplierId === supplier.id).length };
+  return {
+    supplier,
+    partCount: db.parts.filter((p) => p.supplierId === supplier.id).length,
+  };
 }
 
-export async function getSupplierRows(filters?: SupplierFilters): Promise<SupplierRow[]> {
+export async function getSupplierRows(
+  filters?: SupplierFilters,
+): Promise<SupplierRow[]> {
   return simulateRequest(() => {
     let list = [...db.suppliers];
 
@@ -45,7 +50,9 @@ export async function getSupplierRows(filters?: SupplierFilters): Promise<Suppli
       );
     }
 
-    return list.map(enrichSupplier).sort((a, b) => a.supplier.name.localeCompare(b.supplier.name));
+    return list
+      .map(enrichSupplier)
+      .sort((a, b) => a.supplier.name.localeCompare(b.supplier.name));
   });
 }
 
@@ -59,7 +66,10 @@ export async function getSupplier(id: string): Promise<SupplierDetail> {
   return simulateRequest(() => {
     const supplier = findSupplier(id);
     const parts = db.parts.filter((p) => p.supplierId === id);
-    const stockValue = parts.reduce((sum, p) => sum + p.quantityInStock * p.unitCost, 0);
+    const stockValue = parts.reduce(
+      (sum, p) => sum + p.quantityInStock * p.unitCost,
+      0,
+    );
     return { supplier, parts, stockValue };
   });
 }
@@ -72,7 +82,9 @@ export interface SupplierFormInput {
   address?: string;
 }
 
-export async function createSupplier(input: SupplierFormInput): Promise<Supplier> {
+export async function createSupplier(
+  input: SupplierFormInput,
+): Promise<Supplier> {
   return simulateRequest(() => {
     const supplier: Supplier = {
       id: genId("SUP"),
@@ -88,7 +100,10 @@ export async function createSupplier(input: SupplierFormInput): Promise<Supplier
   });
 }
 
-export async function updateSupplier(id: string, input: SupplierFormInput): Promise<Supplier> {
+export async function updateSupplier(
+  id: string,
+  input: SupplierFormInput,
+): Promise<Supplier> {
   return simulateRequest(() => {
     const supplier = findSupplier(id);
     supplier.name = input.name;
@@ -100,7 +115,10 @@ export async function updateSupplier(id: string, input: SupplierFormInput): Prom
   });
 }
 
-export async function setSupplierStatus(id: string, status: Supplier["status"]): Promise<Supplier> {
+export async function setSupplierStatus(
+  id: string,
+  status: Supplier["status"],
+): Promise<Supplier> {
   return simulateRequest(() => {
     const supplier = findSupplier(id);
     supplier.status = status;

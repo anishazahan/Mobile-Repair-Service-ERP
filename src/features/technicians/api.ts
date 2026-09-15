@@ -1,14 +1,19 @@
 import { db, genId } from "@/mocks/db";
 import { MockApiError, simulateRequest } from "@/mocks/server";
-import type { ServiceOrder, StaffUser, Technician, TechnicianSpecialty } from "@/types";
+import type {
+  ServiceOrder,
+  StaffUser,
+  Technician,
+  TechnicianSpecialty,
+} from "@/types";
 
 const TERMINAL_STATUSES = ["CLOSED", "CANCELLED"];
 const COMPLETED_STATUSES = ["DELIVERED", "CLOSED"];
 
-// Flat, unfiltered list for pickers elsewhere — the Staff & Users form's
-// "link to a technician profile" select.
 export async function getTechnicians(): Promise<Technician[]> {
-  return simulateRequest(() => [...db.technicians].sort((a, b) => a.name.localeCompare(b.name)));
+  return simulateRequest(() =>
+    [...db.technicians].sort((a, b) => a.name.localeCompare(b.name)),
+  );
 }
 
 export interface TechnicianFilters {
@@ -31,18 +36,33 @@ function findTechnician(id: string): Technician {
 }
 
 function technicianStats(technicianId: string) {
-  const orders = db.serviceOrders.filter((o) => o.assignedTechnicianId === technicianId);
-  const activeJobs = orders.filter((o) => !TERMINAL_STATUSES.includes(o.status)).length;
-  const completedOrders = orders.filter((o) => COMPLETED_STATUSES.includes(o.status));
-  const revenueGenerated = completedOrders.reduce((sum, o) => sum + (o.finalCost ?? 0), 0);
-  return { activeJobs, completedJobs: completedOrders.length, revenueGenerated };
+  const orders = db.serviceOrders.filter(
+    (o) => o.assignedTechnicianId === technicianId,
+  );
+  const activeJobs = orders.filter(
+    (o) => !TERMINAL_STATUSES.includes(o.status),
+  ).length;
+  const completedOrders = orders.filter((o) =>
+    COMPLETED_STATUSES.includes(o.status),
+  );
+  const revenueGenerated = completedOrders.reduce(
+    (sum, o) => sum + (o.finalCost ?? 0),
+    0,
+  );
+  return {
+    activeJobs,
+    completedJobs: completedOrders.length,
+    revenueGenerated,
+  };
 }
 
 function enrichTechnician(technician: Technician): TechnicianRow {
   return { technician, ...technicianStats(technician.id) };
 }
 
-export async function getTechnicianRows(filters?: TechnicianFilters): Promise<TechnicianRow[]> {
+export async function getTechnicianRows(
+  filters?: TechnicianFilters,
+): Promise<TechnicianRow[]> {
   return simulateRequest(() => {
     let list = [...db.technicians];
 
@@ -50,14 +70,21 @@ export async function getTechnicianRows(filters?: TechnicianFilters): Promise<Te
       list = list.filter((t) => t.status === filters.status);
     }
     if (filters?.specialty && filters.specialty !== "all") {
-      list = list.filter((t) => t.specialties.includes(filters.specialty as TechnicianSpecialty));
+      list = list.filter((t) =>
+        t.specialties.includes(filters.specialty as TechnicianSpecialty),
+      );
     }
     if (filters?.search) {
       const q = filters.search.trim().toLowerCase();
-      list = list.filter((t) => t.name.toLowerCase().includes(q) || t.phone.toLowerCase().includes(q));
+      list = list.filter(
+        (t) =>
+          t.name.toLowerCase().includes(q) || t.phone.toLowerCase().includes(q),
+      );
     }
 
-    return list.map(enrichTechnician).sort((a, b) => a.technician.name.localeCompare(b.technician.name));
+    return list
+      .map(enrichTechnician)
+      .sort((a, b) => a.technician.name.localeCompare(b.technician.name));
   });
 }
 
@@ -103,7 +130,9 @@ export interface TechnicianFormInput {
   specialties: TechnicianSpecialty[];
 }
 
-export async function createTechnician(input: TechnicianFormInput): Promise<Technician> {
+export async function createTechnician(
+  input: TechnicianFormInput,
+): Promise<Technician> {
   return simulateRequest(() => {
     const technician: Technician = {
       id: genId("TECH"),
@@ -119,7 +148,10 @@ export async function createTechnician(input: TechnicianFormInput): Promise<Tech
   });
 }
 
-export async function updateTechnician(id: string, input: TechnicianFormInput): Promise<Technician> {
+export async function updateTechnician(
+  id: string,
+  input: TechnicianFormInput,
+): Promise<Technician> {
   return simulateRequest(() => {
     const technician = findTechnician(id);
     technician.name = input.name;
@@ -130,7 +162,10 @@ export async function updateTechnician(id: string, input: TechnicianFormInput): 
   });
 }
 
-export async function setTechnicianStatus(id: string, status: Technician["status"]): Promise<Technician> {
+export async function setTechnicianStatus(
+  id: string,
+  status: Technician["status"],
+): Promise<Technician> {
   return simulateRequest(() => {
     const technician = findTechnician(id);
     technician.status = status;

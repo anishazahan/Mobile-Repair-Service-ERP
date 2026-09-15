@@ -1,10 +1,5 @@
 import type { SVGProps } from "react";
 
-// lucide-react intentionally ships no brand/wordmark icons, so the two
-// social glyphs used in the header/footer are hand-drawn minimal SVGs
-// (standard single-path brand marks) rather than pulling in a whole extra
-// icon library for two icons.
-
 export function FacebookIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" {...props}>

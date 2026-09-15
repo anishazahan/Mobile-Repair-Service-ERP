@@ -1,8 +1,6 @@
 import { humanizeStatus } from "@/lib/utils";
 import type { ServiceOrderStatus } from "@/types";
 
-// Fixed pipeline order — matches the service-order state machine, not sorted
-// by count, so the sequence of stages always reads left-to-right correctly.
 const PIPELINE_ORDER: ServiceOrderStatus[] = [
   "RECEIVED",
   "INITIAL_INSPECTION",
@@ -22,7 +20,10 @@ interface StatusBreakdownListProps {
 /** Single-hue magnitude list of orders per pipeline stage — a "mini funnel". */
 export function StatusBreakdownList({ data }: StatusBreakdownListProps) {
   const countByStatus = new Map(data.map((d) => [d.status, d.count]));
-  const rows = PIPELINE_ORDER.map((status) => ({ status, count: countByStatus.get(status) ?? 0 }));
+  const rows = PIPELINE_ORDER.map((status) => ({
+    status,
+    count: countByStatus.get(status) ?? 0,
+  }));
   const max = Math.max(1, ...rows.map((r) => r.count));
 
   return (

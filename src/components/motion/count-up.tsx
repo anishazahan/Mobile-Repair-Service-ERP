@@ -10,13 +10,13 @@ interface CountUpProps {
   duration?: number;
   className?: string;
 }
-
-/**
- * Animates a number counting up from 0 to `value` once it scrolls into view.
- * Used for headline stats (years experience, devices repaired, etc.) so the
- * numbers feel alive rather than just appearing.
- */
-export function CountUp({ value, suffix = "", prefix = "", duration = 1400, className }: CountUpProps) {
+export function CountUp({
+  value,
+  suffix = "",
+  prefix = "",
+  duration = 1400,
+  className,
+}: CountUpProps) {
   const ref = useRef<HTMLSpanElement>(null);
   const [display, setDisplay] = useState(0);
   const started = useRef(false);
@@ -25,7 +25,9 @@ export function CountUp({ value, suffix = "", prefix = "", duration = 1400, clas
     const el = ref.current;
     if (!el) return;
 
-    const prefersReducedMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    const prefersReducedMotion = window.matchMedia?.(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
     if (prefersReducedMotion) {
       setDisplay(value);
       return;

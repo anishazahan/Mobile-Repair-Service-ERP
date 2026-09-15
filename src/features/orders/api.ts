@@ -32,7 +32,13 @@ function currentActor() {
   return { name: user?.name ?? "System", role: user?.role ?? "admin" };
 }
 
-function pushTimeline(order: ServiceOrder, entry: Omit<OrderTimelineEvent, "id" | "actorName" | "actorRole" | "createdAt">) {
+function pushTimeline(
+  order: ServiceOrder,
+  entry: Omit<
+    OrderTimelineEvent,
+    "id" | "actorName" | "actorRole" | "createdAt"
+  >,
+) {
   const actor = currentActor();
   order.timeline.push({
     id: genId("T"),
@@ -57,7 +63,13 @@ function enrich(order: ServiceOrder): OrderRow {
     ? db.technicians.find((t) => t.id === order.assignedTechnicianId)
     : undefined;
   const invoice = db.invoices.find((inv) => inv.orderId === order.id);
-  return { order, customer, device, technicianName: technician?.name, invoiceId: invoice?.id };
+  return {
+    order,
+    customer,
+    device,
+    technicianName: technician?.name,
+    invoiceId: invoice?.id,
+  };
 }
 
 export async function getOrders(filters?: OrderFilters): Promise<OrderRow[]> {
@@ -68,7 +80,9 @@ export async function getOrders(filters?: OrderFilters): Promise<OrderRow[]> {
       rows = rows.filter((r) => r.order.status === filters.status);
     }
     if (filters?.technicianId && filters.technicianId !== "all") {
-      rows = rows.filter((r) => r.order.assignedTechnicianId === filters.technicianId);
+      rows = rows.filter(
+        (r) => r.order.assignedTechnicianId === filters.technicianId,
+      );
     }
     if (filters?.priority && filters.priority !== "all") {
       rows = rows.filter((r) => r.order.priority === filters.priority);
@@ -84,7 +98,9 @@ export async function getOrders(filters?: OrderFilters): Promise<OrderRow[]> {
           `${r.device?.brand} ${r.device?.model}`.toLowerCase().includes(q),
       );
     }
-    return rows.sort((a, b) => (a.order.createdAt < b.order.createdAt ? 1 : -1));
+    return rows.sort((a, b) =>
+      a.order.createdAt < b.order.createdAt ? 1 : -1,
+    );
   });
 }
 
@@ -102,50 +118,66 @@ export interface CreateOrderInput {
   ballparkEstimateNote?: string;
 }
 
-export async function createOrder(input: CreateOrderInput): Promise<ServiceOrder> {
-  return simulateRequest(() => {
-    const now = new Date().toISOString();
-    const order: ServiceOrder = {
-      id: genId("SO"),
-      customerId: input.customerId,
-      deviceId: input.deviceId,
-      reportedIssue: input.reportedIssue,
-      priority: input.priority,
-      status: "RECEIVED",
-      accessoriesReceived: input.accessoriesReceived,
-      partsUsed: [],
-      createdAt: now,
-      updatedAt: now,
-      timeline: [],
-    };
-    pushTimeline(order, {
-      type: "status_change",
-      label: "Order Received",
-      description: input.ballparkEstimateNote,
-    });
-    db.serviceOrders.unshift(order);
-    return order;
-  }, { delayMs: 500 });
+export async function createOrder(
+  input: CreateOrderInput,
+): Promise<ServiceOrder> {
+  return simulateRequest(
+    () => {
+      const now = new Date().toISOString();
+      const order: ServiceOrder = {
+        id: genId("SO"),
+        customerId: input.customerId,
+        deviceId: input.deviceId,
+        reportedIssue: input.reportedIssue,
+        priority: input.priority,
+        status: "RECEIVED",
+        accessoriesReceived: input.accessoriesReceived,
+        partsUsed: [],
+        createdAt: now,
+        updatedAt: now,
+        timeline: [],
+      };
+      pushTimeline(order, {
+        type: "status_change",
+        label: "Order Received",
+        description: input.ballparkEstimateNote,
+      });
+      db.serviceOrders.unshift(order);
+      return order;
+    },
+    { delayMs: 500 },
+  );
 }
 
 export async function startInspection(id: string): Promise<void> {
   return simulateRequest(() => {
     const order = findOrder(id);
     order.status = "INITIAL_INSPECTION";
-    pushTimeline(order, { type: "status_change", label: "Initial Inspection Started" });
+    pushTimeline(order, {
+      type: "status_change",
+      label: "Initial Inspection Started",
+    });
   });
 }
 
-export async function assignTechnician(id: string, technicianId: string, reason?: string): Promise<void> {
+export async function assignTechnician(
+  id: string,
+  technicianId: string,
+  reason?: string,
+): Promise<void> {
   return simulateRequest(() => {
     const order = findOrder(id);
     const tech = db.technicians.find((t) => t.id === technicianId);
     if (!tech) throw new MockApiError("Technician not found.");
-    const isReassignment = Boolean(order.assignedTechnicianId) && order.assignedTechnicianId !== technicianId;
+    const isReassignment =
+      Boolean(order.assignedTechnicianId) &&
+      order.assignedTechnicianId !== technicianId;
     order.assignedTechnicianId = technicianId;
     pushTimeline(order, {
       type: "assignment",
-      label: isReassignment ? `Reassigned to ${tech.name}` : `Assigned to ${tech.name}`,
+      label: isReassignment
+        ? `Reassigned to ${tech.name}`
+        : `Assigned to ${tech.name}`,
       description: reason ? `Reason: ${reason}` : undefined,
     });
   });
@@ -154,7 +186,8 @@ export async function assignTechnician(id: string, technicianId: string, reason?
 export async function startDiagnosis(id: string): Promise<void> {
   return simulateRequest(() => {
     const order = findOrder(id);
-    if (!order.assignedTechnicianId) throw new MockApiError("Assign a technician before starting diagnosis.");
+    if (!order.assignedTechnicianId)
+      throw new MockApiError("Assign a technician before starting diagnosis.");
     order.status = "DIAGNOSING";
     pushTimeline(order, { type: "status_change", label: "Diagnosis Started" });
   });
@@ -166,19 +199,27 @@ export interface SubmitDiagnosisInput {
   isAdditionalIssue?: boolean;
 }
 
-export async function submitDiagnosis(id: string, input: SubmitDiagnosisInput): Promise<void> {
+export async function submitDiagnosis(
+  id: string,
+  input: SubmitDiagnosisInput,
+): Promise<void> {
   return simulateRequest(() => {
     const order = findOrder(id);
     order.diagnosisNotes = input.isAdditionalIssue
       ? `${order.diagnosisNotes ? order.diagnosisNotes + "\n\n" : ""}Additional issue: ${input.diagnosisNotes}`
       : input.diagnosisNotes;
     order.laborCost = input.laborCost;
-    const partsTotal = order.partsUsed.reduce((sum, p) => sum + p.unitPrice * p.quantity, 0);
+    const partsTotal = order.partsUsed.reduce(
+      (sum, p) => sum + p.unitPrice * p.quantity,
+      0,
+    );
     order.estimatedCost = input.laborCost + partsTotal;
     order.status = "AWAITING_APPROVAL";
     pushTimeline(order, {
       type: "status_change",
-      label: input.isAdditionalIssue ? "Additional Issue Reported — Re-sent for Approval" : "Diagnosis Submitted — Sent for Approval",
+      label: input.isAdditionalIssue
+        ? "Additional Issue Reported — Re-sent for Approval"
+        : "Diagnosis Submitted — Sent for Approval",
       description: `${input.diagnosisNotes} (Estimate: ৳${order.estimatedCost.toLocaleString()})`,
     });
   });
@@ -191,7 +232,10 @@ export interface RecordApprovalInput {
   note?: string;
 }
 
-export async function recordApproval(id: string, input: RecordApprovalInput): Promise<void> {
+export async function recordApproval(
+  id: string,
+  input: RecordApprovalInput,
+): Promise<void> {
   return simulateRequest(() => {
     const order = findOrder(id);
     if (input.approved) {
@@ -224,7 +268,11 @@ export async function startRepair(id: string): Promise<void> {
 export async function addProgressNote(id: string, note: string): Promise<void> {
   return simulateRequest(() => {
     const order = findOrder(id);
-    pushTimeline(order, { type: "note", label: "Progress Update", description: note });
+    pushTimeline(order, {
+      type: "note",
+      label: "Progress Update",
+      description: note,
+    });
   });
 }
 
@@ -232,7 +280,10 @@ export interface AddPartsInput {
   parts: OrderPartLine[];
 }
 
-export async function addPartsUsed(id: string, input: AddPartsInput): Promise<void> {
+export async function addPartsUsed(
+  id: string,
+  input: AddPartsInput,
+): Promise<void> {
   return simulateRequest(() => {
     const order = findOrder(id);
     for (const line of input.parts) {
@@ -243,19 +294,33 @@ export async function addPartsUsed(id: string, input: AddPartsInput): Promise<vo
         order.partsUsed.push(line);
       }
       const stockPart = db.parts.find((p) => p.id === line.partId);
-      if (stockPart) stockPart.quantityInStock = Math.max(0, stockPart.quantityInStock - line.quantity);
+      if (stockPart)
+        stockPart.quantityInStock = Math.max(
+          0,
+          stockPart.quantityInStock - line.quantity,
+        );
     }
-    const partsTotal = order.partsUsed.reduce((sum, p) => sum + p.unitPrice * p.quantity, 0);
-    if (order.laborCost !== undefined) order.estimatedCost = order.laborCost + partsTotal;
+    const partsTotal = order.partsUsed.reduce(
+      (sum, p) => sum + p.unitPrice * p.quantity,
+      0,
+    );
+    if (order.laborCost !== undefined)
+      order.estimatedCost = order.laborCost + partsTotal;
     pushTimeline(order, {
       type: "note",
       label: "Parts Added",
-      description: input.parts.map((p) => `${p.partName} × ${p.quantity}`).join(", "),
+      description: input.parts
+        .map((p) => `${p.partName} × ${p.quantity}`)
+        .join(", "),
     });
   });
 }
 
-export async function pauseForParts(id: string, missingPartName: string, note?: string): Promise<void> {
+export async function pauseForParts(
+  id: string,
+  missingPartName: string,
+  note?: string,
+): Promise<void> {
   return simulateRequest(() => {
     const order = findOrder(id);
     order.status = "AWAITING_PARTS";
@@ -271,7 +336,10 @@ export async function resumeRepair(id: string): Promise<void> {
   return simulateRequest(() => {
     const order = findOrder(id);
     order.status = "IN_REPAIR";
-    pushTimeline(order, { type: "status_change", label: "Repair Resumed — Parts Arrived" });
+    pushTimeline(order, {
+      type: "status_change",
+      label: "Repair Resumed — Parts Arrived",
+    });
   });
 }
 
@@ -279,7 +347,10 @@ export async function sendForQualityCheck(id: string): Promise<void> {
   return simulateRequest(() => {
     const order = findOrder(id);
     order.status = "QUALITY_CHECK";
-    pushTimeline(order, { type: "status_change", label: "Repair Complete — Sent for Quality Check" });
+    pushTimeline(order, {
+      type: "status_change",
+      label: "Repair Complete — Sent for Quality Check",
+    });
   });
 }
 
@@ -288,15 +359,26 @@ export interface QualityCheckInput {
   notes: string;
 }
 
-export async function submitQualityCheck(id: string, input: QualityCheckInput): Promise<void> {
+export async function submitQualityCheck(
+  id: string,
+  input: QualityCheckInput,
+): Promise<void> {
   return simulateRequest(() => {
     const order = findOrder(id);
     if (input.passed) {
       order.status = "READY_FOR_PICKUP";
-      pushTimeline(order, { type: "status_change", label: "Quality Check Passed", description: input.notes });
+      pushTimeline(order, {
+        type: "status_change",
+        label: "Quality Check Passed",
+        description: input.notes,
+      });
     } else {
       order.status = "IN_REPAIR";
-      pushTimeline(order, { type: "warning", label: "Quality Check Failed — Sent Back for Rework", description: input.notes });
+      pushTimeline(order, {
+        type: "warning",
+        label: "Quality Check Failed — Sent Back for Rework",
+        description: input.notes,
+      });
     }
   });
 }
@@ -309,7 +391,10 @@ export interface DeliveryInput {
   representativeName?: string;
 }
 
-export async function confirmDelivery(id: string, input: DeliveryInput): Promise<void> {
+export async function confirmDelivery(
+  id: string,
+  input: DeliveryInput,
+): Promise<void> {
   return simulateRequest(() => {
     const order = findOrder(id);
     order.status = "DELIVERED";
@@ -331,7 +416,11 @@ function buildInvoiceLineItems(order: ServiceOrder): InvoiceLineItem[] {
     unitPrice: line.unitPrice,
   }));
   if (order.laborCost) {
-    items.push({ description: "Labor", quantity: 1, unitPrice: order.laborCost });
+    items.push({
+      description: "Labor",
+      quantity: 1,
+      unitPrice: order.laborCost,
+    });
   }
   return items;
 }
@@ -341,17 +430,17 @@ export async function closeOrder(id: string): Promise<void> {
     const order = findOrder(id);
     order.status = "CLOSED";
 
-    // The close-order flow is payment-gated (see CloseOrderModal) — by the
-    // time an order reaches here it's already been paid in full, so this
-    // is also where the paid invoice for it actually gets created.
     if (!db.invoices.some((inv) => inv.orderId === order.id)) {
       const lineItems = buildInvoiceLineItems(order);
-      const subtotal = lineItems.reduce((sum, li) => sum + li.quantity * li.unitPrice, 0);
+      const subtotal = lineItems.reduce(
+        (sum, li) => sum + li.quantity * li.unitPrice,
+        0,
+      );
       const preTaxAmount = order.finalCost ?? order.estimatedCost ?? subtotal;
-      // Shop-wide tax rate, managed in Settings — applied here so a rate
-      // change takes effect on the next order closed, without touching
-      // invoices already issued.
-      const tax = Math.round(preTaxAmount * (db.shopSettings.taxRatePercent / 100));
+      // Shop tax rate applies only to invoices generated from here on.
+      const tax = Math.round(
+        preTaxAmount * (db.shopSettings.taxRatePercent / 100),
+      );
       const total = preTaxAmount + tax;
       const now = new Date().toISOString();
       const invoice: Invoice = {
@@ -378,15 +467,26 @@ export async function closeOrder(id: string): Promise<void> {
       });
     }
 
-    pushTimeline(order, { type: "status_change", label: "Order Closed — Payment Settled" });
+    pushTimeline(order, {
+      type: "status_change",
+      label: "Order Closed — Payment Settled",
+    });
   });
 }
 
-export async function cancelOrder(id: string, reason: string, note?: string): Promise<void> {
+export async function cancelOrder(
+  id: string,
+  reason: string,
+  note?: string,
+): Promise<void> {
   return simulateRequest(() => {
     const order = findOrder(id);
     order.status = "CANCELLED";
     order.cancelReason = note ? `${reason} — ${note}` : reason;
-    pushTimeline(order, { type: "cancellation", label: "Order Cancelled", description: order.cancelReason });
+    pushTimeline(order, {
+      type: "cancellation",
+      label: "Order Cancelled",
+      description: order.cancelReason,
+    });
   });
 }

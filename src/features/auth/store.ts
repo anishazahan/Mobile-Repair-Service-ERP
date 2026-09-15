@@ -1,6 +1,6 @@
+import type { StaffUser } from "@/types";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import type { StaffUser } from "@/types";
 
 interface AuthState {
   user: StaffUser | null;
@@ -8,7 +8,7 @@ interface AuthState {
   isAuthenticated: boolean;
   logIn: (user: StaffUser, token: string) => void;
   logOut: () => void;
-  /** Refreshes the session's user record in place — e.g. after a My Profile edit — without re-authenticating. */
+
   updateUser: (user: StaffUser) => void;
 }
 

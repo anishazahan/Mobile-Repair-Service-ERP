@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 
 interface RevealProps {
   children: ReactNode;
@@ -21,14 +21,13 @@ const DIRECTION_START: Record<NonNullable<RevealProps["direction"]>, string> = {
   none: "",
 };
 
-/**
- * Scroll-triggered entrance animation used across every public-site section.
- * Animates once when the element first enters the viewport using a premium
- * "ease-out-expo" curve (fast start, long soft settle) rather than a linear
- * fade — combines opacity with a directional translate or scale. No-ops for
- * prefers-reduced-motion.
- */
-export function Reveal({ children, className, delay = 0, direction = "up", duration = 900 }: RevealProps) {
+export function Reveal({
+  children,
+  className,
+  delay = 0,
+  direction = "up",
+  duration = 900,
+}: RevealProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
 
@@ -57,7 +56,9 @@ export function Reveal({ children, className, delay = 0, direction = "up", durat
       ref={ref}
       className={cn(
         "transition-all motion-reduce:transition-none motion-reduce:transform-none motion-reduce:opacity-100",
-        visible ? "opacity-100 translate-x-0 translate-y-0 scale-100" : cn("opacity-0", DIRECTION_START[direction]),
+        visible
+          ? "opacity-100 translate-x-0 translate-y-0 scale-100"
+          : cn("opacity-0", DIRECTION_START[direction]),
         className,
       )}
       style={{

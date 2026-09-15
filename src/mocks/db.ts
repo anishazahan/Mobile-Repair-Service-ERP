@@ -1,8 +1,3 @@
-// In-memory mock database — hydrated once from the centralized JSON fixtures
-// and mutated in place as the app creates/updates records. This is the
-// single source of truth every feature's api.ts reads from; nothing in the
-// app should import the raw JSON files directly.
-
 import customersData from "./data/customers.json";
 import devicesData from "./data/devices.json";
 import invoicesData from "./data/invoices.json";
@@ -31,11 +26,7 @@ import type {
   Technician,
 } from "@/types";
 
-// Everything below is deliberately in-memory only and resets on reload —
-// fine for transactional demo records (orders, customers, ...). Shop
-// settings are the one exception: the public site (footer, "Call Us" links)
-// reads them too, and a user editing Settings expects that to actually
-// stick across a reload rather than snap back to the seed data.
+// Persisted to localStorage — the one exception to reset-on-reload.
 const SHOP_SETTINGS_STORAGE_KEY = "gadgetfix-shop-settings";
 
 function loadShopSettings(): ShopSettings {
@@ -43,15 +34,12 @@ function loadShopSettings(): ShopSettings {
     const saved = localStorage.getItem(SHOP_SETTINGS_STORAGE_KEY);
     if (saved) return JSON.parse(saved) as ShopSettings;
   } catch {
-    // Corrupted value or storage unavailable (private browsing, etc.) — fall
-    // back to the seed data below.
+    // Fall back to seed data if storage is unavailable or corrupted.
   }
   return shopSettingsData as unknown as ShopSettings;
 }
 
-// Cast through unknown: the JSON fixtures are hand-authored to match these
-// shapes, but TS can't verify string-literal unions (status, category, etc.)
-// against plain JSON. This is the one sanctioned `as` boundary in the app.
+// The one sanctioned `as` boundary — JSON fixtures aren't type-checked against string-literal unions.
 export const db = {
   customers: customersData as unknown as Customer[],
   devices: devicesData as unknown as Device[],
@@ -72,16 +60,9 @@ export function saveShopSettings(settings: ShopSettings): void {
   db.shopSettings = settings;
   try {
     localStorage.setItem(SHOP_SETTINGS_STORAGE_KEY, JSON.stringify(settings));
-  } catch {
-    // Best-effort persistence only — a save that can't reach localStorage
-    // still applies for the rest of this session.
-  }
+  } catch {}
 }
 
-// Frozen "current time" for the mock dataset. The seed data is authored as
-// if today is Sep 12, 2026 — every "today"/"this month" calculation in the
-// app should be based on this constant rather than the real wall clock, so
-// the demo stays coherent no matter when it's actually opened.
 export const MOCK_NOW = new Date("2026-09-12T12:00:00Z");
 
 let idCounter = 100;

@@ -1,6 +1,3 @@
-// Centralized domain types for the GadgetFIX ERP frontend.
-// This file is the single source of truth for shapes shared across features.
-
 export type Role = "admin" | "manager" | "front_desk" | "technician";
 
 export interface StaffUser {

@@ -2,10 +2,10 @@ import { db, genId } from "@/mocks/db";
 import { MockApiError, simulateRequest } from "@/mocks/server";
 import type { Customer, Device, ServiceOrder } from "@/types";
 
-// getCustomers() stays a plain, unfiltered list — the Service Order wizard's
-// "search or add a customer" step depends on this exact shape and signature.
 export async function getCustomers(): Promise<Customer[]> {
-  return simulateRequest(() => [...db.customers].sort((a, b) => a.name.localeCompare(b.name)));
+  return simulateRequest(() =>
+    [...db.customers].sort((a, b) => a.name.localeCompare(b.name)),
+  );
 }
 
 export interface CreateCustomerInput {
@@ -17,7 +17,9 @@ export interface CreateCustomerInput {
   notes?: string;
 }
 
-export async function createCustomer(input: CreateCustomerInput): Promise<Customer> {
+export async function createCustomer(
+  input: CreateCustomerInput,
+): Promise<Customer> {
   return simulateRequest(() => {
     const customer: Customer = {
       id: genId("CUST"),
@@ -55,7 +57,9 @@ export interface CustomerRow {
 function customerStats(customerId: string) {
   const orders = db.serviceOrders.filter((o) => o.customerId === customerId);
   const totalSpent = orders.reduce((sum, o) => sum + (o.finalCost ?? 0), 0);
-  const openOrderCount = orders.filter((o) => o.status !== "CLOSED" && o.status !== "CANCELLED").length;
+  const openOrderCount = orders.filter(
+    (o) => o.status !== "CLOSED" && o.status !== "CANCELLED",
+  ).length;
   const lastOrderAt = orders.reduce<string | undefined>(
     (latest, o) => (!latest || o.createdAt > latest ? o.createdAt : latest),
     undefined,
@@ -64,11 +68,15 @@ function customerStats(customerId: string) {
 }
 
 function enrichCustomer(customer: Customer): CustomerRow {
-  const deviceCount = db.devices.filter((d) => d.customerId === customer.id).length;
+  const deviceCount = db.devices.filter(
+    (d) => d.customerId === customer.id,
+  ).length;
   return { customer, deviceCount, ...customerStats(customer.id) };
 }
 
-export async function getCustomerRows(filters?: CustomerFilters): Promise<CustomerRow[]> {
+export async function getCustomerRows(
+  filters?: CustomerFilters,
+): Promise<CustomerRow[]> {
   return simulateRequest(() => {
     let list = [...db.customers];
 
@@ -88,7 +96,9 @@ export async function getCustomerRows(filters?: CustomerFilters): Promise<Custom
       );
     }
 
-    return list.map(enrichCustomer).sort((a, b) => (a.customer.createdAt < b.customer.createdAt ? 1 : -1));
+    return list
+      .map(enrichCustomer)
+      .sort((a, b) => (a.customer.createdAt < b.customer.createdAt ? 1 : -1));
   });
 }
 
@@ -118,7 +128,10 @@ export async function getCustomer(id: string): Promise<CustomerDetail> {
     const orders = db.serviceOrders
       .filter((o) => o.customerId === id)
       .sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1))
-      .map((order) => ({ order, device: db.devices.find((d) => d.id === order.deviceId) }));
+      .map((order) => ({
+        order,
+        device: db.devices.find((d) => d.id === order.deviceId),
+      }));
     const { totalSpent, openOrderCount } = customerStats(id);
     return { customer, devices, orders, totalSpent, openOrderCount };
   });
@@ -133,7 +146,10 @@ export interface UpdateCustomerInput {
   notes?: string;
 }
 
-export async function updateCustomer(id: string, input: UpdateCustomerInput): Promise<Customer> {
+export async function updateCustomer(
+  id: string,
+  input: UpdateCustomerInput,
+): Promise<Customer> {
   return simulateRequest(() => {
     const customer = findCustomer(id);
     customer.name = input.name;
@@ -146,7 +162,10 @@ export async function updateCustomer(id: string, input: UpdateCustomerInput): Pr
   });
 }
 
-export async function setCustomerStatus(id: string, status: Customer["status"]): Promise<Customer> {
+export async function setCustomerStatus(
+  id: string,
+  status: Customer["status"],
+): Promise<Customer> {
   return simulateRequest(() => {
     const customer = findCustomer(id);
     customer.status = status;
