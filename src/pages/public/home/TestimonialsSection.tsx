@@ -36,7 +36,7 @@ const TESTIMONIALS: Testimonial[] = [
     source: "Google Review",
   },
   {
-    name: "Farzana Rahman",
+    name: "Aleo Pitan",
     role: "Verified Customer",
     avatar:
       "https://images.unsplash.com/photo-1735875530804-d661ca2001da?q=80&w=600&auto=format&fit=crop",
@@ -60,7 +60,7 @@ const TESTIMONIALS: Testimonial[] = [
     source: "Google Review",
   },
   {
-    name: "Nusrat Jahan",
+    name: "Leo Sen",
     role: "Verified Customer",
     avatar:
       "https://images.unsplash.com/photo-1752993018672-bb0f25f528bc?q=80&w=600&auto=format&fit=crop",

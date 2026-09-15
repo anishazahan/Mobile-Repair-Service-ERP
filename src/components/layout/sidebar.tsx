@@ -11,7 +11,7 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
   return (
     <div className="flex h-full w-64 flex-col bg-sidebar text-sidebar-foreground">
       <div className="flex h-14 items-center border-b border-sidebar-border px-5">
-        <Link to="/app" onClick={onNavigate}>
+        <Link to="/" onClick={onNavigate}>
           <Logo theme="light" size="sm" icon />
         </Link>
       </div>

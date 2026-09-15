@@ -22,9 +22,9 @@
   },
   {
     "id": "CUST-1003",
-    "name": "Nusrat Jahan",
+    "name": "Leo Sen",
     "phone": "+880 1933-889900",
-    "email": "nusrat.jahan@example.com",
+    "email": "leo.sen@example.com",
     "type": "walk_in",
     "status": "active",
     "createdAt": "2026-01-05T14:20:00Z"
@@ -41,9 +41,9 @@
   },
   {
     "id": "CUST-1005",
-    "name": "Farhana Akter",
+    "name": "Jitan Hila",
     "phone": "+880 1555-667788",
-    "email": "farhana.akter@example.com",
+    "email": "jitan.hila@example.com",
     "type": "walk_in",
     "status": "active",
     "createdAt": "2026-02-11T16:45:00Z"

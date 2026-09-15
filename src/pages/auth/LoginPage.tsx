@@ -1,3 +1,8 @@
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { DEMO_PASSWORD, login } from "@/features/auth/api";
+import { useAuthStore } from "@/features/auth/store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2, Wrench } from "lucide-react";
 import { useState } from "react";
@@ -5,14 +10,12 @@ import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { z } from "zod";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { DEMO_PASSWORD, login } from "@/features/auth/api";
-import { useAuthStore } from "@/features/auth/store";
 
 const loginSchema = z.object({
-  email: z.string().min(1, "Email is required").email("Enter a valid email address"),
+  email: z
+    .string()
+    .min(1, "Email is required")
+    .email("Enter a valid email address"),
   password: z.string().min(1, "Password is required"),
 });
 
@@ -30,7 +33,8 @@ export function LoginPage() {
   const logIn = useAuthStore((s) => s.logIn);
   const navigate = useNavigate();
   const location = useLocation();
-  const from = (location.state as { from?: Location })?.from?.pathname ?? "/app";
+  const from =
+    (location.state as { from?: Location })?.from?.pathname ?? "/app";
 
   const {
     register,
@@ -50,7 +54,9 @@ export function LoginPage() {
       toast.success(`Welcome back, ${session.user.name.split(" ")[0]}`);
       navigate(from, { replace: true });
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : "Login failed. Please try again.");
+      toast.error(
+        err instanceof Error ? err.message : "Login failed. Please try again.",
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -83,11 +89,15 @@ export function LoginPage() {
             Run the whole repair shop from one screen.
           </h1>
           <p className="text-slate-300">
-            Track every device from intake to delivery, manage inventory, technicians, billing
-            and reporting — all in one purpose-built ERP for mobile repair businesses.
+            Track every device from intake to delivery, manage inventory,
+            technicians, billing and reporting all in one purpose-built ERP for
+            mobile repair businesses.
           </p>
         </div>
-        <p className="relative z-10 text-sm text-slate-400">© 2026 GadgetFIX. All rights reserved.</p>
+        <p className="relative z-10 text-sm text-slate-400">
+          © 2026 GadgetFIX. All rights reserved By{" "}
+          <span className="font-bold text-primary">Anisha Zahan</span>
+        </p>
       </div>
 
       {/* Form panel */}
@@ -104,10 +114,16 @@ export function LoginPage() {
 
           <div className="space-y-1.5">
             <h2 className="text-2xl font-semibold tracking-tight">Sign in</h2>
-            <p className="text-sm text-muted-foreground">Enter your staff credentials to access the ERP.</p>
+            <p className="text-sm text-muted-foreground">
+              Enter your staff credentials to access the ERP.
+            </p>
           </div>
 
-          <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-4">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            noValidate
+            className="space-y-4"
+          >
             <div className="space-y-1.5">
               <Label htmlFor="email">Email</Label>
               <Input
@@ -118,7 +134,11 @@ export function LoginPage() {
                 aria-invalid={!!errors.email}
                 {...register("email")}
               />
-              {errors.email && <p className="text-xs text-destructive">{errors.email.message}</p>}
+              {errors.email && (
+                <p className="text-xs text-destructive">
+                  {errors.email.message}
+                </p>
+              )}
             </div>
 
             <div className="space-y-1.5">
@@ -131,7 +151,11 @@ export function LoginPage() {
                 aria-invalid={!!errors.password}
                 {...register("password")}
               />
-              {errors.password && <p className="text-xs text-destructive">{errors.password.message}</p>}
+              {errors.password && (
+                <p className="text-xs text-destructive">
+                  {errors.password.message}
+                </p>
+              )}
             </div>
 
             <Button type="submit" className="w-full" disabled={isSubmitting}>
@@ -141,17 +165,23 @@ export function LoginPage() {
           </form>
 
           <div className="space-y-2 rounded-lg border border-dashed border-border p-3">
-            <p className="text-xs font-medium text-foreground">Demo accounts (password: {DEMO_PASSWORD})</p>
+            <p className="text-xs font-medium text-foreground">
+              Demo accounts (password: {DEMO_PASSWORD})
+            </p>
             <div className="grid grid-cols-2 gap-1.5">
               {DEMO_ACCOUNTS.map((acc) => (
                 <button
                   key={acc.email}
                   type="button"
                   onClick={() => fillDemoAccount(acc.email)}
-                  className="rounded-md border border-border px-2 py-1.5 text-left text-xs transition-colors hover:bg-accent"
+                  className="rounded-md border border-border px-2 py-1.5 text-left  transition-colors hover:bg-primary/30"
                 >
-                  <span className="block font-medium text-foreground">{acc.role}</span>
-                  <span className="block truncate text-muted-foreground">{acc.email}</span>
+                  <span className="block text-sm font-medium text-black">
+                    {acc.role}
+                  </span>
+                  <span className="block text-[13px] truncate text-muted-foreground">
+                    {acc.email}
+                  </span>
                 </button>
               ))}
             </div>
