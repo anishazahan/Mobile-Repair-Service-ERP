@@ -2,7 +2,7 @@
 
 A complete frontend prototype for a mobile & gadget repair business, built for a Developer Hiring Assessment.
 
-**Live demo**: [https://mobile-repair-erp.netlify.app/login](https://mobile-repair-erp.netlify.app/login)
+**Live demo**: [https://mobile-repair-erp.netlify.app](https://mobile-repair-erp.netlify.app/)
 
 It has two parts:
 
@@ -51,16 +51,16 @@ There is intentionally **no real backend**. All data lives in an in-memory mock 
 
 ## Tech Stack
 
-| Layer | Choice |
-|---|---|
-| Framework | React 19 + TypeScript (strict mode) + Vite |
-| Routing | React Router v7 |
-| Server state | TanStack Query v5 (every mock "API" call goes through this) |
-| Client state | Zustand (auth session only, persisted to `localStorage`) |
-| Forms | React Hook Form + Zod |
-| Styling | Tailwind CSS v3, hand-built shadcn/ui-style primitives on Radix UI |
-| Charts | Recharts |
-| Icons | Lucide |
+| Layer        | Choice                                                             |
+| ------------ | ------------------------------------------------------------------ |
+| Framework    | React 19 + TypeScript (strict mode) + Vite                         |
+| Routing      | React Router v7                                                    |
+| Server state | TanStack Query v5 (every mock "API" call goes through this)        |
+| Client state | Zustand (auth session only, persisted to `localStorage`)           |
+| Forms        | React Hook Form + Zod                                              |
+| Styling      | Tailwind CSS v3, hand-built shadcn/ui-style primitives on Radix UI |
+| Charts       | Recharts                                                           |
+| Icons        | Lucide                                                             |
 
 ---
 
@@ -78,11 +78,11 @@ npm run lint      # oxlint
 
 The login page (`/login`) has one-click demo account buttons. Any password works (mock authentication, no real credential check).
 
-| Role | Email | Access |
-|---|---|---|
-| Admin | `admin@gadgetfix.shop` | Every module |
-| Manager | `manager@gadgetfix.shop` | Every module |
-| Front Desk | `frontdesk@gadgetfix.shop` | Everything except Reports, Staff & Users, Settings |
+| Role       | Email                        | Access                                                      |
+| ---------- | ---------------------------- | ----------------------------------------------------------- |
+| Admin      | `admin@gadgetfix.shop`       | Every module                                                |
+| Manager    | `manager@gadgetfix.shop`     | Every module                                                |
+| Front Desk | `frontdesk@gadgetfix.shop`   | Everything except Reports, Staff & Users, Settings          |
 | Technician | `ahmed.karim@gadgetfix.shop` | Everything except Billing, Reports, Staff & Users, Settings |
 
 See [Roles & Permissions](#roles--permissions) for the full matrix.
@@ -139,9 +139,10 @@ The at-a-glance view of what's happening at the shop today.
 The heart of the whole system: the full lifecycle of a single repair, from intake to money collected.
 
 **Three views:**
+
 - **List**: every order, searchable and filterable by status, technician, and priority.
 - **Repair Board**: a Kanban board spanning every pipeline stage; dragging a card between columns changes its status, and invalid moves are rejected.
-- **Detail page**: full history, cost summary, timeline, parts used, notes, and a status-transition menu that only ever offers the *valid* next actions for the order's current status.
+- **Detail page**: full history, cost summary, timeline, parts used, notes, and a status-transition menu that only ever offers the _valid_ next actions for the order's current status.
 
 **The state machine** is the actual business rule that every screen enforces, and no step can be skipped:
 
@@ -164,6 +165,7 @@ CANCELLED: reachable from RECEIVED through APPROVED, always requires a reason.
 ```
 
 **Business rules enforced in code, not just hidden in the UI:**
+
 1. **Closing is payment-gated.** The Close Order dialog requires an explicit confirmation that payment was received in full before the button is even enabled.
 2. **Closing auto-generates the invoice.** The moment an order is closed, a real, itemized `Invoice` (parts + labor line items) and a matching `Payment` record are created automatically, with the shop's current tax rate applied. This happens idempotently, so re-testing never produces a duplicate invoice for the same order.
 3. **Using parts live-decrements stock.** Logging a part against an order immediately reduces that part's quantity in Spare Parts, visible without a refresh.
@@ -216,7 +218,7 @@ CANCELLED: reachable from RECEIVED through APPROVED, always requires a reason.
 
 ### 8. Reports
 
-*Admin/Manager only.*
+_Admin/Manager only._
 
 - KPIs: Total Revenue, Total Orders, Average Order Value, Outstanding Balance.
 - A 30-day revenue trend and the active pipeline breakdown.
@@ -234,7 +236,7 @@ CANCELLED: reachable from RECEIVED through APPROVED, always requires a reason.
 
 ### 10. Staff & Users
 
-*Admin/Manager only.*
+_Admin/Manager only._
 
 - Every login account, its role, and status (Active / Inactive / Suspended).
 - A **Module Access panel** on each profile shows exactly which sidebar modules that role can see, computed live from the same permission config driving the real sidebar.
@@ -245,9 +247,9 @@ CANCELLED: reachable from RECEIVED through APPROVED, always requires a reason.
 
 ### 11. Settings
 
-- **Shop Profile** *(Admin/Manager)*: shop name, address, phone, email, and **tax rate**; the tax rate is genuinely applied to every invoice generated afterward when an order is closed. This is the one piece of data persisted to `localStorage`, surviving a page reload (see [Data Persistence](#data-persistence-notes)).
-- **Service & Pricing Catalog** *(Admin/Manager)*: a full CRUD reference price list for repair services, also surfaced through the public site's search.
-- **My Profile** *(every role)*: the same self-service profile editing described above. Non-admin roles land directly on this tab with no other tabs shown.
+- **Shop Profile** _(Admin/Manager)_: shop name, address, phone, email, and **tax rate**; the tax rate is genuinely applied to every invoice generated afterward when an order is closed. This is the one piece of data persisted to `localStorage`, surviving a page reload (see [Data Persistence](#data-persistence-notes)).
+- **Service & Pricing Catalog** _(Admin/Manager)_: a full CRUD reference price list for repair services, also surfaced through the public site's search.
+- **My Profile** _(every role)_: the same self-service profile editing described above. Non-admin roles land directly on this tab with no other tabs shown.
 
 ---
 
@@ -255,19 +257,19 @@ CANCELLED: reachable from RECEIVED through APPROVED, always requires a reason.
 
 Every role's sidebar access is driven by a single file: `src/components/layout/nav-config.ts`. Nothing else decides visibility; the Staff & Users "Module Access" panel reads this exact same config, so it's always accurate.
 
-| Module | Admin | Manager | Front Desk | Technician |
-|---|:---:|:---:|:---:|:---:|
-| Dashboard | ✅ | ✅ | ✅ | ✅ |
-| Service Orders | ✅ | ✅ | ✅ | ✅ |
-| Customers | ✅ | ✅ | ✅ | ✅ |
-| Devices | ✅ | ✅ | ✅ | ✅ |
-| Spare Parts | ✅ | ✅ | ✅ | ✅ |
-| Suppliers | ✅ | ✅ | ✅ | ✅ |
-| Billing | ✅ | ✅ | ✅ | ❌ |
-| Reports | ✅ | ✅ | ❌ | ❌ |
-| Technicians | ✅ | ✅ | ✅ | ✅ |
-| Staff & Users | ✅ | ✅ | ❌ | ❌ |
-| Settings (full) | ✅ | ✅ | My Profile only | My Profile only |
+| Module          | Admin | Manager |   Front Desk    |   Technician    |
+| --------------- | :---: | :-----: | :-------------: | :-------------: |
+| Dashboard       |  ✅   |   ✅    |       ✅        |       ✅        |
+| Service Orders  |  ✅   |   ✅    |       ✅        |       ✅        |
+| Customers       |  ✅   |   ✅    |       ✅        |       ✅        |
+| Devices         |  ✅   |   ✅    |       ✅        |       ✅        |
+| Spare Parts     |  ✅   |   ✅    |       ✅        |       ✅        |
+| Suppliers       |  ✅   |   ✅    |       ✅        |       ✅        |
+| Billing         |  ✅   |   ✅    |       ✅        |       ❌        |
+| Reports         |  ✅   |   ✅    |       ❌        |       ❌        |
+| Technicians     |  ✅   |   ✅    |       ✅        |       ✅        |
+| Staff & Users   |  ✅   |   ✅    |       ❌        |       ❌        |
+| Settings (full) |  ✅   |   ✅    | My Profile only | My Profile only |
 
 ---
 
