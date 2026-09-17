@@ -113,6 +113,7 @@ Designed to match the Envato "GadgetFIX" template's layout, in the app's primary
 - **"Coming Soon" pages**: Services directory, full Pricing, Book a Service, About, Team, and Contact. Each is a centered, on-brand placeholder with a real photo and a working "Call Us Now" button using the shop's live phone number.
 - **A functional global search** in the header, searching the live Service & Pricing Catalog and jumping to any page on the site.
 - **Live contact info**: the footer and header don't hardcode the shop's address, phone, or email; they read the same Shop Profile record the ERP's Settings module manages, so a change there updates the whole public site immediately.
+- **AI chat assistant**: a floating widget that answers questions about repair services, pricing, and shop hours, grounded in the same live Shop Profile and Service Catalog data. It runs a small language model (Qwen2.5 0.5B) entirely on-device via WebGPU, using [WebLLM](https://github.com/mlc-ai/web-llm) — no backend, no API key, no per-message cost. The model (~275MB) is lazy-loaded only when the widget is first opened, cached in the browser after that, and code-split out of the main site bundle so it never affects the initial page load. Requires a WebGPU-capable browser (current Chrome or Edge); other browsers see a plain fallback message.
 - **Staff Login** link routes into the ERP's `/login`.
 
 ---

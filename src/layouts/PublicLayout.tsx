@@ -1,4 +1,5 @@
 import { Outlet } from "react-router-dom";
+import { ChatWidget } from "@/components/chat/chat-widget";
 import { PublicFooter } from "@/components/layout/public-footer";
 import { PublicHeader } from "@/components/layout/public-header";
 
@@ -11,6 +12,7 @@ export function PublicLayout() {
         <Outlet />
       </main>
       <PublicFooter />
+      <ChatWidget />
     </div>
   );
 }
