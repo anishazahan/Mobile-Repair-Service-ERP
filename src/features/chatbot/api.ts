@@ -5,8 +5,8 @@ export interface ChatMessage {
   content: string;
 }
 
-/** Small instruction-tuned model (~275MB, cached after first load) — chosen for a fast first-time download over a larger model. */
-export const MODEL_ID = "Qwen2.5-0.5B-Instruct-q4f16_1-MLC";
+/** Smallest instruct model in WebLLM's prebuilt library (~200MB, cached after first load) — prioritizes first-load speed over quality. */
+export const MODEL_ID = "SmolLM2-360M-Instruct-q4f16_1-MLC";
 
 /** `"gpu" in navigator` alone is not reliable — some browsers expose the API with no usable adapter. */
 export async function isWebGpuSupported(): Promise<boolean> {

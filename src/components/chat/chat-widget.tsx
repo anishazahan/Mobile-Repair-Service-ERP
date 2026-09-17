@@ -89,13 +89,13 @@ export function ChatWidget() {
       <button
         onClick={toggle}
         aria-label={isOpen ? "Close chat assistant" : "Open chat assistant"}
-        className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg transition-transform hover:scale-105 active:scale-95"
+        className="fixed bottom-6 left-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg transition-transform hover:scale-105 active:scale-95"
       >
         {isOpen ? <X className="h-6 w-6" /> : <MessageCircle className="h-6 w-6" />}
       </button>
 
       {isOpen && (
-        <div className="fixed bottom-24 right-4 z-50 flex h-[min(70dvh,560px)] w-[min(calc(100vw-2rem),380px)] flex-col overflow-hidden rounded-lg border border-border bg-background shadow-2xl">
+        <div className="fixed bottom-24 left-4 z-50 flex h-[min(70dvh,560px)] w-[min(calc(100vw-2rem),380px)] flex-col overflow-hidden rounded-lg border border-border bg-background shadow-2xl">
           <div className="flex items-center gap-2.5 bg-primary px-4 py-3 text-primary-foreground">
             <Sparkles className="h-4.5 w-4.5 shrink-0" />
             <div className="min-w-0">
@@ -130,9 +130,6 @@ export function ChatWidget() {
               <p className="line-clamp-2 text-[11px] text-muted-foreground">
                 {progressText || "Preparing model…"}
                 {progress === 0 && loadingElapsed > 0 && ` (${loadingElapsed}s elapsed)`}
-              </p>
-              <p className="text-[10.5px] text-muted-foreground/70">
-                One-time download (~275MB), cached in your browser for next time.
               </p>
             </div>
           )}
